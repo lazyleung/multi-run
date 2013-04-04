@@ -5,6 +5,7 @@
 		<head><link href="css/index.css" rel="stylesheet" type="text/css"></head>
 
 		<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,12 +14,11 @@
 	<body>
 		<div>
 			<h1>Multi-Run</h1>
-			<ul>
-				<li>Username</li>
-				<li>Password</li>
-				<li>Login</li>
-				<li>Register</li>
-			</ul>
+
+			<input type="text" id = "login_username" placeholder = "Username" name = "username">
+			<input type="text" id = "login_password" placeholder = "Password" name = "password">
+			<button id = "login_button" onclick = "login()">Log In</button>
+			<button id = "register_button" onclick = "register()">Register</button>
 		</div>
 	</body>
 </html>
