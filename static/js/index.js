@@ -1,8 +1,6 @@
 //Global variables
 var canvasWidth;
 var canvasHeight;
-var usr;
-var pwd;
 
 $(document).ready(function(){
 	//jquery stuff

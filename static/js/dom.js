@@ -1,5 +1,6 @@
-//Contains all the ajax refresh dom functions
+//Contains all the AJAX refresh dom functions
 
+//loads the menu
 function loadMenu() {
 	var content_area = $("#content_area");
  	content_area.empty();
@@ -18,8 +19,8 @@ function loadMenu() {
  	$("#settings_button").onButtonTap(loadSettings);
 }
 
+//loads the canvas and init the game
 function loadCanvas() {
- 	//Load the canvas
  	$("body").html("Loaded!");
 
 	canvasWidth = $(window).width();
@@ -32,6 +33,7 @@ function loadCanvas() {
 	initGame();
 }
 
+//loads the profile
 function loadProfile() {
  	$("#content_area").html("profile");
 }
