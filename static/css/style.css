@@ -2,7 +2,9 @@ body {
 	background-color: #526BA3;
 	text-align: center;
 	font-family: Raleway;
-	margin: 50px auto;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
 }
 
 h1 {
@@ -63,7 +65,7 @@ button {
 }
 
 /*-------------------------------------*/
-/*-------------MENU BUTTONS------------*/
+/*-------------MENU CSS----------------*/
 /*-------------------------------------*/
 
 ul {
