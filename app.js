@@ -1,7 +1,8 @@
 var mongo = require('mongodb');
+
 global.mongoConfig = {
-    host: 'localhost',
-    port: mongo.Connection.DEFAULT_PORT,
+    host: 'dbh85.mongolab.com',
+    port: 27857,
     dbName: 'multirun'
 }
 
@@ -15,6 +16,8 @@ mongoExpressAuth.init({
         host: global.mongoConfig.host,
         port: global.mongoConfig.port,
         dbName: global.mongoConfig.dbName,
+        usrName: 'app',
+        pwd: 'Mc20467y',
         collectionName: 'users'
     }
 }, function(){
