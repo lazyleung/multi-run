@@ -18,7 +18,7 @@ mongoExpressAuth.init({
         dbName: global.mongoConfig.dbName,
         usrName: 'app',
         pwd: 'Mc20467y',
-        collectionName: 'users'
+        collectionName: 'accounts'
     }
 }, function(){
        console.log('ready on port 3000');
