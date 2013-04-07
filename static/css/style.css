@@ -1,3 +1,18 @@
+/* turn off the annoying highlight on a tap (we provide our own visual feedback) */
+* {
+    -webkit-tap-highlight-color: transparent;
+    -moz-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
+}
+
+/* prevent the user from highlighting any text */
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 body {
 	background-color: #526BA3;
 	text-align: center;
@@ -23,6 +38,11 @@ input {
 	color: #555;
 	margin: auto;
 	margin-top: 10px;
+
+	-webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
 }
 
 input:focus {
@@ -62,6 +82,10 @@ button {
 }button:active {
 	position:relative;
 	top:1px;
+}
+
+.buttonDown {
+    background: #2699cc;
 }
 
 /*-------------------------------------*/

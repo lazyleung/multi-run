@@ -1,21 +1,25 @@
-//Dynamicly allocate canvas & draw
-//TODO add handlers for input
+//Highlevel control of game
 
-var canvasWidth;
-var canvasHeight;
-
-$(document).ready(function(){
-	$("body").html("Loaded!");
-
-	canvasWidth = $(window).width();
-	canvasHeight = $(window).height();
-
-	var c = $("<canvas>").attr({id:"myCanvas",width:canvasWidth,height:canvasHeight}).html("Cannot Load!");
-
-	$("body").html(c);
-
+function initGame() {
+	//Sets up the game
 	window.canvas = document.getElementById("myCanvas");
 	window.ctx = canvas.getContext("2d");
+	
+	//Create new player
+	//Add control handlers
 
 	draw();
-});
+
+	//Start the game
+	startGame();
+}
+
+function startGame() {
+
+}
+
+function draw() {
+	//Draw all elements
+	ctx.fillStyle = "rgba(0,0,0,0.9)";
+	ctx.fillRect(canvasWidth/2 - 300, canvasHeight/2 - 300, 600, 600);
+}

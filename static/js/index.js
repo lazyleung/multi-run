@@ -1,3 +1,7 @@
+//Global variables
+var canvasWidth;
+var canvasHeight;
+
 $(document).ready(function(){
 	//jquery stuff
  });
@@ -40,14 +44,11 @@ $(document).ready(function(){
 	canvasWidth = $(window).width();
 	canvasHeight = $(window).height();
 
-	var c = $("<canvas>").attr({id:"myCanvas",width:canvasWidth,height:canvasHeight}).html("Cannot Load!");
+	var c = $("<canvas>").attr({id:"myCanvas", width:canvasWidth, height:canvasHeight}).html("Cannot Load!");
 
 	$("body").html(c);
 
-	window.canvas = document.getElementById("myCanvas");
-	window.ctx = canvas.getContext("2d");
-
-	//draw();
+	initGame();
  }
 
  function loadProfile() {
