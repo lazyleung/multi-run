@@ -7,7 +7,6 @@ function initGame() {
 	window.canvas = document.getElementById("myCanvas");
 	window.ctx = canvas.getContext("2d");
 	
-	// Create update interval
 	//Create new player
 	player = new Player(750, 500);
 	//Add control handlers
@@ -18,8 +17,8 @@ function initGame() {
 	startGame();
 }
 
-function draw() {
 
+function draw() {
 	//Draw all elements
 	ctx.fillStyle = "rgba(0,0,0,0.9)";
 	ctx.fillRect(canvasWidth/2 - 300, canvasHeight/2 - 300, 600, 600);
@@ -28,12 +27,26 @@ function draw() {
 	player.draw(ctx);
 }
 
+function generateLevel(level, random){
+	//Random Level Generation
+	if (random === true) {
+	}
+	//Use Presets
+	else {
+		var levelData = levels[level]
+	}
+}
+
 function update() {
 	player.update();
 	draw();
+
 }
 
 function startGame() {
 	var gameInterval = setInterval(update, gameInterval);
+}
+//Function for generating random output
+function random(numVars) {
 
 }

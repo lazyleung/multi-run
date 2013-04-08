@@ -1,7 +1,7 @@
 function Player(playerX, playerY) {
 	this.x = playerX;
 	this.y = playerY;
-	this.airFriction = .1;
+	this.airFriction = .05;
 	this.gravity = .1;
 	this.onFloor = true;
 	this.width = 50;
