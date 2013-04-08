@@ -6,6 +6,7 @@ function initGame() {
 	window.ctx = canvas.getContext("2d");
 	
 	//Create new player
+	player = new Player(100, 100);
 	//Add control handlers
 
 	draw();
@@ -19,6 +20,8 @@ function startGame() {
 }
 
 function draw() {
+	// Draw player
+	player.draw(ctx);
 	//Draw all elements
 	ctx.fillStyle = "rgba(0,0,0,0.9)";
 	ctx.fillRect(canvasWidth/2 - 300, canvasHeight/2 - 300, 600, 600);
