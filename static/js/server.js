@@ -1,4 +1,4 @@
-//Contains the login functions
+//Contains the server communication functions
 
 function login(username, password){
 	$.ajax({
