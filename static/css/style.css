@@ -121,6 +121,11 @@ button {
 /*-------------MENU CSS----------------*/
 /*-------------------------------------*/
 
+#logout_button {
+	float:left;
+	margin-left: 20px;
+}
+
 ul {
 	text-align: center;
 	margin: 20px auto;

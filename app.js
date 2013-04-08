@@ -34,15 +34,9 @@ app.use('/', express.static(__dirname + '/static/'));
 //  routes
 //===========================
 
-app.get('/', function(req, res){
-    mongoExpressAuth.checkLogin(req, res, function(err){
-        if (err)
-            res.sendfile('static/login.html');
-        else
-            res.sendfile('static/index.html');
-    });
-});
 
+//This is for debugging purposes
+//Delete before release
 app.get('/me', function(req, res){
     mongoExpressAuth.checkLogin(req, res, function(err){
         if (err)
@@ -52,7 +46,7 @@ app.get('/me', function(req, res){
                 if (err)
                     res.send(err);
                 else 
-                    res.send(result); // NOTE: direct access to the database is a bad idea in a real app
+                    res.send(result);
             });
         }
     });

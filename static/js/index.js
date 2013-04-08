@@ -4,24 +4,30 @@ var canvasHeight;
 
 $(document).ready(function(){
 	//jquery stuff
- });
+});
 
- function startLogin() {
+function startLogin() {
  	//Handle login button pressed
  	usr = $("#login_username").val();
  	pwd = $("#login_password").val();
 
 	login(usr,pwd);
- }
+}
 
- function startRegister() {
- 	//Handle register button pressed
- 	usr = $("#login_username").val();
- 	pwd = $("#login_password").val();
+function startRegister() {
+	//Handle register button pressed
+	usr = $("#login_username").val();
+	pwd = $("#login_password").val();
 
- 	if(usr !== '' && pwd !== ''){
- 		register(usr,pwd);
+	if(usr === ''){
+ 		alert("Invalid username");
+ 	} else if(pwd === ''){
+ 		alert("Invalid password");
  	} else {
- 		alert("Invalid registration!");
+ 		register(usr,pwd);
  	}
- }
+}
+
+function startLogout() {
+	logout(usr,pwd);
+}
