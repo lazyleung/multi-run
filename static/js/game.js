@@ -23,3 +23,19 @@ function draw() {
 	ctx.fillStyle = "rgba(0,0,0,0.9)";
 	ctx.fillRect(canvasWidth/2 - 300, canvasHeight/2 - 300, 600, 600);
 }
+
+function generateLevel(level, random){
+	//Random Level Generation
+	if (random === true) {
+
+	}
+	//Use Presets
+	else {
+		var levelData = levels[level]
+	}
+}
+
+//Function for generating random output
+function random(numVars) {
+
+}
