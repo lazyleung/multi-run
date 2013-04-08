@@ -27,7 +27,7 @@ mongoExpressAuth.init({
 
 app.use(express.bodyParser());
 app.use(express.cookieParser());
-app.use(express.session({ secret: 'this is supposed to be secret, change it' }));
+app.use(express.session({ secret: 'r-))wvhta+#4@tw1mie8+k&o*uj0)h$mi2#&5*rn-gby%7^pk)' }));
 app.use('/', express.static(__dirname + '/static/'));
 
 //===========================
@@ -62,14 +62,25 @@ app.post('/login', function(req, res){
     mongoExpressAuth.login(req, res, function(err){
         if (err)
             res.send(err);
-        else
-            res.send('ok');
+        else {
+        	mongoExpressAuth.getAccount(req, function(err, result){
+                if (err)
+                    res.send(err);
+                else {
+                	var data = 
+                	res.send({
+                		"id": result._id,
+                		"success": true
+                	});
+                }
+            });
+        }
     });
 });
 
 app.post('/logout', function(req, res){
     mongoExpressAuth.logout(req, res);
-    res.send('ok');
+    res.send({"success": true});
 });
 
 app.post('/register', function(req, res){
@@ -77,6 +88,6 @@ app.post('/register', function(req, res){
         if (err)
             res.send(err);
         else
-            res.send('ok');
+            res.send({"success": true});
     });
 });

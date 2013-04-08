@@ -4,8 +4,3 @@ var pwd;
 
 var highscores;
 var coins;
-
-//Get user profile on succesful login
-function(){
-	
-}
