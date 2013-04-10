@@ -4,11 +4,11 @@ function Player(playerX, playerY) {
 	this.airFriction = .05;
 	this.gravity = .1;
 	this.onFloor = true;
-	this.width = 50;
-	this.height = 50;
+	this.width = 60;
+	this.height = 100;
 	this.speed = {x : 0, y : 0};
 	this.image = new Image();
-	this.image.src = "/images/wooden_crate.png";
+	this.image.src = "/images/Dinosaur.png";
 
 	this.init = function() {
 		// Setup touch handler
