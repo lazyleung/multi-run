@@ -65,16 +65,27 @@ function loadCanvas() {
 
 //loads the profile
 function loadProfile() {
- 	$("#content_area").html("profile");
+ 	var username = $("<div>").html("Username: " + usr);
+
  	//Back Button
  	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
-	$("#content_area").append(back_button); 	
+ 	
+ 	var content_area = $("#content_area");
+ 	content_area.empty();
+	$("#content_area").append(back_button);
+	$("#content_area").append(username);
+
+	$("#back_button").hammer().on("tap", loadMenu);
 }
 
 //loads the settings
 function loadSettings() {
- 	$("#content_area").html("settings");
 	//Back Button
 	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
+	
+	var content_area = $("#content_area");
+	content_area.empty();
 	$("#content_area").append(back_button);
+
+	$("#back_button").hammer().on("tap", loadMenu);
 }

@@ -47,7 +47,6 @@ function login(username, password){
 			loadMenu();
 	    },
 	    error: function(data) {
-	    	console.log(data);
 	    	alert("Login failed!");
 	    }
 	});
