@@ -8,7 +8,7 @@ function initGame() {
 	window.ctx = canvas.getContext("2d");
 	
 	//Create new player
-	player = new Player(750, 500);
+	player = new Player(350, 300);
 	//Add control handlers
 
 	draw();
@@ -20,11 +20,15 @@ function initGame() {
 
 function draw() {
 	//Draw all elements
+	ctx.save();
+	ctx.translate(350 -player.x, 0);
 	ctx.fillStyle = "rgba(0,0,0,0.9)";
 	ctx.fillRect(canvasWidth/2 - 300, canvasHeight/2 - 300, 600, 600);
 
 	// Draw player
 	player.draw(ctx);
+
+	ctx.restore();
 }
 
 function generateLevel(level, random){

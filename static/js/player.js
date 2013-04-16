@@ -51,6 +51,7 @@ function Player(playerX, playerY) {
 	}.bind(this);
 
 	this.update = function() {
+		this.x += 10
 		// Check on floor
 		if (this.y < 550)
 			this.onFloor = false;
