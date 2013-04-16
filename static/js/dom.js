@@ -66,9 +66,15 @@ function loadCanvas() {
 //loads the profile
 function loadProfile() {
  	$("#content_area").html("profile");
+ 	//Back Button
+ 	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
+	$("#content_area").append(back_button); 	
 }
 
 //loads the settings
 function loadSettings() {
  	$("#content_area").html("settings");
+	//Back Button
+	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
+	$("#content_area").append(back_button);
 }
