@@ -25,6 +25,8 @@ function draw() {
 
 	// Draw player
 	player.draw(ctx);
+
+	// Draw Level
 }
 
 function generateLevel(level, random){
