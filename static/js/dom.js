@@ -1,12 +1,31 @@
 //Contains all the dom refersh functions
+//Global variables
+var canvasWidth;
+var canvasHeight;
+
+$(document).ready(function(){
+	loadLogin();
+});
 
 //loads the login page
 function loadLogin() {
-	var username = $("<input>");
-	var password = $("<input>");
+	var username = $("<input>").attr("type","text").attr("id","login_username").attr("placeholder","Username");
+	var password = $("<input>").attr("type","password").attr("id","login_password").attr("placeholder","Password");
+
+	var login = $("<div>").html("Log In").attr("id","login_button").addClass("button");
+	var register = $("<div>").html("Register").attr("id","register_button").addClass("button");
 
 	var content_area = $("#content_area");
  	content_area.empty();
+
+ 	content_area.append(username);
+ 	content_area.append(password);
+ 	content_area.append(login);
+ 	content_area.append(register);
+
+ 	//Add touch listeners
+ 	$("#login_button").hammer().on("tap", startLogin);
+ 	$("#register_button").hammer().on("tap", startRegister);
 }
 
 //loads the menu
@@ -16,17 +35,18 @@ function loadMenu() {
  	menu.append($("<li>").html("Profile").attr("id","profile_button"));
  	menu.append($("<li>").html("Settings").attr("id","settings_button"));
 
- 	var logout_button = $("<div>").html("logout").attr("id","logout_button").addClass("button");
+ 	var logout = $("<div>").html("logout").attr("id","logout_button").addClass("button");
 
  	var content_area = $("#content_area");
  	content_area.empty();
- 	content_area.append(logout_button);
+ 	content_area.append(logout);
  	content_area.append(menu);
 
  	//Add touch listeners
- 	$("#play_button").onButtonTap(loadCanvas);
- 	$("#profile_button").onButtonTap(loadProfile);
- 	$("#settings_button").onButtonTap(loadSettings);
+ 	$("#logout_button").hammer().on("tap", startLogout);
+ 	$("#play_button").hammer().on("tap", loadCanvas);
+ 	$("#profile_button").hammer().on("tap", loadProfile);
+ 	$("#settings_button").hammer().on("tap", loadSettings);
 }
 
 //loads the canvas and init the game

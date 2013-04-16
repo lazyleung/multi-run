@@ -1,5 +1,33 @@
 //Contains the server communication functions
 
+//wrapper function for serve comm
+function startLogin() {
+ 	//Handle login button pressed
+ 	usr = $("#login_username").val();
+ 	pwd = $("#login_password").val();
+
+	login(usr,pwd);
+}
+
+function startRegister() {
+	//Handle register button pressed
+	usr = $("#login_username").val();
+	pwd = $("#login_password").val();
+
+	if(usr === ''){
+ 		alert("Invalid username");
+ 	} else if(pwd === ''){
+ 		alert("Invalid password");
+ 	} else {
+ 		register(usr,pwd);
+ 	}
+}
+
+function startLogout() {
+	logout(usr,pwd);
+}
+
+//Calls to server
 function login(username, password){
 	$.ajax({
 		type: "post",
@@ -13,6 +41,8 @@ function login(username, password){
 			alert("Login succesful!");
 
 			//Load user data
+			usr = username;
+			pwd = password;
 
 			loadMenu();
 	    },
@@ -52,6 +82,7 @@ function logout(username, password){
 	    url: "/logout",
 	    success: function(data) {
 			alert("Logout succesful!");
+			loadLogin();
 	    },
 	    error: function(data) {
 	    	alert("Logout failed!");
