@@ -45,8 +45,42 @@ function update() {
 
 function startGame() {
 	var gameInterval = setInterval(update, gameInterval);
+	drawTimer(5);
 }
 //Function for generating random output
 function random(numVars) {
 
+}
+
+function drawTimer(minutes) {
+	//Get Current Time
+    var timer = minutes * 60;
+    setInterval(function() {
+    	var str = prefixZero(0, parseInt(timer / 60), timer % 60);
+    	ctx.font = "60px Arial";
+		ctx.fillStyle = "green";
+		ctx.fillText(str, 350, 90);
+		timer -= 1;
+    }, 1000);
+
+}
+
+// Author: Anthoniraj Amalanathan
+function prefixZero(hour, min, sec)
+{
+	var curTime;
+	if(hour < 10)
+	   curTime = "0"+hour.toString();
+	else
+	   curTime = hour.toString(); 
+	 if(min < 10)
+	   curTime += ":0"+min.toString();                           
+	else
+	   curTime += ":"+min.toString();  
+
+	if(sec < 10)
+	   curTime += ":0"+sec.toString();                           
+	else
+	   curTime += ":"+sec.toString();  
+	return curTime;
 }
