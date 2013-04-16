@@ -79,7 +79,7 @@ function Player(playerX, playerY) {
 
 		if (this.onFloor())
 			this.speed.y = 0;
-		else if (this.y + this.speed.y > this.floor) { // make sure it doesnt go past floor
+		else if (this.y + this.speed.y > this.floor) // make sure it doesnt go past floor
 			this.speed.y = this.floor - this.y;
 		else if (!this.onFloor()) // whenever in air, add gravity
 			this.speed.y += this.gravity;
