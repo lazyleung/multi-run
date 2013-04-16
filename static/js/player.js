@@ -8,6 +8,8 @@ function Player(playerX, playerY) {
 	this.height = 100;
 	this.speed = {x : 0, y : 0};
 	this.image = new Image();
+	this.xSpeedLimit = 20;
+	this.xOffset = 0;
 	this.image.src = "/images/Dinosaur.png";
 
 	this.init = function() {
@@ -51,7 +53,9 @@ function Player(playerX, playerY) {
 	}.bind(this);
 
 	this.update = function() {
-		this.x += 10
+		if (this.speed.x < this.xSpeedLimit) {
+			this.speed.x += 1;
+		}
 		// Check on floor
 		if (this.y < 550)
 			this.onFloor = false;
@@ -60,6 +64,7 @@ function Player(playerX, playerY) {
 
 		this.y += this.speed.y;
 		this.x += this.speed.x;
+		this.xOffset += this.speed.x;
 		if (Math.abs(this.speed.y) < this.airFriction)
 			this.speed.y = 0;
 		else if (this.speed.y < 0)
