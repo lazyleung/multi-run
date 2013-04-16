@@ -53,18 +53,23 @@ app.get('/me', function(req, res){
 });
 
 app.post('/login', function(req, res){
-    mongoExpressAuth.login(req, res, function(err){
-        mongoExpressAuth.getAccount(req, function(err, result){
-            if (err)
-                res.send(err);
-            else {
-            	var data = 
-            	res.send({
-            		"id": result._id,
-            		"success": true
-            	});
-            }
-        });
+    mongoExpressAuth.login(req, res, function(e){
+        if (e)
+            res.send(e);
+        else {
+        	mongoExpressAuth.getAccount(req, function(err, result){
+                console.log(err);
+                console.log(result);
+                if (err)
+                    res.send(err);
+                else {
+                	res.send({
+                		"username": result.username,
+                		"success": true
+                	});
+                }
+            });
+        }
     });
 });
 

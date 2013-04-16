@@ -41,12 +41,13 @@ function login(username, password){
 			alert("Login succesful!");
 
 			//Load user data
-			usr = username;
-			pwd = password;
+			usr = data.username;
+			pwd = data.password;
 
 			loadMenu();
 	    },
 	    error: function(data) {
+	    	console.log(data);
 	    	alert("Login failed!");
 	    }
 	});
