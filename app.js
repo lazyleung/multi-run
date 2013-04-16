@@ -58,8 +58,6 @@ app.post('/login', function(req, res){
             res.send(e);
         else {
         	mongoExpressAuth.getAccount(req, function(err, result){
-                console.log(err);
-                console.log(result);
                 if (err)
                     res.send(err);
                 else {

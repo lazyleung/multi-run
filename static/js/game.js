@@ -10,14 +10,16 @@ function initGame() {
 	
 	//Create new player
 	player = new Player(350, 300);
+
 	// Add timer
 	timer = new Timer(5);
+
+	//Create new background
+	background = new Background();
 
 	//Start the game
 	startGame();
 	draw();
-
-
 }
 
 
@@ -26,9 +28,11 @@ function draw() {
 	ctx.clearRect(0,0,canvasWidth, canvasHeight);
 	//Draw all elements
 	ctx.save();
+
 	ctx.translate(350 - player.xOffset, 0);
-	ctx.fillStyle = "rgba(0,0,0,0.9)";
-	ctx.fillRect(canvasWidth/2 - 300, canvasHeight/2 - 300, 600, 600);
+
+	//Draw background
+	background.draw();
 
 	// Draw player
 	player.draw(ctx);
