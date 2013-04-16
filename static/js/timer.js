@@ -1,8 +1,5 @@
 var Timer = function(minutes) {
-	this.timer = minutes * 60 *1000; // Convert to milliseconds
-
-	console.log("called")
-	
+	this.timer = minutes * 60 *1000; // Convert to milliseconds	
 
 	this.draw = function(ctx, offsetX) {
 		var str = prefixZero(0, parseInt(this.timer / 60000), parseInt(this.timer / 1000) % 60);
@@ -13,7 +10,6 @@ var Timer = function(minutes) {
 
 	this.update = function() {
 		if(this.timer % 1000 == 0)
-			console.log(this.timer);
 		this.timer -= 25;
 	}
 }
