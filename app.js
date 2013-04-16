@@ -54,21 +54,17 @@ app.get('/me', function(req, res){
 
 app.post('/login', function(req, res){
     mongoExpressAuth.login(req, res, function(err){
-        if (err)
-            res.send(err);
-        else {
-        	mongoExpressAuth.getAccount(req, function(err, result){
-                if (err)
-                    res.send(err);
-                else {
-                	var data = 
-                	res.send({
-                		"id": result._id,
-                		"success": true
-                	});
-                }
-            });
-        }
+        mongoExpressAuth.getAccount(req, function(err, result){
+            if (err)
+                res.send(err);
+            else {
+            	var data = 
+            	res.send({
+            		"id": result._id,
+            		"success": true
+            	});
+            }
+        });
     });
 });
 
