@@ -7,7 +7,8 @@ function initGame() {
 	//Sets up the game
 	window.canvas = document.getElementById("myCanvas");
 	window.ctx = canvas.getContext("2d");
-	
+	window.block_x = canvasWidth/16;
+	window.block_y = canvasHeight/8;
 	//Create new player
 	player = new Player(350, 300);
 
@@ -33,6 +34,10 @@ function draw() {
 	background.draw();
 
 	ctx.translate(350 - player.xOffset, 0);
+
+	// Draw Level
+	var level = create_level(["flat","flat","flat","flat","flat","flat"]);
+
 
 	// Draw player
 	player.draw(ctx);
