@@ -1,10 +1,29 @@
 function Background() {
 	this.BGcolor = "rgb(130,160,230)";
-	this.cloud = new Image();
-	this.cloud.src = "/images/cloud.png";
+	this.clouds = new Array();
+	this.cloudSpawnTime = 10;
 
 	this.update = function() {
-		//Move clouds
+		for(var i = 0; i < this.clouds.length;){
+			this.clouds[i].update();
+			if(this.clouds[i].x + this.clouds[i].w < 0) {
+				this.clouds.splice(i,1);
+			} else {
+				i++;
+				if(i == this.clouds.length){
+					break;
+				}
+			}
+		}
+		if(this.clouds.length < 5 && this.cloudSpawnTime === 0 && Math.random() > 0.9) {
+			var type = Math.floor((Math.random()*2));
+			var size = Math.floor((Math.random()*3));
+			this.clouds.push(new cloud(type, size));
+			this.cloudSpawnTime = 100;
+		}
+		if(this.cloudSpawnTime > 0){
+			this.cloudSpawnTime--;
+		}
 	}
 
 	this.draw = function() {
@@ -14,8 +33,9 @@ function Background() {
 		ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
 		//clouds
-		ctx.drawImage(this.cloud, 23, 31, 444, 196, 0,0, 444, 196);
-		ctx.drawImage(this.cloud, 23, 31, 444, 196, 500,150, 222, 98);
+		for(var i in this.clouds){
+			this.clouds[i].draw();
+		}
 
 		ctx.restore();
 	}

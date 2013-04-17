@@ -29,10 +29,10 @@ function draw() {
 	//Draw all elements
 	ctx.save();
 
-	ctx.translate(350 - player.xOffset, 0);
-
 	//Draw background
 	background.draw();
+
+	ctx.translate(350 - player.xOffset, 0);
 
 	// Draw player
 	player.draw(ctx);
@@ -54,6 +54,7 @@ function generateLevel(level, random){
 }
 
 function update() {
+	background.update();
 	player.update();
 	timer.update();
 	draw();
