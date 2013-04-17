@@ -2,18 +2,17 @@ function Background() {
 	this.BGcolor = "rgb(130,160,230)";
 	this.clouds = new Array();
 	this.cloudSpawnTime = 10;
-	this.mountainSpawnTime = 15;
 	this.mountains = new Array();
+	this.mountainSpawnTime = 15;
 
 	this.update = function() {
 		//Cloud stuff
 		//Check for and delete clouds that have moved off screen
 		for(var i = 0; i < this.clouds.length;){
-			var c =  this.clouds[i];
-			if((c.x + c.w) < 0) {
-				this.clouds.splice(this.clouds.indexOf(c),1);
+			if((this.clouds[i].x + this.clouds[i].w) < 0) {
+				this.clouds.splice(i,1);
 			} else {
-				c.update();
+				this.clouds[i].update();
 				i++;
 			}
 		}
@@ -31,24 +30,23 @@ function Background() {
 		}
 
 		//mountain stuff
-
+		//Check for and delete mountains that have moved off screen
 		for (var i = 0; i < this.mountains.length;){
-			var aMountain = this.mountains[i];
-			if((aMountain.x + aMountain.w) < 0) {
-				this.mountains.splice(this.mountains.indexOf(aMountain), 1);
+			if((this.mountains[i].x + this.mountains[i].w) < 0) {
+				this.mountains.splice(i, 1);
 			}
 			else {
-				aMountain.update();
+				this.mountains[i].update();
 				i++;
 			}
 		}
 
-		//Add Mountains at a reasonable frequency
+		//Add mountains at a reasonable frequency
 		if(this.mountains.length < 5 && this.mountainSpawnTime === 0 && Math.random() > 0.9) {
-			//Random type 0-1
+			//Random type 0-2
 			var type = Math.floor((Math.random()*3));
-			//Random size 2-6
-			var size = Math.floor((Math.random()*4)+2);
+			//Random size 3-6
+			var size = Math.floor((Math.random()*3)+3);
 			this.mountains.push(new Mountain(type, size));
 			this.mountainSpawnTime = 100;
 		}

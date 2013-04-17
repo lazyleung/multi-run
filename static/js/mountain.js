@@ -32,7 +32,7 @@ function Mountain(type, size) {
 	}
 
 	if(size <= 0){
-		throw "cloud size is invalid";
+		throw "mountain size is invalid";
 	}
 	this.w = this.sw/size;
 	this.h = this.sh/size;
