@@ -4,26 +4,31 @@ function Background() {
 	this.cloudSpawnTime = 10;
 
 	this.update = function() {
+		//Cloud stuff
+		//Check for and delete clouds that have moved off screen
 		for(var i = 0; i < this.clouds.length;){
-			this.clouds[i].update();
-			if(this.clouds[i].x + this.clouds[i].w < 0) {
-				this.clouds.splice(i,1);
+			var c =  this.clouds[i];
+			if((c.x + c.w) < 0) {
+				this.clouds.splice(this.clouds.indexOf(c),1);
 			} else {
+				c.update();
 				i++;
-				if(i == this.clouds.length){
-					break;
-				}
 			}
 		}
+		//Add clouds at a reasonable frequency
 		if(this.clouds.length < 5 && this.cloudSpawnTime === 0 && Math.random() > 0.9) {
+			//Random type 0-1
 			var type = Math.floor((Math.random()*2));
-			var size = Math.floor((Math.random()*3));
+			//Random size 2-6
+			var size = Math.floor((Math.random()*4)+2);
 			this.clouds.push(new cloud(type, size));
 			this.cloudSpawnTime = 100;
 		}
 		if(this.cloudSpawnTime > 0){
 			this.cloudSpawnTime--;
 		}
+
+		//mountain stuff
 	}
 
 	this.draw = function() {

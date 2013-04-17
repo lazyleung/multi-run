@@ -1,12 +1,15 @@
 //Create different sizes of clouds
 //Clouds have different speed depedning on size
 
+//Type 0 is the white cloud
+//Type 1 is the grey cloud
+
 function cloud(type, size){
 	this.x = canvasWidth;
 	this.y = 100;
 	this.w;
 	this.h;
-	this.speed = 6;
+	this.speed = 10;
 	this.bobCount = 0;
 	this.img = new Image();
 	this.img.src = "/images/cloud.png"
@@ -30,11 +33,12 @@ function cloud(type, size){
 			break;
 	}
 
-	if(size != 0){
-		this.w = this.sw/size;
-		this.h = this.sh/size;
-		this.speed /= size;
+	if(size <= 0){
+		throw "cloud size is invalid";
 	}
+	this.w = this.sw/size;
+	this.h = this.sh/size;
+	this.speed /= size;
 }
 
 cloud.prototype.draw = function(){
@@ -42,7 +46,9 @@ cloud.prototype.draw = function(){
 }
 
 cloud.prototype.update = function(){
-	this.x -= this.speed;
+	if((this.x + this.w) >= 0){
+		this.x -= this.speed;
+	}
 	if(this.bobCount > 16){
 		this.bobCount = 0;
 	}
