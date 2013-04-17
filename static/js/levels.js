@@ -13,7 +13,7 @@
 				console.log(levels[i][1]);
 				console.log(levels[i][2][0].indexOf(levels[i+1][1][0]));
 				if (levels[i+1][2].indexOf(levels[i][1][0]) === -1){
-				 	console.log("Error in Level Design: Illegal Level Design")
+				 	console.log("Error in Level Design: Illegal Level Design");
 				 	return false;
 				}
 			return true;

@@ -13,8 +13,7 @@ function loadLogin() {
 	var password = $("<input>").attr("type","password").attr("id","login_password").attr("placeholder","Password");
 
 	var login = $("<div>").html("Log In").attr("id","login_button").addClass("button");
-	var register = $("<div
-			>").html("Register").attr("id","register_button").addClass("button");
+	var register = $("<div>").html("Register").attr("id","register_button").addClass("button");
 
 	var content_area = $("#content_area");
  	content_area.empty();
