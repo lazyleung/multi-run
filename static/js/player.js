@@ -10,7 +10,7 @@ function Player(playerX, playerY) {
 	this.image = new Image();
 	this.xOffset = 0;
 	this.jumpTimeLeft = 0;
-	this.floor = 400
+	this.floor = 650
 	this.image.src = "/images/Dinosaur.png";
 
 	this.init = function() {
