@@ -1,7 +1,6 @@
 		//Levels Data
 		//Each one contains the data in the first index, and allowable pieces to be placed next to it on the second index
 
-
 		//Joins together pieces and returns an array of all the completed pieces. 
 		function check_level(levels){
 			console.log(levels);
@@ -9,11 +8,10 @@
 			for (var i = 0; i < levels.length; i++){
 				console.log("i =", i);
 				console.log(levels[i]);
-				console.log(levels[i+1][2][0]);
-				console.log(levels[i][1][0]);
-				console.log("df");
-				console.log(levels[i+1][2][0].indexOf(levels[i][1][0]));
-				if (levels[i+1][2][0].indexOf(levels[i][1][0]) === -1){
+				console.log(levels[i+1][2]);
+				console.log(levels[i][1]);
+				console.log(levels[i][2][0].indexOf(levels[i+1][1][0]));
+				if (levels[i+1][2].indexOf(levels[i][1][0]) === -1){
 				 	console.log("Error in Level Design: Illegal Level Design")
 				 	return false;
 				}
@@ -51,6 +49,7 @@
 				console.log(level_0.toString());
 				level_array = level_0.concat(level_1, level_2, level_3, level_4, level_5, level_6, level_7);
 				level_array = [].concat.apply([], level_array);
+				console.log("Sucessfully created level", level_array);
 				return level_array;
 			}
 			else {
@@ -184,7 +183,19 @@
 					0, 1, 1, 0,
 					1, 1, 1, 1, 
 					1, 1, 1, 1];
+		jump[1] = ["jump"]
+		jump[2] = ["flat"];
 
-		console.log([flat]);
-		var Level_1 = create_level([flat, flat, flat, flat, flat, flat]);
-		console.log("Level_1 = ", Level_1);
+		//console.log([flat]);
+
+		function level(level_string){
+			if (level_string === "1"){
+				var terrain_data = create_level([flat, flat, jump, flat, flat, jump, flat, flat]);
+				var data = new Array();
+				data[0] = terrain_data;
+				data[1] = ["flat", "flat", "jump", "flat", "flat", "jump", "flat", "flat", "jump", "flat", "flat"];
+				console.log(data[1]);
+				return data;
+			}
+		}
+		//console.log("Level_1 = ", Level_1);
