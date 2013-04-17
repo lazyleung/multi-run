@@ -2,6 +2,8 @@ function Background() {
 	this.BGcolor = "rgb(130,160,230)";
 	this.clouds = new Array();
 	this.cloudSpawnTime = 10;
+	this.mountainSpawnTime = 15;
+	this.mountains = new Array();
 
 	this.update = function() {
 		//Cloud stuff
@@ -29,6 +31,30 @@ function Background() {
 		}
 
 		//mountain stuff
+
+		for (var i = 0; i < this.mountains.length;){
+			var aMountain = this.mountains[i];
+			if((aMountain.x + aMountain.w) < 0) {
+				this.mountains.splice(this.mountains.indexOf(aMountain), 1);
+			}
+			else {
+				aMountain.update();
+				i++;
+			}
+		}
+
+		//Add Mountains at a reasonable frequency
+		if(this.mountains.length < 5 && this.mountainSpawnTime === 0 && Math.random() > 0.9) {
+			//Random type 0-1
+			var type = Math.floor((Math.random()*3));
+			//Random size 2-6
+			var size = Math.floor((Math.random()*4)+2);
+			this.mountains.push(new Mountain(type, size));
+			this.mountainSpawnTime = 100;
+		}
+		if(this.mountainSpawnTime > 0){
+			this.mountainSpawnTime--;
+		}
 	}
 
 	this.draw = function() {
@@ -40,6 +66,11 @@ function Background() {
 		//clouds
 		for(var i in this.clouds){
 			this.clouds[i].draw();
+		}
+
+		//mountains
+		for(var i in this.mountains){
+			this.mountains[i].draw();
 		}
 
 		ctx.restore();

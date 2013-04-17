@@ -61,7 +61,6 @@ function Player(playerX, playerY) {
 
 	this.update = function() {
 		if(!this.onFloor())
-			console.log("in air")
 		// Limit horizontal speed
 		if (this.speed.x < this.xSpeedLimit) {
 			this.speed.x += 1;
@@ -71,7 +70,6 @@ function Player(playerX, playerY) {
 		if (this.jumpTimeLeft > 0) {
 			this.speed.y -= 2;
 			this.jumpTimeLeft -= 25;
-					console.log(this.speed.y);
 
 		}
 		this.y += this.speed.y;
