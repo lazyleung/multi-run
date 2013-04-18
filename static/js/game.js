@@ -11,7 +11,7 @@ function initGame() {
 	window.block_x = canvasWidth/16;
 	window.block_y = canvasHeight/8;
 	//Create new player
-	player = new Player(350, 700);
+	player = new Player(350, 650);
 
 	// Add timer
 	timer = new Timer(5);
