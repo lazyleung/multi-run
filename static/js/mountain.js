@@ -1,6 +1,6 @@
 function Mountain(type, size) {
 	this.x = canvasWidth;
-	this.y = 300;
+	this.y = 500;
 	this.w;
 	this.h;
 	this.speed = 10;

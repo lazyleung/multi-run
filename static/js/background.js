@@ -46,7 +46,7 @@ function Background() {
 			//Random type 0-2
 			var type = Math.floor((Math.random()*3));
 			//Random size 3-6
-			var size = Math.floor((Math.random()*3)+3);
+			var size = Math.floor((Math.random()*3));
 			this.mountains.push(new Mountain(type, size));
 			this.mountainSpawnTime = 100;
 		}
