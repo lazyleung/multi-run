@@ -194,7 +194,7 @@
 				var terrain_data = create_level([flat, flat, jump, flat, flat, jump, flat, flat]);
 				var data = new Array();
 				data[0] = terrain_data;
-				data[1] = ["flat", "flat", "jump", "flat", "flat", "jump", "flat", "flat", "jump", "flat", "flat"];
+				data[1] = ["flat", "jump", "flat", "flat", "jump", "jump", "flat", "flat", "jump", "flat", "jump", "flat", "jump", "jump", "jump", "flat", "flat", "flat", "flat", "jump", "jump", "flat", "flat", "jump", "flat", "jump", "flat", "jump", "jump", "jump", "flat", "flat", "flat", "flat", "jump", "jump", "flat", "flat", "jump", "flat", "jump", "flat", "jump", "jump", "jump", "flat", "flat", "jump", "flat", "flat", "flat", "flat", "jump", "jump", "flat", "flat", "jump", "flat", "jump", "flat", "flat", "jump", "flat", "flat", "jump", "jump", "flat", "flat", "jump", "flat", "jump", "flat", "jump", "jump", "jump", "flat", "flat", "flat", "flat", "jump", "jump", "flat", "flat", "jump", "flat", "jump", "flat", "jump", "jump", "jump", "flat", "flat", "flat", "flat", "jump", "jump", "flat", "flat", "jump", "flat", "jump", "flat", "jump", "jump", "jump", "flat", "flat", "jump", "flat", "flat", "flat", "flat", "jump", "jump", "flat", "flat", "jump", "flat", "jump", "flat"];
 				console.log(data[1]);
 				return data;
 			}

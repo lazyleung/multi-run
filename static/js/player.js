@@ -3,7 +3,7 @@ function Player(playerX, playerY) {
 	this.y = playerY;
 	this.targetDisplacement = 0;
 	this.airFriction = 0;
-	this.gravity = 1;
+	this.gravity = 1.2;
 	this.width = 60;
 	this.height = 100;
 	this.speed = {x : 0, y : 0};
@@ -11,7 +11,7 @@ function Player(playerX, playerY) {
 	this.xOffset = 0;
 	this.jumpTimeLeft = 0;
 	this.floor = 650
-	this.xSpeedLimit = 15;
+	this.xSpeedLimit = 25;
 	this.image.src = "/images/Dinosaur.png";
 
 	this.init = function() {
@@ -49,11 +49,11 @@ function Player(playerX, playerY) {
 	}
 
 	var lowJump = function(ctx) {
-		this.jumpTimeLeft = 300;	
+		this.jumpTimeLeft = 100;	
 	}.bind(this);
 
 	var highJump = function(ctx) {
-		this.jumpTimeLeft = 400;	
+		this.jumpTimeLeft = 130;	
 	}.bind(this);
 
 	var slowDown = function(ctx) {
@@ -64,12 +64,12 @@ function Player(playerX, playerY) {
 		if(!this.onFloor())
 		// Limit horizontal speed
 		if (this.speed.x < this.xSpeedLimit) {
-			this.speed.x += 1;
+			this.speed.x += .3;
 		}
 		
 		//  handle jumping
 		if (this.jumpTimeLeft > 0) {
-			this.speed.y -= 2;
+			this.speed.y -= 5;
 			this.jumpTimeLeft -= 25;
 
 		}

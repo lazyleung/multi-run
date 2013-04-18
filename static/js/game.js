@@ -48,7 +48,7 @@ function draw() {
 	ctx.translate(350 - player.xOffset, 0);
 
 	// Draw Level
-	for (var i = 0; i < window.terrain_data.length/32; i++){
+	for (var i = 0; i < window.pieces_data.length; i++){
 		if (window.pieces_data[i] === "flat"){
 			//console.log(i, window.pieces_data[i]);
 			ctx.drawImage(window.flat_img, i*200,canvasHeight-200, 200, 200)
