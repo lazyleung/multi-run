@@ -11,6 +11,7 @@ function Player(playerX, playerY) {
 	this.xOffset = 0;
 	this.jumpTimeLeft = 0;
 	this.floor = 650
+	this.xSpeedLimit = 15;
 	this.image.src = "/images/Dinosaur.png";
 
 	this.init = function() {
@@ -74,6 +75,9 @@ function Player(playerX, playerY) {
 		}
 		this.y += this.speed.y;
 		this.x += this.speed.x;
+
+		// add offset to move canvas
+		this.xOffset += this.speed.x;
 
 		if (this.onFloor())
 			this.speed.y = 0;
