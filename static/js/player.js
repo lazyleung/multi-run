@@ -60,7 +60,11 @@ function Player(playerX, playerY) {
 
 	}.bind(this);
 
-	this.update = function() {
+	this.update = function(progress) {
+		if(window.terrain_data[progress] === 1) {
+			//Make player fall
+		}
+
 		if(!this.onFloor())
 		// Limit horizontal speed
 		if (this.speed.x < this.xSpeedLimit) {
@@ -71,7 +75,6 @@ function Player(playerX, playerY) {
 		if (this.jumpTimeLeft > 0) {
 			this.speed.y -= 5;
 			this.jumpTimeLeft -= 25;
-
 		}
 		this.y += this.speed.y;
 		this.x += this.speed.x;

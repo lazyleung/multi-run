@@ -2,7 +2,7 @@
 var player;
 var timeInterval = 25;
 var timer;
-
+var progress;
 
 function initGame() {
 	//Sets up the game
@@ -15,6 +15,7 @@ function initGame() {
 
 	// Add timer
 	timer = new Timer(5);
+	progress = 0;
 
 	//Create new background
 	background = new Background();
@@ -46,6 +47,7 @@ function draw() {
 	background.draw();
 
 	ctx.translate(350 - player.xOffset, 0);
+	progress++;
 
 	// Draw Level
 	for (var i = 0; i < window.pieces_data.length; i++){
@@ -78,7 +80,7 @@ function generateLevel(level, random){
 
 function update() {
 	background.update();
-	player.update();
+	player.update(progress);
 	timer.update();
 	draw();
 
