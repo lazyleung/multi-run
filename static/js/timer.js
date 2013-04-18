@@ -9,7 +9,6 @@ var Timer = function(minutes) {
 	}
 
 	this.update = function() {
-		if(this.timer % 1000 == 0)
 		this.timer -= 25;
 	}
 }
