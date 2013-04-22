@@ -4,7 +4,7 @@
 //Type 0 is the white cloud
 //Type 1 is the grey cloud
 
-function cloud(type, size){
+function Cloud(type, size){
 	this.x = canvasWidth;
 	this.y = 100;
 	this.w;
@@ -41,11 +41,11 @@ function cloud(type, size){
 	this.speed /= size;
 }
 
-cloud.prototype.draw = function(){
+Cloud.prototype.draw = function(){
 	ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x,this.y, this.w, this.h);
 }
 
-cloud.prototype.update = function(){
+Cloud.prototype.update = function(){
 	if((this.x + this.w) >= 0){
 		this.x -= this.speed;
 	}

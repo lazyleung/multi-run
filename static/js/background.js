@@ -22,7 +22,7 @@ function Background() {
 			var type = Math.floor((Math.random()*2));
 			//Random size 2-6
 			var size = Math.floor((Math.random()*4)+2);
-			this.clouds.push(new cloud(type, size));
+			this.clouds.push(new Cloud(type, size));
 			this.cloudSpawnTime = 100;
 		}
 		if(this.cloudSpawnTime > 0){
@@ -45,8 +45,8 @@ function Background() {
 		if(this.mountains.length < 5 && this.mountainSpawnTime === 0 && Math.random() > 0.9) {
 			//Random type 0-2
 			var type = Math.floor((Math.random()*3));
-			//Random size 1-3
-			var size = Math.floor((Math.random()*3)+1);
+			//Random size 1-2
+			var size = Math.floor((Math.random()*2)+1);
 			this.mountains.push(new Mountain(type, size));
 			this.mountainSpawnTime = 100;
 		}
