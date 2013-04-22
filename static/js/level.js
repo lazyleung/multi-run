@@ -32,7 +32,8 @@ function Level(seed){
 	}
 
 	//Draw all the correct level terrain
-	this.draw = function(i) {
+	this.draw = function() {
+		var i = Math.floor(progress/16) - 2;
 		for (; i < this.level_data.length; i++){
 			if (this.level_data[i] === "flat") {
 				for(var j = 0; j < 16; j++){
@@ -158,7 +159,7 @@ ramp_flat[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,];
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 var ramp_hole = new Array();
 ramp_hole[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

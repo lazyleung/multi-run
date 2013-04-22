@@ -16,6 +16,8 @@ function Player(playerX, playerY) {
 	this.image.src = "/images/Dinosaur.png";
 
 	this.init = function() {
+
+		console.log("floor:" + this.floor);
 		// Setup touch handler
 		$('body').hammer().on("swipeup", function(event) {
 			event.gesture.preventDefault();
@@ -61,24 +63,27 @@ function Player(playerX, playerY) {
 
 	}.bind(this);
 
-	this.update = function(progress, terrain) {
-		if(this.x - this.lastX >= window.block_x){
-			progress++;
-			this.lastX = this.x;
-		}
+	this.update = function(terrain) {
+		progress = Math.floor((this.x + this.width)/window.block_x);
+		console.log(progress);
 
-		var x_block = Math.floor(this.x/window.block_x);
+		// if(this.x - this.lastX >= window.block_x){
+		// 	progress++;
+		// 	this.lastX = this.x;
+		// }
+
 		var y_block = Math.floor(this.y/window.block_y);
 
-		// this.floor = canvasHeight;
+		this.floor = canvasHeight;
 
-		// for(var i = y_block; i < 8; i++){
-		// 	if(terrain[progress][0][x_block - (progress * 16) + (i * 8)] === 1){
-		// 		console.log("floor change:" + (x_block - (progress * 16) + (i * 8)));
-		// 		this.floor = canvasHeight- (i + 1)*window.block_y;
-		// 		break;
-		// 	}
-		// }
+		for(var i = y_block; i < 8; i++){
+			//console.log(i + " : " + progress);
+			if(terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + (i * 16)] === 1){
+				this.floor = canvasHeight - (8 - i)*window.block_y;
+				console.log(" floor change:" + this.floor);
+				break;
+			}
+		}
 		
 		//Slowly increase player speed
 		// Limit horizontal speed

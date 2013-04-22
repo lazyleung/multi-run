@@ -48,7 +48,7 @@ function draw() {
 	ctx.translate(2*window.block_x - player.xOffset, 0);
 
 	// Draw Level
-	level.draw(progress);
+	level.draw();
 	
 	// Draw player
 	player.draw(ctx);
@@ -61,7 +61,7 @@ function draw() {
 
 function update() {
 	background.update();
-	player.update(progress,level.terrain_data);
+	player.update(level.terrain_data);
 	timer.update();
 	draw();
 }
