@@ -65,22 +65,14 @@ function Player(playerX, playerY) {
 
 	this.update = function(terrain) {
 		progress = Math.floor((this.x + this.width)/window.block_x);
-		console.log(progress);
-
-		// if(this.x - this.lastX >= window.block_x){
-		// 	progress++;
-		// 	this.lastX = this.x;
-		// }
 
 		var y_block = Math.floor(this.y/window.block_y);
 
 		this.floor = canvasHeight;
 
 		for(var i = y_block; i < 8; i++){
-			//console.log(i + " : " + progress);
 			if(terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + (i * 16)] === 1){
 				this.floor = canvasHeight - (8 - i)*window.block_y;
-				console.log(" floor change:" + this.floor);
 				break;
 			}
 		}
