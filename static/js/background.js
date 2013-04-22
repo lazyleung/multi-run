@@ -45,8 +45,8 @@ function Background() {
 		if(this.mountains.length < 5 && this.mountainSpawnTime === 0 && Math.random() > 0.9) {
 			//Random type 0-2
 			var type = Math.floor((Math.random()*3));
-			//Random size 1-2
-			var size = Math.floor((Math.random()*2)+1);
+			//Random size 1-3
+			var size = (Math.random()*2)+1;
 			this.mountains.push(new Mountain(type, size));
 			this.mountainSpawnTime = 100;
 		}
@@ -61,14 +61,14 @@ function Background() {
 		ctx.fillStyle = this.BGcolor;
 		ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-		//clouds
-		for(var i in this.clouds){
-			this.clouds[i].draw();
-		}
-
 		//mountains
 		for(var i in this.mountains){
 			this.mountains[i].draw();
+		}
+
+		//clouds
+		for(var i in this.clouds){
+			this.clouds[i].draw();
 		}
 
 		ctx.restore();

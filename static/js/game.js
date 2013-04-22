@@ -16,7 +16,7 @@ function initGame() {
 	window.block_y = canvasHeight/8;
 
 	//Create new player
-	player = new Player(2*window.block_x, canvasHeight - 2*window.block_y);
+	player = new Player(2*window.block_x, canvasHeight - 1*window.block_y);
 
 	// Add timer
 	timer = new Timer(5);
@@ -37,26 +37,25 @@ function initGame() {
 }
 
 function draw() {
-	// Clear context
+	//Clear context
 	ctx.clearRect(0,0,canvasWidth, canvasHeight);
-	//Draw all elements
-	ctx.save();
-
+	
 	//Draw background
 	background.draw();
 
+	//Draw elements that we will be scrolling through
+	ctx.save();
 	ctx.translate(2*window.block_x - player.xOffset, 0);
 
-	// Draw Level
-	level.draw();
-	
-	// Draw player
-	player.draw(ctx);
-
-	// draw timer
-	timer.draw(ctx, player.xOffset);
+	//Draw Level
+	level.draw(player.x);
+	//Draw player
+	player.draw();
 
 	ctx.restore();
+
+	//Draw GUI
+	timer.draw();
 }
 
 function update() {

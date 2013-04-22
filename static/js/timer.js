@@ -1,11 +1,11 @@
 var Timer = function(minutes) {
 	this.timer = minutes * 60 *1000; // Convert to milliseconds	
 
-	this.draw = function(ctx, offsetX) {
+	this.draw = function() {
 		var str = prefixZero(0, parseInt(this.timer / 60000), parseInt(this.timer / 1000) % 60);
-    	ctx.font = "60px Arial";
+    	ctx.font = "50px Arial";
 		ctx.fillStyle = "white";
-		ctx.fillText(str, 90 + offsetX, 90);
+		ctx.fillText(str, window.block_x, 60);
 	}
 
 	this.update = function() {

@@ -11,7 +11,7 @@ function Player(playerX, playerY) {
 	this.image = new Image();
 	this.xOffset = 2*window.block_x;
 	this.jumpTimeLeft = 0;
-	this.floor = canvasHeight- 2*window.block_y;
+	this.floor = canvasHeight - window.block_y;
 	this.xSpeedLimit = 25;
 	this.image.src = "/images/Dinosaur.png";
 
@@ -47,26 +47,26 @@ function Player(playerX, playerY) {
 			return true;
 	}
 
-	this.draw = function(ctx) {
+	this.draw = function() {
 		ctx.drawImage(this.image, this.x, this.y - this.height, this.width, this.height);
 	}
 
-	var lowJump = function(ctx) {
+	var lowJump = function() {
 		this.jumpTimeLeft = 100;	
 	}.bind(this);
 
-	var highJump = function(ctx) {
+	var highJump = function() {
 		this.jumpTimeLeft = 130;	
 	}.bind(this);
 
-	var slowDown = function(ctx) {
+	var slowDown = function() {
 
 	}.bind(this);
 
 	this.update = function(terrain) {
 		progress = Math.floor((this.x + this.width)/window.block_x);
 
-		var y_block = Math.floor(this.y/window.block_y);
+		var y_block = Math.ceil(this.y/window.block_y);
 
 		this.floor = canvasHeight;
 

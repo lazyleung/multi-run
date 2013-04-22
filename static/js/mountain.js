@@ -1,6 +1,6 @@
 function Mountain(type, size) {
 	this.x = canvasWidth;
-	this.y = 500;
+	this.y = canvasHeight;
 	this.w;
 	this.h;
 	this.speed = 10;
@@ -39,7 +39,7 @@ function Mountain(type, size) {
 }
 
 Mountain.prototype.draw = function(){
-	ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x,this.y, this.w, this.h);
+	ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x,this.y - this.h, this.w, this.h);
 }
 
 Mountain.prototype.update = function(){
