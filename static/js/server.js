@@ -38,6 +38,7 @@ function login(username, password){
 	    },
 	    url: "/login",
 	    success: function(data) {
+	    	showNotification("Login succesful!")
 			alert("Login succesful!");
 
 			//Load user data

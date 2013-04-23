@@ -89,3 +89,12 @@ function loadSettings() {
 
 	$("#back_button").hammer().on("tap", loadMenu);
 }
+
+function showNotification(message) { // type is "green" or "red"
+  var notification = $("<div>").addClass("notification").html($("<p>").html(message));
+  $("body").append(notification);
+  notification.hide();
+  notification.fadeIn(200, function() { // Fade in and then after 2 seconds, fade out
+    setTimeout(function() { notification.fadeOut(400, function() {$(this).remove})}, 2000);
+  });
+}
