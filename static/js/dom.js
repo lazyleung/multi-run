@@ -31,7 +31,8 @@ function loadLogin() {
 //loads the menu
 function loadMenu() {
  	var menu = $("<ul>");
- 	menu.append($("<li>").html("Play").attr("id","play_button"));
+ 	menu.append($("<li>").html("Create Lobby").attr("id","create_lobby_button"));
+ 	menu.append($("<li>").html("Join Lobby").attr("id", "join_lobby_button"));
  	menu.append($("<li>").html("Profile").attr("id","profile_button"));
  	menu.append($("<li>").html("Settings").attr("id","settings_button"));
 
@@ -44,7 +45,8 @@ function loadMenu() {
 
  	//Add touch listeners
  	$("#logout_button").hammer().on("tap", startLogout);
- 	$("#play_button").hammer().on("tap", loadCanvas);
+ 	$("#create_lobby_button").hammer().on("tap", createLobby);
+ 	$("#join_lobby_button").hammer().on("tap", joinLobby);
  	$("#profile_button").hammer().on("tap", loadProfile);
  	$("#settings_button").hammer().on("tap", loadSettings);
 }
@@ -63,13 +65,39 @@ function loadCanvas() {
 	initGame();
 }
 
+function createLobby() {
+
+}
+
+function joinLobby() {
+	var menu = $("<ul>");
+	var username = $("<div>").html("Username: " + usr);
+	var chatbox = $("<form>").html("")
+	
+	menu.empty();
+	menu.append($("<li>").html("Play").attr("id","play_button"));
+	
+	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
+	
+	var content_area = $("#content_area");
+ 	content_area.empty();
+ 	content_area.append(back_button);
+ 	content_area.append(menu);
+ 	content_area.append(chatbox);
+
+
+	//Touch
+	$("#back_button").hammer().on("tap", loadMenu);
+	$("#play_button").hammer().on("tap", loadCanvas);
+}
+
 //loads the profile
 function loadProfile() {
  	var username = $("<div>").html("Username: " + usr);
 
  	//Back Button
  	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
- 	
+ 
  	var content_area = $("#content_area");
  	content_area.empty();
 	$("#content_area").append(back_button);
