@@ -6,8 +6,24 @@ global.mongoConfig = {
     dbName: 'multirun'
 }
 
+// ========================
+// ==== Express server ====
+// ========================
+
 var express = require("express");
 var app = express();
+
+// ========================
+// === Socket.io server ===
+// ========================
+
+var io = require('socket.io').listen(8888);
+io.sockets.on("connection", function(socket){
+    socket.on('msg', function(data) {
+        socket.emit('status', {success: 'true'});
+        io.sockets.emit('newmsg', {body: data.body});
+    });
+});
 
 var mongoExpressAuth = require('mongo-express-auth');
 
