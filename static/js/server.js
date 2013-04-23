@@ -38,6 +38,7 @@ function login(username, password){
 	    },
 	    url: "/login",
 	    success: function(data) {
+	    	showNotification("Login succesful!")
 			alert("Login succesful!");
 
 			//Load user data
@@ -88,4 +89,5 @@ function logout(username, password){
 	    	alert("Logout failed!");
 	    }
 	});
+>>>>>>> e6efa7323e6a2916a11a602efc5f0928ddb59a6b
 }
