@@ -68,6 +68,7 @@ function Player(playerX, playerY) {
 
 		var y_block = Math.ceil(this.y/window.block_y);
 
+		//Deals with changing floor height
 		this.floor = canvasHeight;
 
 		for(var i = y_block; i < 8; i++){
@@ -75,6 +76,15 @@ function Player(playerX, playerY) {
 				this.floor = canvasHeight - (8 - i)*window.block_y;
 				break;
 			}
+		}
+
+		var player_block_y = Math.floor(this.y/window.block_y);
+
+		//Check if end
+		if(terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((8-player_block_y) * 16)] === 4){
+			//end game
+			console.log("end");
+			endGame();
 		}
 		
 		//Slowly increase player speed

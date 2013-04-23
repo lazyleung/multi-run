@@ -5,6 +5,7 @@ var timer;
 var progress;
 var background;
 var level;
+var gameInterval;
 
 function initGame() {
 	//Sets up the game
@@ -66,5 +67,10 @@ function update() {
 }
 
 function startGame() {
-	var gameInterval = setInterval(update, timeInterval);
+	gameInterval = setInterval(update, timeInterval);
+}
+
+function endGame() {
+	draw();
+	clearInterval(gameInterval);
 }

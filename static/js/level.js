@@ -12,7 +12,9 @@ function Level(seed){
 		for(var i = 0; i < levels.length; i++) {
 			this.level_data[i] = levels[i][1][0];
 		}
-		this.level_data[levels.length] = "end";
+		console.log(levels);
+		console.log(this.terrain_data);
+		console.log(this.level_data);
 	}
 
 	this.check_level = function(levels) {
@@ -31,11 +33,12 @@ function Level(seed){
 		Math.floor(this.y/window.block_y);
 		var i = Math.floor(pos/window.block_x/16) - 1;
 		for(var count = 0;i < this.level_data.length && count < 3; count++){
-			if (this.level_data[i] === "flat") {
+			if (this.level_data[i] === "flat" || this.level_data[i] === "end") {
 				for(var j = 0; j < 16; j++){
 					ctx.drawImage(window.flat_img, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
 				}
-			} else if (this.level_data[i] === "hole"){
+			} else if (this.level_data[i] === "platform_powerup"){
+				//Need to modify
 				for(var j = 0; j < 16; j++){
 					if(j > 3 && j < 12){
 						//draw hole
@@ -60,7 +63,7 @@ function Level(seed){
 	//generate premade or radnom level
 	switch(seed) {
 		case 1:
-			this.make_level([flat, flat, platform, flat, flat, hole, flat, flat]);
+			this.make_level([flat, flat, platform, flat, flat, platform, flat, flat, flat, flat, platform, flat, flat, platform, flat, flat, flat, flat, platform, flat, flat, platform, flat, flat]);
 			break;
 		default:
 			
@@ -73,6 +76,7 @@ function Level(seed){
 // 1: flat terrain
 // 2: obstacle
 // 3: powerup
+// 4: end
 
 var flat = new Array();
 flat[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -130,12 +134,12 @@ platform_powerup[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 platform_powerup[1] = ["platform"];
 
 var end = new Array();
-end[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+end[0] = [0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4,
+			0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4,
+			0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4,
+			0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4,
+			0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4,
+			0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4,
+			0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,];
 end[1] = ["end"];
