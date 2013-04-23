@@ -89,5 +89,4 @@ function logout(username, password){
 	    	alert("Logout failed!");
 	    }
 	});
->>>>>>> e6efa7323e6a2916a11a602efc5f0928ddb59a6b
 }
