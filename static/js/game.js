@@ -43,7 +43,10 @@ function draw() {
 	
 	//Draw background
 	background.draw();
-
+_x, canvasHeight - window.block_y, window.block_x, window.block_y);
+				}
+			} else if (this.level_data[i] === "end") {
+				for(var j = 0; j < 22; j++){
 	//Draw elements that we will be scrolling through
 	ctx.save();
 	ctx.translate(2*window.block_x - player.xOffset, 0);
@@ -58,7 +61,10 @@ function draw() {
 	//Draw GUI
 	timer.draw();
 }
-
+_x, canvasHeight - window.block_y, window.block_x, window.block_y);
+				}
+			} else if (this.level_data[i] === "end") {
+				for(var j = 0; j < 22; j++){
 function update() {
 	background.update();
 	player.update(level.terrain_data);
@@ -73,4 +79,11 @@ function startGame() {
 function endGame() {
 	draw();
 	clearInterval(gameInterval);
+	//5 Second pause before exiting
+	setTimeout(exitGame,5000);
+}
+
+function exitGame(){
+	loadContent();
+	loadMenu();
 }

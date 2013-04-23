@@ -126,3 +126,15 @@ function showNotification(message) { // type is "green" or "red"
     setTimeout(function() { notification.fadeOut(400, function() {$(this).remove})}, 2000);
   });
 }
+
+//Loads title and content area
+function loadContent() {
+	var title = $("<h1>").html("Multi-Run");
+	var content_area = $("<div>").attr("id","content_area");
+
+	var body = $("body");
+
+	body.empty();
+	body.append(title);
+	body.append(content_area);
+}

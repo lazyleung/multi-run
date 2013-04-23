@@ -33,7 +33,7 @@ function Level(seed){
 		Math.floor(this.y/window.block_y);
 		var i = Math.floor(pos/window.block_x/16) - 1;
 		for(var count = 0;i < this.level_data.length && count < 3; count++){
-			if (this.level_data[i] === "flat" || this.level_data[i] === "end") {
+			if (this.level_data[i] === "flat") {
 				for(var j = 0; j < 16; j++){
 					ctx.drawImage(window.flat_img, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
 				}
@@ -49,9 +49,13 @@ function Level(seed){
 				}
 			} else if (this.level_data[i] === "platform"){
 				for(var j = 0; j < 16; j++){
-					if(j > 2 && j < 13){
-						//draw platform
-						ctx.drawImage(window.flat_img, i*canvasWidth + j*window.block_x, canvasHeight - 3*window.block_y, window.block_x, window.block_y/4);
+					ctx.drawImage(window.flat_img, i*canvasWidth + j*window.block_x, canvasHeight - 4*window.block_y, window.block_x, window.block_y/4);
+					ctx.drawImage(window.flat_img, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
+				}
+			} else if (this.level_data[i] === "end") {
+				for(var j = 0; j < 22; j++){
+					if(j === 8){
+						ctx.drawImage(window.flat_img, i*canvasWidth + j*window.block_x, canvasHeight - 2*window.block_y, window.block_x, window.block_y);
 					}
 					ctx.drawImage(window.flat_img, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
 				}
@@ -63,7 +67,10 @@ function Level(seed){
 	//generate premade or radnom level
 	switch(seed) {
 		case 1:
-			this.make_level([flat, flat, platform, flat, flat, platform, flat, flat, flat, flat, platform, flat, flat, platform, flat, flat, flat, flat, platform, flat, flat, platform, flat, flat]);
+			this.make_level([flat, flat, platform, flat, flat, platform, flat, flat]);
+			break;
+		case 2:
+			this.make_level([flat, flat, platform, flat, flat, platform, flat, flat, platform, flat, flat, platform, flat, flat, platform, flat, flat, platform, flat, flat, platform, flat, flat, platform, flat, flat]);
 			break;
 		default:
 			
@@ -116,8 +123,8 @@ platform[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,];
 platform[1] = ["platform"];

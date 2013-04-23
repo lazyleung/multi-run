@@ -5,8 +5,8 @@ function Player(playerX, playerY) {
 	this.targetDisplacement = 0;
 	this.airFriction = 0;
 	this.gravity = 1.2;
-	this.width = 60;
-	this.height = 100;
+	this.width = window.block_y/5 * 6;
+	this.height = window.block_y * 2;
 	this.speed = {x : 0, y : 0};
 	this.image = new Image();
 	this.xOffset = 2*window.block_x;
