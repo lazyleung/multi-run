@@ -66,7 +66,23 @@ function loadCanvas() {
 }
 
 function createLobby() {
-
+	var player_id = 1; //1 = Host_ID
+	var socket = io.connect("http://localhost:8888")
+	var lobby_name_input = $("<input>").attr("type","text").attr("id","lobby_name").attr("placeholder","Lobby Name");
+	var create_lobby = $("<div>").html("Log In").attr("id","create_lobby_button").addClass("button");
+	var	lobby_name = $("#lobby_name_username").val();
+ 	$("#login_button").hammer().on("tap", function(){
+ 		//Send lobby create to server
+ 		socket.emit('create_lobby',{id: player_id, username: usr});
+ 	
+ 	});
+ 	socket.on("lobby_status", function(data){
+ 		if (data.success) {
+ 			showNotification("Created Lobby!");
+ 		} else {
+ 			showNotification("Error Creating Lobby");
+ 		}
+ 	});
 }
 
 function joinLobby() {
@@ -78,17 +94,24 @@ function joinLobby() {
 	menu.append($("<li>").html("Play").attr("id","play_button"));
 	
 	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
-	
+	var games = $("<ul>");	
 	var content_area = $("#content_area");
  	content_area.empty();
  	content_area.append(back_button);
  	content_area.append(menu);
+ 	content_area.append(games);
  	content_area.append(chatbox);
 
-
-	//Touch
+ 	//Touch 
 	$("#back_button").hammer().on("tap", loadMenu);
 	$("#play_button").hammer().on("tap", loadCanvas);
+ 	//Search for any lobbys using socket.io
+ 	var socket = io.connect("http://localhost:8888")
+ 	socket.on("join_lobby", function(data) {
+ 		console.log(data);
+ 		$("#games").append($("<li>").html(data.body))
+ 	});
+
 }
 
 //loads the profile
