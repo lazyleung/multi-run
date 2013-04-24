@@ -15,9 +15,9 @@ function startRegister() {
 	pwd = $("#login_password").val();
 
 	if(usr === ''){
- 		alert("Invalid username");
+ 		showNotification("Invalid username");
  	} else if(pwd === ''){
- 		alert("Invalid password");
+ 		showNotification("Invalid password");
  	} else {
  		register(usr,pwd);
  	}
@@ -45,7 +45,7 @@ function login(username, password){
 			loadMenu();
 	    },
 	    error: function(data) {
-	    	alert("Login failed!");
+	    	showNotification("Login failed!");
 	    }
 	});
 }
@@ -60,11 +60,11 @@ function register(username, password){
 	    },
 	    url: "/register",
 	    success: function(data) {
-			alert("Registration succesful!");
+			showNotification("Registration succesful!");
 			login(usr,pwd);
 	    },
 	    error: function(data) {
-	    	alert("Registration failed!");
+	    	showNotification("Registration failed!");
 	    }
 	});
 }
@@ -79,11 +79,10 @@ function logout(username, password){
 	    },
 	    url: "/logout",
 	    success: function(data) {
-			alert("Logout succesful!");
 			loadLogin();
 	    },
 	    error: function(data) {
-	    	alert("Logout failed!");
+	    	showNotification("Logout failed!");
 	    }
 	});
 }
