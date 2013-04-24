@@ -1,0 +1,22 @@
+Jonathan Leung
+jkleung1
+Person 1:
+	Confused on what to do in Main menu
+	Neet intro page
+	Agree need a progress bar
+	Like how art style is consitant
+	Ground need gradient to fit in with the res of the game
+	Point system needs to be finalized
+Person 2:
+	Wasn't sure what to do in the game, need instruction page
+	Need to have a minimap/progress bar 
+	The gestures are nice
+	Maybe feedback for getting gestures correct
+	Asked about chatroom functionality
+	Liked hte idea of the game
+	Problems with viewport slightly too big on mobile
+	Don't need notification for login succesful, just for uncuccesful since thing swill be happening already
+Person 3:
+	Cool idea
+	Needs instructions
+	If levels certain length, maybe have the game end 20 seconds after first finish
