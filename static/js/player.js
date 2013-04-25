@@ -52,11 +52,15 @@ function Player(playerX, playerY) {
 	}
 
 	var lowJump = function() {
-		this.jumpTimeLeft = 100;	
+		if (this.onFloor() == true) {
+			this.jumpTimeLeft = 100;
+		}
 	}.bind(this);
 
 	var highJump = function() {
-		this.jumpTimeLeft = 130;	
+		if (this.onFloor() == true) {
+			this.jumpTimeLeft = 130;
+		}
 	}.bind(this);
 
 	var slowDown = function() {
