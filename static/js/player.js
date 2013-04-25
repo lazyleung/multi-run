@@ -22,7 +22,7 @@ function Player(playerX, playerY) {
 		$('body').hammer().on("swipeup", function(event) {
 			event.gesture.preventDefault();
 		    console.log(this, event);
-		    if (Math.abs(event.gesture.deltaY) <= 300) {
+		    if (Math.abs(event.gesture.deltaY) <= 100) {
 		    	console.log("low jump");
 		    	lowJump();
 		    }
