@@ -25,12 +25,12 @@ io.sockets.on("connection", function(socket){
     });
 
     socket.on('join_lobby', function(data) {
-
+        console.log(data)
     });
 
-    socket.on('start_game', function(data)) {
-        
-    }
+    socket.on('start_game', function(data) {
+        console.log(data)
+    });
 });
 
 var mongoExpressAuth = require('mongo-express-auth');
