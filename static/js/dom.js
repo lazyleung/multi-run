@@ -30,18 +30,24 @@ function loadLogin() {
 
 //loads the menu
 function loadMenu() {
+	var navbar = $('#navbar');
  	var menu = $("<ul>");
  	menu.append($("<li>").html("Create Lobby").attr("id","create_lobby_button"));
  	menu.append($("<li>").html("Join Lobby").attr("id", "join_lobby_button"));
  	menu.append($("<li>").html("Profile").attr("id","profile_button"));
- 	menu.append($("<li>").html("Settings").attr("id","settings_button"));
-
- 	var logout = $("<div>").html("logout").attr("id","logout_button").addClass("button");
+ 	// menu.append($("<li>").html("Settings").attr("id","settings_button"));
 
  	var content_area = $("#content_area");
  	content_area.empty();
- 	content_area.append(logout);
  	content_area.append(menu);
+
+ 	// Create navbar
+ 	navbar.empty();
+ 	var settings_button = $("<img>").attr("src", "images/gear.png").attr('id', 'settings_button').height('30px').width('30px');;
+ 	var logout = $("<div>").html("logout").attr("id","logout_button").addClass("button");
+
+ 	navbar.append(settings_button);
+ 	navbar.append(logout);
 
  	//Add touch listeners
  	$("#logout_button").hammer().on("tap", startLogout);
@@ -142,19 +148,19 @@ function loadSettings() {
 }
 
 function showNotification(message) { // type is "green" or "red"
-  var notification = $("<div>").addClass("notification").html($("<p>").html(message));
-  $("body").append(notification);
-  notification.hide();
-  notification.fadeIn(200, function() { // Fade in and then after 2 seconds, fade out
-    setTimeout(function() { notification.fadeOut(400, function() {$(this).remove})}, 2000);
-  });
+	$('div').remove(".notification");
+	var notification = $("<div>").addClass("notification").html($("<p>").html(message));
+	$("body").append(notification);
+	notification.hide();
+	notification.slideDown(200, function() { // Fade in and then after 2 seconds, fade out
+		setTimeout(function() { notification.slideUp(400, function() {$("div").remove(".notification")})}, 2000);
+	});
 }
 
 //Loads title and content area
 function loadContent() {
 	var title = $("<h1>").html("Multi-Run");
-	var content_area = $("<div>").attr("id","content_area");
-
+	var content_area = $("<div>").attr("id","content_area")
 	var body = $("body");
 
 	body.empty();
