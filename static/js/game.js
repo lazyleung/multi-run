@@ -27,7 +27,7 @@ function initGame() {
 	background = new Background();
 
 	//Create Level
-	level = new Level(1);
+	level = new Level(2);
 
 	//Start the game
 	startGame();

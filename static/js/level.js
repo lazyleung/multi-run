@@ -4,7 +4,13 @@ function Level(seed){
 	this.terrain_data;
 	this.level_data;
 	this.ground = new Image();
-	this.ground.src = "/images/flat.png"
+	this.ground.src = "/images/ground.png";
+	this.end = new Image();
+	this.end.src = "/images/end.png";
+	this.powerup = new Image();
+	this.powerup.src = "/images/powerup.png";
+	this.box = new Image();
+	this.box.src = "/images/wooden_crate.png";
 
 	//assign terrain data
 	this.make_level = function(levels) {
@@ -39,7 +45,14 @@ function Level(seed){
 				for(var j = 0; j < 16; j++){
 					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
 				}
-			} else if (this.level_data[i] === "platform_powerup"){
+			} else if (this.level_data[i] === "flat_obstacle"){
+				for(var j = 0; j < 16; j++){
+					if(j === 9){
+						ctx.drawImage(this.box, i*canvasWidth + j*window.block_x, canvasHeight - 3*window.block_y, 2*window.block_y, 2*window.block_y);
+					}
+					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
+				}
+			}else if (this.level_data[i] === "platform_powerup"){
 				//Need to modify
 				for(var j = 0; j < 16; j++){
 					//Draw platform
@@ -47,8 +60,8 @@ function Level(seed){
 						ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - 4*window.block_y, window.block_x, window.block_y/4);
 					}
 					//Draw powerup box
-					if(j > 5 && j < 8){
-						ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - 5*window.block_y, window.block_x, window.block_y);
+					if(j === 5){
+						ctx.drawImage(this.powerup, i*canvasWidth + j*window.block_x, canvasHeight - 6*window.block_y, 2*window.block_y, 2*window.block_y);
 					}
 					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
 				}
@@ -62,7 +75,7 @@ function Level(seed){
 			} else if (this.level_data[i] === "end") {
 				for(var j = 0; j < 22; j++){
 					if(j === 8){
-						ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - 2*window.block_y, window.block_x, window.block_y);
+						ctx.drawImage(this.end, i*canvasWidth + j*window.block_x, canvasHeight - 5*window.block_y, 8*window.block_y/5, 4*window.block_y);
 					}
 					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
 				}
@@ -77,7 +90,7 @@ function Level(seed){
 			this.make_level([flat, flat, platform_powerup, flat, flat, platform, flat, flat]);
 			break;
 		case 2:
-			this.make_level([flat, flat, platform, flat, flat, platform, flat, flat, platform, flat, flat, platform, flat, flat, platform, flat, flat, platform, flat, flat, platform, flat, flat, platform, flat, flat]);
+			this.make_level([flat, flat, flat_obstacle, flat, flat, platform, platform_powerup, platform, flat, flat, platform_powerup, flat, flat, platform, flat, flat, platform, flat]);
 			break;
 		default:
 			
@@ -112,7 +125,7 @@ flat_obstacle[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,];
-flat_obstacle[1] = ["platform_obstacle"];
+flat_obstacle[1] = ["flat_obstacle"];
 
 var flat_powerup = new Array();
 flat_powerup[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -120,10 +133,10 @@ flat_powerup[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,];
-flat_powerup[1] = ["platform_powerup"];
+flat_powerup[1] = ["flat_powerup"];
 
 var platform = new Array();
 platform[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
