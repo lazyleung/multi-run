@@ -1,0 +1,24 @@
+alvinw-userStudy
+
+Person 1:
+
+	1.log out button gets shifted incorrectly depending on the size of the view
+	2.user got a login failed message when the user hit register (we weren't able to recreate this, the user may have clicked twice accidentally, causing an error when the system tried to register an existing user.)
+	3. some of the pages did not have back buttons
+Person 2:
+	
+	1. User complained about the annoying popup alert boxes that obstructed user control.
+	2. No controls instructions for user
+	3.there isnt much in the profile tab
+	4.jumping was a bit hard to execute
+	5.chrachter fell through the floor and didnt die
+	6. User asked how we were going to show offscreen users
+	7. need something to show race progression.
+
+Person 3:
+
+	1. Should log you in automatically when you register for the app
+	2. No instructions
+	3. When you reach the end of the race, it doesnt tell you
+	4. simple bar to show progress
+	5. User said that making good obstacles would be very important to the game.
