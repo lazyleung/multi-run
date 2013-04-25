@@ -19,10 +19,18 @@ var app = express();
 
 var io = require('socket.io').listen(8888);
 io.sockets.on("connection", function(socket){
-    socket.on('msg', function(data) {
+    socket.on('create_lobby', function(data) {
         socket.emit('status', {success: 'true'});
         io.sockets.emit('newmsg', {body: data.body});
     });
+
+    socket.on('join_lobby', function(data) {
+
+    });
+
+    socket.on('start_game', function(data)) {
+        
+    }
 });
 
 var mongoExpressAuth = require('mongo-express-auth');
