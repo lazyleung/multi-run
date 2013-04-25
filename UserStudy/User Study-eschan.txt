@@ -1,0 +1,39 @@
+User Study: Ethan 
+Date: April 23rd, 2013
+
+User 1: 
+Issue: Can jump too high
+Analysis: When playing the game, it is possible for the user to jump multiple times 
+while swiping up. This is a gameplay bug, and we need to fix it.
+Solution: Add a time restriction on jumping if the command has been issued 
+
+Issue: Run off map
+Analysis: When playing the game, the level design was incomplete.
+Solution: We need to implement better and complete level design with objectives 
+and a defined end point.
+
+Issue: Don't die in hole
+Analysis: When falling into a hole, the character kept on moving.
+Solution: We need to stop character movement if they fall into a hole.
+
+Issue: don't make it float
+Analysis: Some of the UI did not scale nicely when the window was resized. 
+This could be a potential issue for mobile devices. 
+Solution: Test using multiple sizes to ensure that the UI is consistent and usable. 
+
+User 2:
+Issue: make it scaleable
+Analysis: Some of the gameplay elements would not scale correctly.
+Solution: As above.
+
+Issue: When playing the game, there is no way to quit
+Analysis: N/A
+Solution: Add an pause/menu button to the game.
+
+Issue: No End Point in Game
+Analysis: No clear end point when playing game.
+Solution: Add a clear game objective/mission.
+
+Issue: Unclear controls
+Analysis: The user did not know how to control the character
+Solution: Add a tutorial/intro with graphics to explain the gameplay mechanics. 
