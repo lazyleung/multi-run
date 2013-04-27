@@ -32,8 +32,8 @@ function loadLogin() {
 function loadMenu() {
 	var navbar = $('#navbar');
  	var menu = $("<ul>");
- 	menu.append($("<li>").html("Create Lobby").attr("id","create_lobby_button"));
- 	menu.append($("<li>").html("Join Lobby").attr("id", "join_lobby_button"));
+ 	menu.append($("<li>").html("Create A Game").attr("id","create_lobby_button"));
+ 	menu.append($("<li>").html("Join A Game").attr("id", "join_lobby_button"));
  	menu.append($("<li>").html("Profile").attr("id","profile_button"));
  	// menu.append($("<li>").html("Settings").attr("id","settings_button"));
 
@@ -77,7 +77,7 @@ function createLobby() {
 
 	//Inputs
 	var lobby_name_input = $("<input>").attr("type","text").attr("id","lobby_name").attr("placeholder","Lobby Name");
-	var	lobby_name = $("#lobby_name_username").val();
+
  	
  	//UI
 	var menu = $("<ul>");
@@ -88,22 +88,35 @@ function createLobby() {
 	var content_area = $("#content_area");
 	content_area.empty();
 	content_area.append(back_button);
+	content_area.append(lobby_name_input);
 	content_area.append(menu);
 
 	//Touch
 	$("#back_button").hammer().on("tap", loadMenu);
- 	$("#login_button").hammer().on("tap", function(){
+ 	$("#create_lobby_button").hammer().on("tap", function(){
  		//Send lobby create to server
  		console.log("pressed");
- 		socket.emit('create_lobby',{id: player_id, username: usr});
+ 		var	lobby_name = $("#lobby_name").val();
+ 		console.log(player_id, usr, lobby_name);
+ 		socket.emit('create_lobby',{id: player_id, username: usr, name: lobby_name});
  	
  	});
+
  	socket.on("lobby_status", function(data){
+ 		console.log(data);
  		if (data.success) {
  			showNotification("Created Lobby!");
+ 			content_area.empty();
+ 			var title = $("<h1>").html("Waiting for players");
+ 			content_area.append(title);
+ 			socket.emit('get_lobby');
  		} else {
- 			showNotification("Error Creating Lobby");
+ 			showNotification("Error Creating Lobby, please try again");
  		}
+ 	});
+
+ 	socket.on("room_status", function(data){
+
  	});
 }
 

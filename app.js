@@ -23,25 +23,34 @@ var clients = new Object();
 
 // Tell socket io to listen for new connections
 io.sockets.on("connection", function(socket){
-    socket.on('connect', connect(socket, data));
+    //socket.on('connect', connect(socket, data));
 
-    socket.on('join_lobby', function(data) {
+    socket.on('create_lobby', function(data) {
         console.log(data)
+        connect(socket, data);
     });
 
     socket.on('start_game', function(data) {
         console.log(data)
     });
+
+    socket.on('get_lobby', function(data){
+        console.log(clients);
+        console.log(getRooms());
+        //console.log(getClientsInRoom(socket, room));
+    });
 });
 
 var connect = function(socket, data) {
     // log client ID
-    util.log("New player has connected: "+client.id);
+    util.log("New player has connected: "+ data.id);
 
     // Save client to hash object
     clients[socket.id] = data;
 
     socket.emit('ready', { clientId: data.clientId });
+    socket.emit('lobby_status', {success: true});
+    console.log("done");
 }
 
 var disconnect = function(data) {
