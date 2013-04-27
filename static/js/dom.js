@@ -178,7 +178,7 @@ function findLobby() {
  			lobby_area.empty();
  			for(i = 1; i < data.lobbies.length; i++){
  				var lobby = $("<li>").html(String(data.names[data.lobbies[i]])).attr("id", i);
- 				lobby.hammer().on("tap", joinLobby(data.lobbies[i]));
+ 				lobby.hammer().on("tap", joinLobby(parseInt(data.lobbies[i].slice(1)), socket));
  				lobby_area.append(lobby);
  			}
 
@@ -198,8 +198,42 @@ function findLobby() {
  	});
 }
 
-function joinLobby(lobby){
+function joinLobby(lobby, socket){
+	//var socket = io.connect("http://localhost:8888");
+	console.log("called");
+	var content_area = $("#content_area");
 
+	socket.emit("join_lobby", {username: usr, lobby_id: lobby});
+
+ 	socket.on("join_status", function(data){
+ 		//console.log(data);
+ 		if (data.success) {
+ 			var lobby_id = lobby;
+ 			//showNotification("Created Lobby!");
+ 			content_area.empty();
+ 			var title = $("<h1>").html("Waiting for players");
+ 			content_area.append(title);
+ 			var start_game = $("<div>").html("Start Game").attr("id","start_button").addClass("button");
+ 			$("#start_button").hammer().on("tap", loadCanvas);
+ 			var players = $("<ul>").attr("id", "players");
+ 			content_area.append(players);
+ 			//Auto refresh lobby details
+ 			setInterval(function(){
+ 				socket.emit("get_lobby_details", {lobby_id: lobby_id});
+ 				socket.on("lobby_details", function(data){
+ 				var players_area = $("#players");
+ 				players_area.empty();
+ 				for(i = 0; i < data.clients.length; i++){
+ 						var player = $("<li>").html(String(data.clients[i]));
+ 						players_area.append(player);
+ 					}
+ 				});
+ 				//content_area.append(players_area);
+ 			}, 1000);
+ 		} else {
+ 			showNotification("Error Creating Lobby, please try again");
+ 		}
+ 	});
 }
 
 //loads the profile

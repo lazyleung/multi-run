@@ -56,6 +56,7 @@ io.sockets.on("connection", function(socket){
 
     //Join lobby
     socket.on('join_lobby', function(data){
+        connect(socket, data);
         socket.join(String(data.lobby_id));
         socket.emit('join_status', {success: true});
     });
