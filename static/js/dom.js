@@ -175,8 +175,8 @@ function findLobby() {
  			//showNotification("Found active lobbies!");
  			var lobby_area = $("#lobbies");
  			lobby_area.empty();
- 			for(i = 0; i < data.lobbies.length; i++){
- 				var lobby = $("<li>").html(String(data.lobbies[i]));
+ 			for(i = 1; i < data.lobbies.length; i++){
+ 				var lobby = $("<li>").html(String(data.names[data.lobbies[i]]));
  				lobby_area.append(lobby);
  			}
  		} else {

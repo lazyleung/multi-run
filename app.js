@@ -20,6 +20,7 @@ var app = express();
 var util = require("util")
 var io = require('socket.io').listen(8888);
 var clients = new Object();
+var lobby_names = new Object();
 
 // Tell socket io to listen for new connections
 io.sockets.on("connection", function(socket){
@@ -27,11 +28,14 @@ io.sockets.on("connection", function(socket){
 
     //Create Lobby
     socket.on('create_lobby', function(data) {
-        console.log(data)
+        //console.log(data)
         connect(socket, data);
         var lobby_id = Object.keys(clients).length;
-        console.log("clients.length = ", clients.length, Object.keys(clients).length);
+
+        //console.log("clients.length = ", clients.length, Object.keys(clients).length);
         socket.join(String(lobby_id));
+        console.log("ADFAF", Object.keys(io.sockets.manager.rooms)[lobby_id], data.lobby_name)
+        lobby_names[Object.keys(io.sockets.manager.rooms)[lobby_id]] = data.lobby_name;
         socket.emit('lobby_status', {success: true, lobby_id: lobby_id});
     });
 
@@ -42,10 +46,10 @@ io.sockets.on("connection", function(socket){
 
     //Send all lobbys
     socket.on('get_lobby', function(){
-        console.log(clients);
-        console.log("Rooms = ",getRooms());
-        console.log("io.sockets.manager.room", io.sockets.manager.rooms);
-        socket.emit('lobbies', {success: true, lobbies: getRooms(), names: lobby_name})
+        //console.log(clients);
+        //console.log("Rooms = ",getRooms());
+        //console.log("io.sockets.manager.room", io.sockets.manager.rooms);
+        socket.emit('lobbies', {success: true, lobbies: getRooms(), names: lobby_names})
         //console.log("In Room = ", io.sockets.clients(data.lobby_id));
         //console.log("In Room = ", getClientsInRoom(socket, data.lobby_id));
     });
