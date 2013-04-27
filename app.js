@@ -63,10 +63,13 @@ io.sockets.on("connection", function(socket){
     //Returns current clients in lobby
     socket.on('get_lobby_details', function(data){
         var lobby_clients = io.sockets.clients(data.lobby_id);
+        //console.log("lobby_clients", lobby_clients);
         var names = [];
         for (i = 0; i < lobby_clients.length; i++){
+            //console.log(clients[lobby_clients[i].id]);
             names.push(clients[lobby_clients[i].id]);
         }
+        console.log(names);
         socket.emit('lobby_details', {clients: names});
     });
 });
@@ -90,6 +93,10 @@ var disconnect = function(data) {
 
 var getRooms = function() {
  return Object.keys(io.sockets.manager.rooms);
+}
+
+var playerCount = function(room) {
+    return io.sockets.clients(room).length;
 }
 
 // get array of clients in a room

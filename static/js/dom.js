@@ -30,6 +30,7 @@ function loadLogin() {
 
 //loads the menu
 function loadMenu() {
+	showNotification("Welcome" + " " + usr + "!");
 	var navbar = $('#navbar');
  	var menu = $("<ul>");
  	menu.append($("<li>").html("Create A Game").attr("id","create_lobby_button"));
@@ -176,9 +177,20 @@ function findLobby() {
  			var lobby_area = $("#lobbies");
  			lobby_area.empty();
  			for(i = 1; i < data.lobbies.length; i++){
- 				var lobby = $("<li>").html(String(data.names[data.lobbies[i]]));
+ 				var lobby = $("<li>").html(String(data.names[data.lobbies[i]])).attr("id", i);
+ 				lobby.hammer().on("tap", joinLobby(data.lobbies[i]));
  				lobby_area.append(lobby);
  			}
+
+			for (i = 1; i < data.lobbies.length; i++){
+ 				var lobby = $("#"+String(i));
+ 				socket.emit('get_lobby_details', {lobby_id: data.lobbies[i]});
+ 				socket.on('lobby_details', function(data){
+ 					var player_count = $("<div>").html("Players: " + String(data.clients.length) + "/4");
+ 					lobby.append(player_count);
+ 				});
+ 			}
+
  		} else {
  			showNotification("Error getting lobbies");
  		}
