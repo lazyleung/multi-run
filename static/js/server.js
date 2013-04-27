@@ -41,8 +41,8 @@ function login(username, password){
 			//Load user data
 			usr = data.username;
 			pwd = data.password;
-
 			loadMenu();
+			showNotification("Welcome" + " " + usr + "!");
 	    },
 	    error: function(data) {
 	    	showNotification("Login failed!");

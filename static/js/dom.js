@@ -30,7 +30,6 @@ function loadLogin() {
 
 //loads the menu
 function loadMenu() {
-	showNotification("Welcome" + " " + usr + "!");
 	var navbar = $('#navbar');
  	var menu = $("<ul>");
  	menu.append($("<li>").html("Create A Game").attr("id","create_lobby_button"));
