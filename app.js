@@ -25,31 +25,58 @@ var clients = new Object();
 io.sockets.on("connection", function(socket){
     //socket.on('connect', connect(socket, data));
 
+    //Create Lobby
     socket.on('create_lobby', function(data) {
         console.log(data)
         connect(socket, data);
+        var lobby_id = Object.keys(clients).length;
+        console.log("clients.length = ", clients.length, Object.keys(clients).length);
+        socket.join(String(lobby_id));
+        socket.emit('lobby_status', {success: true, lobby_id: lobby_id});
     });
 
+    //Start Game
     socket.on('start_game', function(data) {
         console.log(data)
     });
 
-    socket.on('get_lobby', function(data){
+    //Send all lobbys
+    socket.on('get_lobby', function(){
         console.log(clients);
-        console.log(getRooms());
-        //console.log(getClientsInRoom(socket, room));
+        console.log("Rooms = ",getRooms());
+        console.log("io.sockets.manager.room", io.sockets.manager.rooms);
+        socket.emit('lobbies', {success: true, lobbies: getRooms(), names: lobby_name})
+        //console.log("In Room = ", io.sockets.clients(data.lobby_id));
+        //console.log("In Room = ", getClientsInRoom(socket, data.lobby_id));
+    });
+
+    //Join lobby
+    socket.on('join_lobby', function(data){
+        socket.join(String(data.lobby_id));
+        socket.emit('join_status', {success: true});
+    });
+
+    //Returns current clients in lobby
+    socket.on('get_lobby_details', function(data){
+        var lobby_clients = io.sockets.clients(data.lobby_id);
+        var names = [];
+        for (i = 0; i < lobby_clients.length; i++){
+            names.push(clients[lobby_clients[i].id]);
+        }
+        socket.emit('lobby_details', {clients: names});
     });
 });
 
 var connect = function(socket, data) {
     // log client ID
-    util.log("New player has connected: "+ data.id);
+    util.log("New player has connected: "+ data.username);
 
     // Save client to hash object
-    clients[socket.id] = data;
+    clients[socket.id] = data.username;
 
-    socket.emit('ready', { clientId: data.clientId });
-    socket.emit('lobby_status', {success: true});
+    //socket.emit('ready', { clientId: data.clientId });
+    //Lobby ID is ID of User
+
     console.log("done");
 }
 
