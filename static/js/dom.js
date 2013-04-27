@@ -178,7 +178,7 @@ function findLobby() {
  			lobby_area.empty();
  			for(i = 1; i < data.lobbies.length; i++){
  				var lobby = $("<li>").html(String(data.names[data.lobbies[i]])).attr("id", i);
- 				lobby.hammer().on("tap", joinLobby(parseInt(data.lobbies[i].slice(1)), socket));
+ 				$("#"+String(i)).hammer().on("tap", joinLobby(parseInt(data.lobbies[i].slice(1)), socket));
  				lobby_area.append(lobby);
  			}
 
@@ -213,9 +213,11 @@ function joinLobby(lobby, socket){
  			content_area.empty();
  			var title = $("<h1>").html("Waiting for players");
  			content_area.append(title);
+ 			var lobby_name = $("<h1>").html(String(data.names[data.lobbies[lobby]]));
  			var start_game = $("<div>").html("Start Game").attr("id","start_button").addClass("button");
  			$("#start_button").hammer().on("tap", loadCanvas);
  			var players = $("<ul>").attr("id", "players");
+ 			content_area.append(lobby_name);
  			content_area.append(players);
  			//Auto refresh lobby details
  			setInterval(function(){

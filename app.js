@@ -58,7 +58,7 @@ io.sockets.on("connection", function(socket){
     socket.on('join_lobby', function(data){
         connect(socket, data);
         socket.join(String(data.lobby_id));
-        socket.emit('join_status', {success: true});
+        socket.emit('join_status', {success: true, lobbies: getRooms(), names: lobby_names});
     });
 
     //Returns current clients in lobby
