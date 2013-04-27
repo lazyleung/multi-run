@@ -102,6 +102,7 @@ function createLobby() {
  	
  	});
 
+ 	//Sockets
  	socket.on("lobby_status", function(data){
  		//console.log(data);
  		if (data.success) {
@@ -143,11 +144,9 @@ function findLobby() {
 	//UI
 	var title = $("<h1>").html("Active Lobbies:")
 	var menu = $("<ul>");
+	menu.empty();
 	var username = $("<div>").html("Username: " + usr);
 	var chatbox = $("<form>").html("")
-	
-	menu.empty();
-	//menu.append($("<li>").html("Play").attr("id","play_button"));
 	
 	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
 	var content_area = $("#content_area");
@@ -163,10 +162,9 @@ function findLobby() {
 
  	//Touch 
 	$("#back_button").hammer().on("tap", loadMenu);
-	//$("#play_button").hammer().on("tap", loadCanvas);
+ 	
  	//Search for any lobbys using socket.io
  	var socket = io.connect("http://localhost:8888");
- 	//$("#games").append($("<li>").html(data.body))
 
  	//Look for lobbies every 1000ms
  	setInterval(function(){socket.emit("get_lobby")}, 1000);
@@ -203,7 +201,6 @@ function joinLobby(lobby, socket){
 	var content_area = $("#content_area");
 
 	socket.emit("join_lobby", {username: usr, lobby_id: lobby});
-
  	socket.on("join_status", function(data){
  		//console.log(data);
  		if (data.success) {
