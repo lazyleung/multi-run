@@ -74,11 +74,27 @@ function loadCanvas() {
 function createLobby() {
 	var player_id = 1; //1 = Host_ID
 	var socket = io.connect("http://localhost:8888")
+
+	//Inputs
 	var lobby_name_input = $("<input>").attr("type","text").attr("id","lobby_name").attr("placeholder","Lobby Name");
-	var create_lobby = $("<div>").html("Log In").attr("id","create_lobby_button").addClass("button");
 	var	lobby_name = $("#lobby_name_username").val();
+ 	
+ 	//UI
+	var menu = $("<ul>");
+	var make_lobby = $("<div>").html("Make Lobby").attr("id","make_lobby_button").addClass("button");
+	var create_lobby = $("<div>").html("Log In").attr("id","create_lobby_button").addClass("button");
+	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");	
+	menu.append($("<li>").html("Create Lobby").attr("id","create_lobby_button"));
+	var content_area = $("#content_area");
+	content_area.empty();
+	content_area.append(back_button);
+	content_area.append(menu);
+
+	//Touch
+	$("#back_button").hammer().on("tap", loadMenu);
  	$("#login_button").hammer().on("tap", function(){
  		//Send lobby create to server
+ 		console.log("pressed");
  		socket.emit('create_lobby',{id: player_id, username: usr});
  	
  	});
