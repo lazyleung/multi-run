@@ -104,15 +104,16 @@ function Player(playerX, playerY) {
 			this.speed.x += .3;
 		}
 		
-		//  handle jumping
+		//Handle jumping
 		if (this.jumpTimeLeft > 0) {
-			this.speed.y -= window.block_y/20;
+			//this.speed.y -= 5;
+			this.speed.y -= window.block_y/22;
 			this.jumpTimeLeft -= 25;
 		}
 		this.y += this.speed.y;
 		this.x += this.speed.x;
 
-		// add offset to move canvas
+		//Add offset to move canvas
 		this.xOffset += this.speed.x;
 
 		if (this.onFloor())
