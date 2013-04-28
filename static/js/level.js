@@ -21,18 +21,7 @@ function Level(seed){
 			this.level_data[i] = levels[i][1][0];
 		}
 		console.log(levels);
-		console.log(this.terrain_data);
 		console.log(this.level_data);
-	}
-
-	this.check_level = function(levels) {
-		for (var i = 0; i < levels.length; i++){
-			if (levels[i+1][2].indexOf(levels[i][1][0]) === -1){
-			 	console.log("Error in Level Design: Illegal Level Design");
-			 	return false;
-			}
-			return true;
-		}
 	}
 
 	//Draw all the correct level terrain

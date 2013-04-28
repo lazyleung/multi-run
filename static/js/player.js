@@ -22,7 +22,7 @@ function Player(playerX, playerY) {
 
 	this.init = function() {
 
-		console.log("floor:" + this.floor);
+		console.log(this.speed);
 		// Setup touch handler
 		$('body').hammer().on("swipeup", function(event) {
 			event.gesture.preventDefault();
@@ -90,13 +90,12 @@ function Player(playerX, playerY) {
 	}
 
 	this.checkAhead = function(y, terrain){
-		var ahead = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)];
+		return terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)];
 		if(ahead === 2){
 			console.log("hit!");
 			this.speed.x = this.xSpeedBase;
 		}else if(ahead === 4){
 			//end game
-			console.log("end");
 			endGame();
 			return;
 		}
@@ -118,7 +117,16 @@ function Player(playerX, playerY) {
 		this.floor = canvasHeight;
 
 		this.checkFloor(y_block, terrain);
-		this.checkAhead(y_block, terrain);
+
+		switch(this.checkAhead(y_block, terrain)){
+			case 2:
+				console.log("hit!");
+				this.speed.x = this.xSpeedBase;
+				break;
+			case 4:
+				endGame();
+				return;
+		}
 		
 		//Slowly increase player speed
 		// Limit horizontal speed

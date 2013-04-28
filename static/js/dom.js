@@ -71,7 +71,7 @@ function loadMenu() {
 }
 
 //loads the canvas and init the game
-function loadCanvas(socket, players, lobby_name) {
+function loadCanvas(players, lobby_name) {
  	$("body").html("Loaded!");
 
 	canvasWidth = $(window).width();
@@ -81,7 +81,7 @@ function loadCanvas(socket, players, lobby_name) {
 
 	$("body").html(c);
 
-	initGame(socket, players, lobby_name);
+	initGame(players, lobby_name);
 }
 
 function loadCreateGame() {
@@ -105,7 +105,6 @@ function loadCreateGame() {
  	//Add touch listeners
 	$("#back_button").hammer().on("tap", loadMenu);
  	$("#create_lobby_button").hammer().on("tap", function(){
- 		console.log("Create lobby: "+$("#lobby_name").val());
  		var	lobby_name = $("#lobby_name").val();
  		socket.emit('create_lobby',{'username': usr.name, 'lobby_name': lobby_name});
  	});
@@ -184,6 +183,7 @@ function loadLobby(data) {
  	navbar.append(back_button);
 
 	$("#start_button").hammer().on("tap", function(){
+
 		socket.emit('start_game', {'lobby_name': usr.lobby_name});
 	});
 	$("#back_button").hammer().on("tap", function(){
@@ -202,8 +202,11 @@ function loadLobby(data) {
 		$("#count").html("Players: " + String(data.players.length) + "/4");
 	});
 
-	socket.on("start_game", function(data){
-		loadCanvas(socket, data.players, data.lobby_name);
+	socket.on("start_game_signal", function(data){
+		if(data.success){
+			console.log("Starting game!");
+			loadCanvas(data.players, data.lobby_name);
+		}
 	});
 }
 
@@ -246,11 +249,13 @@ function showNotification(message) { // type is "green" or "red"
 
 //Loads title and content area
 function loadContent() {
+	var navbar = $("<div>").attr("id","navbar");
 	var title = $("<h1>").html("Multi-Run");
-	var content_area = $("<div>").attr("id","content_area")
+	var content_area = $("<div>").attr("id","content_area");
 	var body = $("body");
 
 	body.empty();
+	body.append(navbar);
 	body.append(title);
 	body.append(content_area);
 }

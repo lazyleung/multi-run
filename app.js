@@ -57,7 +57,7 @@ io.sockets.on("connection", function(socket){
             socket.join(data.lobby_name);
             clients[socket.id] = data.lobby_name;
             socket.emit('join_status', {'success': true, 'lobby_name': data.lobby_name, 'players': private_lobby_list[status].players, 'player_id': private_lobby_list[status].players.push(player)});
-            io.sockets.in(data.lobby_name).emit('lobby_update',{'players': private_lobby_list[status].players});
+            io.sockets.in(data.lobby_name).broadcast.emit('lobby_update',{'players': private_lobby_list[status].players});
         }
     });
 
@@ -71,6 +71,8 @@ io.sockets.on("connection", function(socket){
             //Last person in lobby
             private_lobby_list[status].players.splice(status, 1);
             private_lobby_list.splice(status,1);
+            socket.leave(data.lobby_name);
+            clients[socket.id] = 0;
             socket.emit('leave_status', {'success': true});
         }else if(status >= 0){
             //Succesfully found leave lobby
@@ -79,15 +81,15 @@ io.sockets.on("connection", function(socket){
             socket.leave(data.lobby_name);
             clients[socket.id] = 0;
             socket.emit('leave_status', {'success': true});
-            io.sockets.in(data.lobby_name).emit('lobby_update',{'players': private_lobby_list[status].players});
+            io.sockets.in(data.lobby_name).broadcast.emit('lobby_update',{'players': private_lobby_list[status].players});
         }
     });
 
     //Start Game
     socket.on('start_game', function(data) {
-        getPrivateLobby(data.lobby_name);
-        var lobby = getPrivateLobby(data.lobby_name);
-        io.sockets.in(data.lobby_name).emit('start_game', {'lobby_name': data.lobby_name, 'players': private_lobby_list[lobby].players});
+        //Error checking
+        var status = getPrivateLobby(data.lobby_name);
+        io.sockets.in(data.lobby_name).emit('start_game_signal', {'success': true, 'lobby_name': data.lobby_name, 'players': private_lobby_list[status].players});
     });
 
     socket.on("disconnect", function() {
@@ -100,6 +102,8 @@ io.sockets.on("connection", function(socket){
                 //Last person in lobby
                 private_lobby_list[status].players.splice(status, 1);
                 private_lobby_list.splice(status,1);
+                socket.leave(clients[socket.id]);
+                clients[socket.id] = 0;
                 socket.emit('leave_status', {'success': true});
             }else if(status >= 0){
                 //Succesfully found leave lobby
@@ -112,7 +116,7 @@ io.sockets.on("connection", function(socket){
                 socket.leave(clients[socket.id]);
                 clients[socket.id] = 0;
                 socket.emit('leave_status', {'success': true});
-                io.sockets.in(clients[socket.id]).emit('lobby_update',{'players': private_lobby_list[status].players});
+                io.sockets.in(clients[socket.id]).broadcast.emit('lobby_update',{'players': private_lobby_list[status].players});
             }
         }
         delete clients[socket.id]
