@@ -106,7 +106,7 @@ function Player(playerX, playerY) {
 		progress = Math.floor((this.x + this.width)/window.block_x);
 
 		// Update player race progression; -8 accounts for the end being at the mid point
-		this.race_progress = progress / ((level.level_data.length) * 16 - 8);
+		this.race_progress = (this.x + this.width)/window.block_x / ((level.level_data.length) * 16 - 8);
 		var y_block = Math.ceil(this.y/window.block_y);
 
 		//Deals with changing floor height
