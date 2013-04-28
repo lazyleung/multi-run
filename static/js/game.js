@@ -6,7 +6,7 @@ var progress;
 var background;
 var level;
 var gameInterval;
-var musicList = ['sound/airbrushed.mp3', 'sound/game2.mp3'];
+var musicList = ['sound/airbrushed.mp3', 'sound/blackout_city.mp3'];
 var music;
 var race_progress;
 
