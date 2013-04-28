@@ -25,9 +25,7 @@ var private_lobby_list = new Array();
 var public_lobby_list = [{'name': 'Alpha', 'players': []}, {'beta': 'Alpha', 'players': []}];
 
 // Tell socket io to listen for new connections
-io.sockets.on("connection", function(socket){
-    clients[socket.id] = data.username;
-
+io.sockets.on("connection", function(socket)
     //Create Lobby
     socket.on('create_lobby', function(data) {
         if(!isPrivateLobby(data.lobby_name)){
@@ -69,10 +67,6 @@ io.sockets.on("connection", function(socket){
 
     });
 });
-
-var disconnect = function(data) {
-    util.log("Player has disconnected")
-}
 
 var getRooms = function() {
  return Object.keys(io.sockets.manager.rooms);
