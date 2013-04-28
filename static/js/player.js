@@ -106,7 +106,7 @@ function Player(playerX, playerY) {
 		
 		//  handle jumping
 		if (this.jumpTimeLeft > 0) {
-			this.speed.y -= 5;
+			this.speed.y -= window.block_y/20;
 			this.jumpTimeLeft -= 25;
 		}
 		this.y += this.speed.y;
