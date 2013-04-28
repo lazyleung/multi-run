@@ -78,6 +78,7 @@ function startGame() {
 
 function endGame() {
 	clearInterval(gameInterval);
+	socket.emit('leave_lobby', {'username': usr.name, 'lobby_name': usr.lobby_name, 'player_id': usr.player_id});
 	//5 Second pause before exiting
 	setTimeout(exitGame,5000);
 }

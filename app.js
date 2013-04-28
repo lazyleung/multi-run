@@ -39,12 +39,6 @@ io.sockets.on("connection", function(socket){
         }
     });
 
-    //Start Game
-    socket.on('start_game', function(data) {
-        getPrivateLobby(data.lobby_name)
-        socket.emit('start_game');
-    });
-
     //Join lobby
     socket.on('join_lobby', function(data){
         var status = getPrivateLobby(data.lobby_name);
@@ -82,6 +76,12 @@ io.sockets.on("connection", function(socket){
             socket.emit('leave_status', {'success': true});
             io.sockets.in(data.lobby_name).emit('lobby_update',{'players': private_lobby_list[status].players});
         }
+    });
+
+    //Start Game
+    socket.on('start_game', function(data) {
+        getPrivateLobby(data.lobby_name);
+        io.sockets.in(data.lobby_name).emit('start_game');
     });
 });
 

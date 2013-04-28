@@ -3,11 +3,14 @@
 var canvasWidth;
 var canvasHeight;
 var user;
+
 var menuMusic = new Audio("sound/koji_pocket.mp3");
+var socket;
 
 $(document).ready(function(){
 	loadLogin();
 	usr = new User();
+	socket = io.connect("http://localhost:8888");
 });
 
 //loads the login page
@@ -82,8 +85,6 @@ function loadCanvas() {
 }
 
 function loadCreateGame() {
-	var socket = io.connect("http://localhost:8888");
-
  	//UI
  	//Content area
 	var create_lobby = $("<div>").html("Create Lobby").attr("id","create_lobby_button").addClass("button");
@@ -122,8 +123,6 @@ function loadCreateGame() {
 }
 
 function loadFindGame() {
-	var socket = io.connect("http://localhost:8888");
-
 	//UI
  	var lobby_name_input = $("<input>").attr("type","text").attr("id","lobby_name").attr("placeholder","Lobby Name");
  	var join_lobby = $("<div>").html("Join Lobby").attr("id","join_lobby_button").addClass("button");
@@ -158,8 +157,6 @@ function loadFindGame() {
 }
 
 function loadLobby(data) {
-	var socket = io.connect("http://localhost:8888");
-
 	var title = $("<h1>").html(data.lobby_name + " Waiting for players");
 	var lobby_name = $("<h2>").html("Lobby: " + data.lobby_name);
 	var players_count = $("<h2>").html("Players: " + String(data.players.length) + "/4").attr("id", "count");
@@ -186,7 +183,9 @@ function loadLobby(data) {
  	navbar.empty();
  	navbar.append(back_button);
 
-	$("#start_button").hammer().on("tap", loadCanvas);
+	$("#start_button").hammer().on("tap", function(){
+		socket.emit('start_game', {'lobby_name': usr.lobby_name});
+	});
 	$("#back_button").hammer().on("tap", function(){
 		socket.emit('leave_lobby', {'username': usr.name, 'lobby_name': usr.lobby_name, 'player_id': usr.player_id});
 		loadMenu();
@@ -201,6 +200,10 @@ function loadLobby(data) {
 		}
 		$("#count").empty();
 		$("#count").html("Players: " + String(data.players.length) + "/4");
+	});
+
+	socket.on("start_game", function(data){
+		loadCanvas();
 	});
 }
 
