@@ -71,7 +71,10 @@ function Player(playerX, playerY) {
 	this.update = function(terrain) {
 
 		// advance the animation frame
-		this.animationFrame = (this.animationFrame + (this.speed.x / 40)) % 5
+		if (this.speed.x == 0 || !this.onFloor())
+			this.animationFrame = 0;
+		this.animationFrame = (this.animationFrame + (this.speed.x / 40)) % 5;
+		
 		progress = Math.floor((this.x + this.width)/window.block_x);
 
 		var y_block = Math.ceil(this.y/window.block_y);
