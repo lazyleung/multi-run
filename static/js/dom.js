@@ -115,6 +115,7 @@ function createLobby() {
  			$("#start_button").hammer().on("tap", loadCanvas);
  			var players = $("<ul>").attr("id", "players");
  			content_area.append(players);
+
  			//Auto refresh lobby details
  			setInterval(function(){
  				socket.emit("get_lobby_details", {lobby_id: lobby_id});
@@ -126,7 +127,6 @@ function createLobby() {
  						players_area.append(player);
  					}
  				});
- 				//content_area.append(players_area);
  			}, 1000);
  		} else {
  			showNotification("Error Creating Lobby, please try again");
@@ -158,7 +158,6 @@ function findLobby() {
  	content_area.append(menu);
  	content_area.append(lobbies);
  	content_area.append(chatbox);
-
 
  	//Touch 
 	$("#back_button").hammer().on("tap", loadMenu);
