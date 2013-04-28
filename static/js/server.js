@@ -3,28 +3,28 @@
 //wrapper function for serve comm
 function startLogin() {
  	//Handle login button pressed
- 	usr = $("#login_username").val();
- 	pwd = $("#login_password").val();
+ 	usr.name = $("#login_username").val();
+ 	usr.pwd = $("#login_password").val();
 
-	login(usr,pwd);
+	login(usr.name,usr.pwd);
 }
 
 function startRegister() {
 	//Handle register button pressed
-	usr = $("#login_username").val();
-	pwd = $("#login_password").val();
+	usr.name = $("#login_username").val();
+	usr.pwd = $("#login_password").val();
 
-	if(usr === ''){
+	if(usr.name === ''){
  		showNotification("Invalid username");
- 	} else if(pwd === ''){
+ 	} else if(usr.pwd === ''){
  		showNotification("Invalid password");
  	} else {
- 		register(usr,pwd);
+ 		register(usr.name,usr.pwd);
  	}
 }
 
 function startLogout() {
-	logout(usr,pwd);
+	logout(usr.name,usr.pwd);
 }
 
 //Calls to server
@@ -39,10 +39,10 @@ function login(username, password){
 	    url: "/login",
 	    success: function(data) {
 			//Load user data
-			usr = data.username;
-			pwd = data.password;
+			usr.name = data.username;
+			usr.pwd = data.password;
 			loadMenu();
-			showNotification("Welcome" + " " + usr + "!");
+			showNotification("Welcome" + " " + usr.name + "!");
 	    },
 	    error: function(data) {
 	    	showNotification("Login failed!");
@@ -61,7 +61,7 @@ function register(username, password){
 	    url: "/register",
 	    success: function(data) {
 			showNotification("Registration succesful!");
-			login(usr,pwd);
+			login(usr.name,usr.pwd);
 	    },
 	    error: function(data) {
 	    	showNotification("Registration failed!");

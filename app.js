@@ -26,15 +26,13 @@ var public_lobby_list = [{'name': 'Alpha', 'players': []}, {'beta': 'Alpha', 'pl
 
 // Tell socket io to listen for new connections
 io.sockets.on("connection", function(socket){
-    //socket.on('connect', connect(socket, data));
+    clients[socket.id] = data.username;
 
     //Create Lobby
     socket.on('create_lobby', function(data) {
-        connect(socket, data);
-
         if(!isPrivateLobby(data.lobby_name)){
             var player = {'name': data.username, 'id': socket.id};
-            var lobby = {'name': data.lobby_name, 'players': [player]};
+            var lobby = {'name': data.lobby_name, 'players': [player], 'status': 'waiting'};
 
             socket.join(data.lobby_name);
             socket.emit('create_lobby_status', {'success': true, 'lobby_name': data.lobby_name, 'players': private_lobby_list[ private_lobby_list.push(lobby)-1].players,'player_id': 1});
@@ -50,8 +48,6 @@ io.sockets.on("connection", function(socket){
 
     //Join lobby
     socket.on('join_lobby', function(data){
-        connect(socket, data);
-
         var status = getPrivateLobby(data);
         if(status >= 0){
             //Succesfully joined lobby
@@ -68,33 +64,11 @@ io.sockets.on("connection", function(socket){
         }
     });
 
+    //Leave lobby
+    socket.on('leave_lobby', function(data) {
 
-    //Returns current clients in lobby
-    socket.on('get_lobby_details', function(data){
-        var lobby_clients = io.sockets.clients(data.lobby_id);
-        //console.log("lobby_clients", lobby_clients);
-        var names = [];
-        for (i = 0; i < lobby_clients.length; i++){
-            //console.log(clients[lobby_clients[i].id]);
-            names.push(clients[lobby_clients[i].id]);
-        }
-        console.log(names);
-        socket.emit('lobby_details', {clients: names});
     });
 });
-
-var connect = function(socket, data) {
-    // log client ID
-    util.log("New player has connected: "+ data.username);
-
-    // Save client to hash object
-    clients[socket.id] = data.username;
-
-    //socket.emit('ready', { clientId: data.clientId });
-    //Lobby ID is ID of User
-
-    console.log("done");
-}
 
 var disconnect = function(data) {
     util.log("Player has disconnected")

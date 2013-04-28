@@ -2,9 +2,11 @@
 //Global variables
 var canvasWidth;
 var canvasHeight;
+var user;
 
 $(document).ready(function(){
 	loadLogin();
+	usr = new User();
 });
 
 //loads the login page
@@ -95,7 +97,7 @@ function loadCreateGame() {
  	$("#create_lobby_button").hammer().on("tap", function(){
  		console.log("Create lobby: "+$("#lobby_name").val());
  		var	lobby_name = $("#lobby_name").val();
- 		socket.emit('create_lobby',{'username': usr, 'lobby_name': lobby_name});
+ 		socket.emit('create_lobby',{'username': usr.name, 'lobby_name': lobby_name});
  	});
 
  	//Sockets
@@ -160,7 +162,7 @@ function loadFindGame() {
  	//Touch 
 	$("#back_button").hammer().on("tap", loadMenu);
 	$("#join_lobby_button").hammer().on("tap", function(){
- 		socket.emit('join_lobby',{'username': usr, 'lobby_name': $("#lobby_name").val()});
+ 		socket.emit('join_lobby',{'username': usr.name, 'lobby_name': $("#lobby_name").val()});
  	});
 
  	socket.on('join_status', function(data){
@@ -203,7 +205,7 @@ function joinLobby(lobby, socket){
 	console.log("called");
 	var content_area = $("#content_area");
 
-	socket.emit("join_lobby", {username: usr, lobby_id: lobby});
+	socket.emit("join_lobby", {username: usr.name, lobby_id: lobby});
  	socket.on("join_status", function(data){
  		//console.log(data);
  		if (data.success) {
@@ -239,7 +241,7 @@ function joinLobby(lobby, socket){
 
 //loads the profile
 function loadProfile() {
- 	var username = $("<div>").html("Username: " + usr);
+ 	var username = $("<div>").html("Username: " + usr.name);
 
  	//Back Button
  	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
