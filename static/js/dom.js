@@ -3,6 +3,7 @@
 var canvasWidth;
 var canvasHeight;
 var user;
+var menuMusic = new Audio("sound/alright!.mp3");
 
 $(document).ready(function(){
 	loadLogin();
@@ -32,6 +33,14 @@ function loadLogin() {
 
 //loads the menu
 function loadMenu() {
+	// Load menu music and loop it
+	menuMusic.addEventListener('ended', function() {
+    	this.currentTime = 0;
+    	this.play();
+	}, false);
+	menuMusic.play();
+
+
 	var navbar = $('#navbar');
  	var menu = $("<ul>");
  	menu.append($("<li>").html("Create A Game").attr("id","create_game_button"));

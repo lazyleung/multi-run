@@ -6,6 +6,8 @@ var progress;
 var background;
 var level;
 var gameInterval;
+var musicList = ['sound/airbrushed.mp3', 'sound/game2.mp3'];
+var music;
 
 function initGame() {
 	//Sets up the game
@@ -64,17 +66,25 @@ function update() {
 }
 
 function startGame() {
+	// end menuMusic()
+	menuMusic.pause();
+	menuMusic.currentTime = 0;
+	// Start music
+	music = new Audio(musicList[Math.floor(Math.random() * 2)])
+	music.play();
 	gameInterval = setInterval(update, timeInterval);
 }
 
 function endGame() {
-	draw();
 	clearInterval(gameInterval);
 	//5 Second pause before exiting
 	setTimeout(exitGame,5000);
 }
 
 function exitGame(){
+	// stop music
+	music.pause();
+	music.currentTime = 0;
 	loadContent();
 	loadMenu();
 }
