@@ -26,6 +26,8 @@ var public_lobby_list = [{'name': 'Alpha', 'players': []}, {'beta': 'Alpha', 'pl
 
 // Tell socket io to listen for new connections
 io.sockets.on("connection", function(socket){
+    clients[socket.id] = 0;
+
     //Create Lobby
     socket.on('create_lobby', function(data) {
         if(!isPrivateLobby(data.lobby_name)){
@@ -33,6 +35,7 @@ io.sockets.on("connection", function(socket){
             var lobby = {'name': data.lobby_name, 'players': [player], 'status': 'waiting'};
 
             socket.join(data.lobby_name);
+            clients[socket.id] = data.lobby_name;
             socket.emit('create_lobby_status', {'success': true, 'lobby_name': data.lobby_name, 'players': private_lobby_list[ private_lobby_list.push(lobby)-1].players,'player_id': 1});
         } else {
             socket.emit('create_lobby_status', {'success': false, 'reason': "Lobby name already exist"});
@@ -52,6 +55,7 @@ io.sockets.on("connection", function(socket){
             //Succesfully found joined lobby
             var player = {'name': data.username, 'id': socket.id};
             socket.join(data.lobby_name);
+            clients[socket.id] = data.lobby_name;
             socket.emit('join_status', {'success': true, 'lobby_name': data.lobby_name, 'players': private_lobby_list[status].players, 'player_id': private_lobby_list[status].players.push(player)});
             io.sockets.in(data.lobby_name).emit('lobby_update',{'players': private_lobby_list[status].players});
         }
@@ -73,6 +77,7 @@ io.sockets.on("connection", function(socket){
             //Take out player
             private_lobby_list[status].players.splice(data.player_id-1, 1);
             socket.leave(data.lobby_name);
+            clients[socket.id] = 0;
             socket.emit('leave_status', {'success': true});
             io.sockets.in(data.lobby_name).emit('lobby_update',{'players': private_lobby_list[status].players});
         }
@@ -82,6 +87,34 @@ io.sockets.on("connection", function(socket){
     socket.on('start_game', function(data) {
         getPrivateLobby(data.lobby_name);
         io.sockets.in(data.lobby_name).emit('start_game');
+    });
+
+    socket.on("disconnect", function() {
+        if(clients[socket.id] !== 0){
+            var status = getPrivateLobby(clients[socket.id]);
+            if (status === -1){
+                //Lobby doesn't exist
+                socket.emit('leave_status', {'success': false, 'reason': "Lobby doesn't exist"});
+            }else if(private_lobby_list[status].players.length === 1){
+                //Last person in lobby
+                private_lobby_list[status].players.splice(status, 1);
+                private_lobby_list.splice(status,1);
+                socket.emit('leave_status', {'success': true});
+            }else if(status >= 0){
+                //Succesfully found leave lobby
+                //Take out player
+                for(var i = 0; i < private_lobby_list[status].players.length; i++){
+                    if(private_lobby_list[status].players[i].id === socket.id){
+                        private_lobby_list[status].players.splice(i, 1);
+                    }
+                }
+                socket.leave(clients[socket.id]);
+                clients[socket.id] = 0;
+                socket.emit('leave_status', {'success': true});
+                io.sockets.in(clients[socket.id]).emit('lobby_update',{'players': private_lobby_list[status].players});
+            }
+        }
+        delete clients[socket.id]
     });
 });
 

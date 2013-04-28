@@ -7,11 +7,12 @@ function Player(playerX, playerY) {
 	this.gravity = 1.2;
 	this.width = window.block_y/5 * 6;
 	this.height = window.block_y * 2;
-	this.speed = {x : 0, y : 0};
+	this.speed = {x : 5, y : 0};
 	this.image = new Image();
 	this.xOffset = 2*window.block_x;
 	this.jumpTimeLeft = 0;
 	this.floor = canvasHeight - window.block_y;
+	this.xSpeedBase = 5;
 	this.xSpeedLimit = 25;
 	this.animationFrame = 0;
 	this.image.src = "/images/dinosaur_animation.png";
@@ -74,39 +75,45 @@ function Player(playerX, playerY) {
 
 	}.bind(this);
 
+	this.checkFloor = function(y, terrain){
+		for(var i = y; i < 8; i++){
+			if(terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + (i * 16)] === 1){
+				this.floor = canvasHeight - (8 - i)*window.block_y;
+				break;
+			}
+		}
+	}
+
+	this.checkAhead = function(y, terrain){
+		var ahead = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)];
+		if(ahead === 2){
+			console.log("hit!");
+			this.speed.x = this.xSpeedBase;
+		}else if(ahead === 4){
+			//end game
+			console.log("end");
+			endGame();
+			return;
+		}
+	}
+
 	this.update = function(terrain) {
 		// advance the animation frame
 		if (this.speed.x == 0 || !this.onFloor())
 			this.animationFrame = 0;
 		this.animationFrame = (this.animationFrame + (this.speed.x / 40)) % 5;
-		
-		var block_progress = Math.floor((this.x + this.width)/window.block_x);
+
+		progress = Math.floor((this.x + this.width)/window.block_x);
 
 		// Update player race progression; -8 accounts for the end being at the mid point
-		this.race_progress = block_progress / ((level.level_data.length -1) * 16);
-
-
-
+		this.race_progress = progress / ((level.level_data.length) * 16 - 8);
 		var y_block = Math.ceil(this.y/window.block_y);
 
 		//Deals with changing floor height
 		this.floor = canvasHeight;
 
-		for(var i = y_block; i < 8; i++){
-			if(terrain[Math.floor(block_progress/16)][0][block_progress - (Math.floor(block_progress/16) * 16) + (i * 16)] === 1){
-				this.floor = canvasHeight - (8 - i)*window.block_y;
-				break;
-			}
-		}
-
-		var player_block_y = Math.floor(this.y/window.block_y);
-
-		//Check if end
-		if(terrain[Math.floor(block_progress/16)][0][block_progress - (Math.floor(block_progress/16) * 16) + ((8-player_block_y) * 16)] === 4){
-			//end game
-			console.log("end");
-			endGame();
-		}
+		this.checkFloor(y_block, terrain);
+		this.checkAhead(y_block, terrain);
 		
 		//Slowly increase player speed
 		// Limit horizontal speed
@@ -116,8 +123,7 @@ function Player(playerX, playerY) {
 		
 		//Handle jumping
 		if (this.jumpTimeLeft > 0) {
-			//this.speed.y -= 5;
-			this.speed.y -= window.block_y/22;
+			this.speed.y -= 5;
 			this.jumpTimeLeft -= 25;
 		}
 		this.y += this.speed.y;
