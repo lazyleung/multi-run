@@ -10,7 +10,12 @@ var musicList = ['sound/airbrushed.mp3', 'sound/blackout_city.mp3'];
 var music;
 var race_progress;
 
-function initGame() {
+function initGame(socket, players, lobby_name) {
+	//socket = socket of the client
+	//players = list of players
+	console.log("socket = ", socket);
+	console.log("players = ", players);
+	console.log("lobby_name = ", lobby_name);
 	//Sets up the game
 	window.canvas = document.getElementById("myCanvas");
 	window.ctx = canvas.getContext("2d");
@@ -18,6 +23,9 @@ function initGame() {
 	//Screen split up 16x8 blocks
 	window.block_x = canvasWidth/16;
 	window.block_y = canvasHeight/8;
+
+	//Talk to server
+	
 
 	//Create new player
 	player = new Player(canvasWidth/3, canvasHeight - 1*window.block_y);

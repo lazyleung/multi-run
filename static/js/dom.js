@@ -71,7 +71,7 @@ function loadMenu() {
 }
 
 //loads the canvas and init the game
-function loadCanvas() {
+function loadCanvas(socket, players, lobby_name) {
  	$("body").html("Loaded!");
 
 	canvasWidth = $(window).width();
@@ -81,7 +81,7 @@ function loadCanvas() {
 
 	$("body").html(c);
 
-	initGame();
+	initGame(socket, players, lobby_name);
 }
 
 function loadCreateGame() {
@@ -203,7 +203,7 @@ function loadLobby(data) {
 	});
 
 	socket.on("start_game", function(data){
-		loadCanvas();
+		loadCanvas(socket, data.players, data.lobby_name);
 	});
 }
 

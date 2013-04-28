@@ -86,7 +86,8 @@ io.sockets.on("connection", function(socket){
     //Start Game
     socket.on('start_game', function(data) {
         getPrivateLobby(data.lobby_name);
-        io.sockets.in(data.lobby_name).emit('start_game');
+        var lobby = getPrivateLobby(data.lobby_name);
+        io.sockets.in(data.lobby_name).emit('start_game', {'lobby_name': data.lobby_name, 'players': private_lobby_list[lobby].players});
     });
 
     socket.on("disconnect", function() {
