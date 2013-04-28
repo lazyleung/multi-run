@@ -99,39 +99,8 @@ function loadCreateGame() {
  	});
 
  	//Sockets
-<<<<<<< HEAD
  	socket.on("create_lobby_status", function(data){
  		loadLobby(data);
-=======
- 	socket.on("lobby_status", function(data){
- 		//console.log(data);
- 		if (data.success) {
- 			var lobby_id = data.lobby_id;
- 			showNotification("Created Lobby!");
- 			content_area.empty();
- 			var title = $("<h1>").html("Waiting for players");
- 			content_area.append(title);
- 			var start_game = $("<div>").html("Start Game").attr("id","start_button").addClass("button");
- 			$("#start_button").hammer().on("tap", loadCanvas);
- 			var players = $("<ul>").attr("id", "players");
- 			content_area.append(players);
-
- 			//Auto refresh lobby details
- 			setInterval(function(){
- 				socket.emit("get_lobby_details", {lobby_id: lobby_id});
- 				socket.on("lobby_details", function(data){
- 				var players_area = $("#players");
- 				players_area.empty();
- 				for(i = 0; i < data.clients.length; i++){
- 						var player = $("<li>").html(String(data.clients[i]));
- 						players_area.append(player);
- 					}
- 				});
- 			}, 1000);
- 		} else {
- 			showNotification("Error Creating Lobby, please try again");
- 		}
->>>>>>> 92b9cf4290811bef73a1eb0a054604e84a0b9920
  	});
 }
 
@@ -180,16 +149,10 @@ function loadFindGame() {
  	//navbar
  	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
  	var navbar = $('#navbar');
  	navbar.empty();
  	navbar.append(back_button);
 
-=======
->>>>>>> 92b9cf4290811bef73a1eb0a054604e84a0b9920
-=======
->>>>>>> 92b9cf4290811bef73a1eb0a054604e84a0b9920
  	//Touch 
 	$("#back_button").hammer().on("tap", loadMenu);
 	$("#join_lobby_button").hammer().on("tap", function(){
