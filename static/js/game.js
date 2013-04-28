@@ -8,6 +8,7 @@ var level;
 var gameInterval;
 var musicList = ['sound/airbrushed.mp3', 'sound/game2.mp3'];
 var music;
+var race_progress;
 
 function initGame() {
 	//Sets up the game

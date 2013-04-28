@@ -3,7 +3,7 @@
 var canvasWidth;
 var canvasHeight;
 var user;
-var menuMusic = new Audio("sound/alright!.mp3");
+var menuMusic = new Audio("sound/koji_pocket.mp3");
 
 $(document).ready(function(){
 	loadLogin();
