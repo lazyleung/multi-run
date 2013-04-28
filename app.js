@@ -20,29 +20,55 @@ var app = express();
 var util = require("util")
 var io = require('socket.io').listen(8888);
 var clients = new Object();
+var lobby_names = new Object();
+var private_lobby_list = new Array();
+var public_lobby_list = [{'name': 'Alpha', 'players': []}, {'beta': 'Alpha', 'players': []}];
 
 // Tell socket io to listen for new connections
 io.sockets.on("connection", function(socket){
-    socket.on('connect', connect(socket, data));
+    clients[socket.id] = data.username;
 
-    socket.on('join_lobby', function(data) {
-        console.log(data)
+    //Create Lobby
+    socket.on('create_lobby', function(data) {
+        if(!isPrivateLobby(data.lobby_name)){
+            var player = {'name': data.username, 'id': socket.id};
+            var lobby = {'name': data.lobby_name, 'players': [player], 'status': 'waiting'};
+
+            socket.join(data.lobby_name);
+            socket.emit('create_lobby_status', {'success': true, 'lobby_name': data.lobby_name, 'players': private_lobby_list[ private_lobby_list.push(lobby)-1].players,'player_id': 1});
+        } else {
+            socket.emit('create_lobby_status', {'success': false, 'reason': "Lobby name already exist"});
+        }
     });
 
+    //Start Game
     socket.on('start_game', function(data) {
         console.log(data)
     });
+
+    //Join lobby
+    socket.on('join_lobby', function(data){
+        var status = getPrivateLobby(data);
+        if(status >= 0){
+            //Succesfully joined lobby
+            var player = {'name': data.username, 'id': socket.id};
+            socket.join(data.lobby_name);
+            socket.emit('join_status', {'success': true, 'players': private_lobby_list[status].players, 'player_id': private_lobby_list[status].players.push(player)});
+            io.sockets.in(data.lobby_name).emit('lobby_update',{'players': private_lobby_list[status].players});
+        }else if (status === -1){
+            //Lobby full
+            socket.emit('join_status', {'success': false, 'reason': "Lobby full"});
+        }else if (status === -2){
+            //Lobby doesn't exist
+            socket.emit('join_status', {'success': false, 'reason': "Lobby doesn't exist"});
+        }
+    });
+
+    //Leave lobby
+    socket.on('leave_lobby', function(data) {
+
+    });
 });
-
-var connect = function(socket, data) {
-    // log client ID
-    util.log("New player has connected: "+client.id);
-
-    // Save client to hash object
-    clients[socket.id] = data;
-
-    socket.emit('ready', { clientId: data.clientId });
-}
 
 var disconnect = function(data) {
     util.log("Player has disconnected")
@@ -50,6 +76,10 @@ var disconnect = function(data) {
 
 var getRooms = function() {
  return Object.keys(io.sockets.manager.rooms);
+}
+
+var playerCount = function(room) {
+    return io.sockets.clients(room).length;
 }
 
 // get array of clients in a room
@@ -61,7 +91,6 @@ var getClientsInRoom = function(socketId, room){
     if(socketIds && socketIds.length > 0){
         // push every client to the result array
         for(var i = 0, len = socketIds.length; i < len; i++){
-   
             // check if the socket is not the requesting
             // socket
             if(socketIds[i] != socketId){
@@ -70,6 +99,31 @@ var getClientsInRoom = function(socketId, room){
         }
     }
     return clients;
+}
+
+function getPrivateLobby(data) {
+    for(var i = 0; i < private_lobby_list.length; i++){
+        if(private_lobby_list[i].name === data.lobby_name){
+            if(private_lobby_list[i].players.length > 4){
+                //No space in lobby
+                console.log(private_lobby_list[i].players.length);
+                return -2;
+            }
+            return i;
+        }
+    }
+    //No such lobby
+    return -1;
+}
+
+//returns true if the lobby name is in the provate lobby list
+function isPrivateLobby(name){
+    for(var i = 0; i < private_lobby_list.length; i++){
+        if(private_lobby_list[i].name === name){
+            return true;
+        }
+    }
+    return false;
 }
 
 
@@ -125,14 +179,14 @@ app.post('/login', function(req, res){
         if (e)
             res.send(e);
         else {
-        	mongoExpressAuth.getAccount(req, function(err, result){
+            mongoExpressAuth.getAccount(req, function(err, result){
                 if (err)
                     res.send(err);
                 else {
-                	res.send({
-                		"username": result.username,
-                		"success": true
-                	});
+                    res.send({
+                        "username": result.username,
+                        "success": true
+                    });
                 }
             });
         }
