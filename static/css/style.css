@@ -97,8 +97,17 @@ input:focus {
 /*-------------------------------------*/
 
 #logout_button {
-	float:left;
-	margin: 10px;
+	display: inline-block;
+	position: absolute;
+	left: 10%;
+	top: 1%;
+}
+
+#back_button {
+	display: inline-block;
+	position: absolute;
+	left: 10%;
+	top: 1%;
 }
 
 ul {
@@ -127,7 +136,6 @@ li{
 	position: absolute;
 	left: 90%;
 	top: 1%;
-
 }
 
 #title {
