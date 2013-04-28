@@ -15,6 +15,7 @@ function Player(playerX, playerY) {
 	this.xSpeedLimit = 25;
 	this.animationFrame = 0;
 	this.image.src = "/images/dinosaur_animation.png";
+	this.race_progress = 0;
 
 	this.init = function() {
 
@@ -50,7 +51,12 @@ function Player(playerX, playerY) {
 
 	this.draw = function() {
 		ctx.drawImage(this.image, ( 247 * Math.ceil(this.animationFrame)), 0, 247, 475, this.x, this.y - this.height, this.width, this.height);
+		// Draws player progress on minimap
+		this.drawProgression();
 	}
+	this.drawProgression = function() {
+		ctx.drawImage(this.image, 0, 0, 247, 475,  (this.race_progress * canvasWidth * .8) + this.xOffset - canvasWidth/15 , canvasHeight * .1, 247/8, 475/8);
+	}.bind(this)
 
 	var lowJump = function() {
 		if (this.onFloor() == true) {
@@ -69,13 +75,17 @@ function Player(playerX, playerY) {
 	}.bind(this);
 
 	this.update = function(terrain) {
-
 		// advance the animation frame
 		if (this.speed.x == 0 || !this.onFloor())
 			this.animationFrame = 0;
 		this.animationFrame = (this.animationFrame + (this.speed.x / 40)) % 5;
 		
-		progress = Math.floor((this.x + this.width)/window.block_x);
+		var block_progress = Math.floor((this.x + this.width)/window.block_x);
+
+		// Update player race progression; -8 accounts for the end being at the mid point
+		this.race_progress = block_progress / ((level.level_data.length -1) * 16);
+
+
 
 		var y_block = Math.ceil(this.y/window.block_y);
 
@@ -83,7 +93,7 @@ function Player(playerX, playerY) {
 		this.floor = canvasHeight;
 
 		for(var i = y_block; i < 8; i++){
-			if(terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + (i * 16)] === 1){
+			if(terrain[Math.floor(block_progress/16)][0][block_progress - (Math.floor(block_progress/16) * 16) + (i * 16)] === 1){
 				this.floor = canvasHeight - (8 - i)*window.block_y;
 				break;
 			}
@@ -92,7 +102,7 @@ function Player(playerX, playerY) {
 		var player_block_y = Math.floor(this.y/window.block_y);
 
 		//Check if end
-		if(terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((8-player_block_y) * 16)] === 4){
+		if(terrain[Math.floor(block_progress/16)][0][block_progress - (Math.floor(block_progress/16) * 16) + ((8-player_block_y) * 16)] === 4){
 			//end game
 			console.log("end");
 			endGame();
