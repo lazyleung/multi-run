@@ -114,6 +114,7 @@ function loadLobby(data) {
 	var socket = io.connect("http://localhost:8888");
 
 	var title = $("<h1>").html("Waiting for players");
+	var lobby_name = $("<h2>").html("Lobby: " + data.lobby_name);
 	var start_game = $("<div>").html("Start Game").attr("id","start_button").addClass("button");
 	var players = $("<ul>").attr("id", "players");
 
@@ -125,6 +126,7 @@ function loadLobby(data) {
 	var content_area = $("#content_area");
 	content_area.empty();
 	content_area.append(title);
+	content_area.append(lobby_name);
 	content_area.append(players);
 	content_area.append(start_game);
 

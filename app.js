@@ -51,7 +51,7 @@ io.sockets.on("connection", function(socket){
             //Succesfully joined lobby
             var player = {'name': data.username, 'id': socket.id};
             socket.join(data.lobby_name);
-            socket.emit('join_status', {'success': true, 'players': private_lobby_list[status].players, 'player_id': private_lobby_list[status].players.push(player)});
+            socket.emit('join_status', {'success': true, 'lobby_name': data.lobby_name, 'players': private_lobby_list[status].players, 'player_id': private_lobby_list[status].players.push(player)});
             io.sockets.in(data.lobby_name).emit('lobby_update',{'players': private_lobby_list[status].players});
         }else if (status === -1){
             //Lobby full
