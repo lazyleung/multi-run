@@ -17,6 +17,8 @@ function Player(playerX, playerY) {
 	this.animationFrame = 0;
 	this.image.src = "/images/dinosaur_animation.png";
 	this.race_progress = 0;
+	this.end = new Image();
+	this.end.src = "/images/end.png";
 
 	this.init = function() {
 
@@ -53,8 +55,11 @@ function Player(playerX, playerY) {
 	this.draw = function() {
 		ctx.drawImage(this.image, ( 247 * Math.ceil(this.animationFrame)), 0, 247, 475, this.x, this.y - this.height, this.width, this.height);
 		// Draws player progress on minimap
+		ctx.drawImage(this.end, (canvasWidth*.75+ this.xOffset), (canvasHeight*.1), 247/8, 475/8);
 		this.drawProgression();
+
 	}
+
 	this.drawProgression = function() {
 		ctx.drawImage(this.image, 0, 0, 247, 475,  (this.race_progress * canvasWidth * .8) + this.xOffset - canvasWidth/15 , canvasHeight * .1, 247/8, 475/8);
 	}.bind(this)
