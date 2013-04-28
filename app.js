@@ -32,12 +32,15 @@ io.sockets.on("connection", function(socket){
     socket.on('create_lobby', function(data) {
         connect(socket, data);
 
-        var player = {'name': data.username, 'id': socket.id};
+        if(!isPrivateLobby(data.lobby_name)){
+            var player = {'name': data.username, 'id': socket.id};
+            var lobby = {'name': data.lobby_name, 'players': [player]};
 
-        var lobby = {'name': data.lobby_name, 'players': [player]};
-
-        socket.join(data.lobby_name);
-        socket.emit('create_lobby_status', {success: true, 'lobby_name': data.lobby_name, 'players': private_lobby_list[ private_lobby_list.push(lobby)-1].players,'player_id': 1});
+            socket.join(data.lobby_name);
+            socket.emit('create_lobby_status', {'success': true, 'lobby_name': data.lobby_name, 'players': private_lobby_list[ private_lobby_list.push(lobby)-1].players,'player_id': 1});
+        } else {
+            socket.emit('create_lobby_status', {'success': false, 'reason': "Lobby name already exist"});
+        }
     });
 
     //Start Game
@@ -137,6 +140,16 @@ function getPrivateLobby(data) {
     }
     //No such lobby
     return -1;
+}
+
+//returns true if the lobby name is in the provate lobby list
+function isPrivateLobby(name){
+    for(var i = 0; i < private_lobby_list.length; i++){
+        if(private_lobby_list[i].name === name){
+            return true;
+        }
+    }
+    return false;
 }
 
 

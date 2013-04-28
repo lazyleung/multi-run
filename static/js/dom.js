@@ -100,7 +100,11 @@ function loadCreateGame() {
 
  	//Sockets
  	socket.on("create_lobby_status", function(data){
- 		loadLobby(data);
+ 		if(data.success){
+ 			loadLobby(data);
+ 		} else {
+ 			showNotification(data.reason);
+ 		}
  	});
 }
 
