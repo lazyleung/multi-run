@@ -139,7 +139,8 @@ function loadFindGame() {
 
  	socket.on('join_status', function(data){
  		if (data.success) {
- 			showNotification("Created Lobby!");
+ 			usr.player_id = data.player_id;
+ 			usr.lobby_name = data.lobby_name;
  			loadLobby(data);
  		} else {
  			showNotification(data.reason);
