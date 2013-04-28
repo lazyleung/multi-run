@@ -55,10 +55,16 @@ function draw() {
 	ctx.save();
 	ctx.translate(2*window.block_x - player.xOffset, 0);
 
+
+
 	//Draw Level
 	level.draw(player.x);
 	//Draw player
 	player.draw();
+
+	//Draw Coin
+	coin = new Coin(500,500);
+	coin.draw();
 
 	ctx.restore();
 
