@@ -174,70 +174,70 @@ function loadFindGame() {
  		}
  	});
  	
- 	socket.on("lobbies", function(data){	
- 		if (data.success) {
- 			//showNotification("Found active lobbies!");
- 			var lobby_area = $("#lobbies");
- 			lobby_area.empty();
- 			for(i = 1; i < data.lobbies.length; i++){
- 				var lobby = $("<li>").html(String(data.names[data.lobbies[i]])).attr("id", i);
- 				$("#"+String(i)).hammer().on("tap", joinLobby(parseInt(data.lobbies[i].slice(1)), socket));
- 				lobby_area.append(lobby);
- 			}
+ 	// socket.on("lobbies", function(data){	
+ 	// 	if (data.success) {
+ 	// 		//showNotification("Found active lobbies!");
+ 	// 		var lobby_area = $("#lobbies");
+ 	// 		lobby_area.empty();
+ 	// 		for(i = 1; i < data.lobbies.length; i++){
+ 	// 			var lobby = $("<li>").html(String(data.names[data.lobbies[i]])).attr("id", i);
+ 	// 			$("#"+String(i)).hammer().on("tap", joinLobby(parseInt(data.lobbies[i].slice(1)), socket));
+ 	// 			lobby_area.append(lobby);
+ 	// 		}
 
-			for (i = 1; i < data.lobbies.length; i++){
- 				var lobby = $("#"+String(i));
- 				socket.emit('get_lobby_details', {lobby_id: data.lobbies[i]});
- 				socket.on('lobby_details', function(data){
- 					var player_count = $("<div>").html("Players: " + String(data.clients.length) + "/4");
- 					lobby.append(player_count);
- 				});
- 			}
+		// 	for (i = 1; i < data.lobbies.length; i++){
+ 	// 			var lobby = $("#"+String(i));
+ 	// 			socket.emit('get_lobby_details', {lobby_id: data.lobbies[i]});
+ 	// 			socket.on('lobby_details', function(data){
+ 	// 				var player_count = $("<div>").html("Players: " + String(data.clients.length) + "/4");
+ 	// 				lobby.append(player_count);
+ 	// 			});
+ 	// 		}
 
- 		} else {
- 			showNotification("Error getting lobbies");
- 		}
- 	});
+ 	// 	} else {
+ 	// 		showNotification("Error getting lobbies");
+ 	// 	}
+ 	// });
 }
 
-function joinLobby(lobby, socket){
-	//var socket = io.connect("http://localhost:8888");
-	console.log("called");
-	var content_area = $("#content_area");
+// function joinLobby(lobby, socket){
+// 	//var socket = io.connect("http://localhost:8888");
+// 	console.log("called");
+// 	var content_area = $("#content_area");
 
-	socket.emit("join_lobby", {username: usr.name, lobby_id: lobby});
- 	socket.on("join_status", function(data){
- 		//console.log(data);
- 		if (data.success) {
- 			var lobby_id = lobby;
- 			//showNotification("Created Lobby!");
- 			content_area.empty();
- 			var title = $("<h1>").html("Waiting for players");
- 			content_area.append(title);
- 			var lobby_name = $("<h1>").html(String(data.names[data.lobbies[lobby]]));
- 			var start_game = $("<div>").html("Start Game").attr("id","start_button").addClass("button");
- 			$("#start_button").hammer().on("tap", loadCanvas);
- 			var players = $("<ul>").attr("id", "players");
- 			content_area.append(lobby_name);
- 			content_area.append(players);
- 			//Auto refresh lobby details
- 			setInterval(function(){
- 				socket.emit("get_lobby_details", {lobby_id: lobby_id});
- 				socket.on("lobby_details", function(data){
- 				var players_area = $("#players");
- 				players_area.empty();
- 				for(i = 0; i < data.clients.length; i++){
- 						var player = $("<li>").html(String(data.clients[i]));
- 						players_area.append(player);
- 					}
- 				});
- 				//content_area.append(players_area);
- 			}, 1000);
- 		} else {
- 			showNotification("Error Creating Lobby, please try again");
- 		}
- 	});
-}
+// 	socket.emit("join_lobby", {username: usr.name, lobby_id: lobby});
+//  	socket.on("join_status", function(data){
+//  		//console.log(data);
+//  		if (data.success) {
+//  			var lobby_id = lobby;
+//  			//showNotification("Created Lobby!");
+//  			content_area.empty();
+//  			var title = $("<h1>").html("Waiting for players1");
+//  			content_area.append(title);
+//  			var lobby_name = $("<h1>").html(String(data.names[data.lobbies[lobby]]));
+//  			var start_game = $("<div>").html("Start Game").attr("id","start_button").addClass("button");
+//  			$("#start_button").hammer().on("tap", loadCanvas);
+//  			var players = $("<ul>").attr("id", "players");
+//  			content_area.append(lobby_name);
+//  			content_area.append(players);
+//  			//Auto refresh lobby details
+//  			setInterval(function(){
+//  				socket.emit("get_lobby_details", {lobby_id: lobby_id});
+//  				socket.on("lobby_details", function(data){
+//  				var players_area = $("#players");
+//  				players_area.empty();
+//  				for(i = 0; i < data.clients.length; i++){
+//  						var player = $("<li>").html(String(data.clients[i]));
+//  						players_area.append(player);
+//  					}
+//  				});
+//  				//content_area.append(players_area);
+//  			}, 1000);
+//  		} else {
+//  			showNotification("Error Creating Lobby, please try again");
+//  		}
+//  	});
+// }
 
 //loads the profile
 function loadProfile() {
