@@ -87,7 +87,7 @@ function Level(seed){
 	//generate premade or radnom level
 	switch(seed) {
 		case 1:
-			this.make_level([flat, flat, platform_powerup, flat, flat, platform, flat, flat]);
+			this.make_level([flat, flat, flat_obstacle, flat, flat, flat_obstacle]);
 			break;
 		case 2:
 			this.make_level([flat, flat, flat_obstacle, flat, flat, platform, platform_powerup, platform, flat, flat, platform_powerup, flat, flat, platform, flat, flat, platform, flat]);
