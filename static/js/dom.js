@@ -162,6 +162,7 @@ function loadLobby(data) {
 
 	var title = $("<h1>").html(data.lobby_name + " Waiting for players");
 	var lobby_name = $("<h2>").html("Lobby: " + data.lobby_name);
+	var players_count = $("<h2>").html("Players: " + String(data.players.length) + "/4").attr("id", "count");
 	var start_game = $("<div>").html("Start Game").attr("id","start_button").addClass("button");
 	var players = $("<ul>").attr("id", "players");
 
@@ -174,6 +175,7 @@ function loadLobby(data) {
 	content_area.empty();
 	content_area.append(title);
 	content_area.append(lobby_name);
+	content_area.append(players_count);
 	content_area.append(players);
 	content_area.append(start_game);
 
@@ -197,6 +199,8 @@ function loadLobby(data) {
 			var player = $("<li>").html(data.players[i].name);
 			players.append(player);
 		}
+		$("#count").empty();
+		$("#count").html("Players: " + String(data.players.length) + "/4");
 	});
 }
 
