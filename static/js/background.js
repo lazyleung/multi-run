@@ -1,9 +1,10 @@
 function Background() {
-	this.BGcolor = "rgb(130,160,230)";
 	this.clouds = new Array();
 	this.cloudSpawnTime = 10;
 	this.mountains = new Array();
 	this.mountainSpawnTime = 15;
+	this.backgroundImg = new Image();
+	this.backgroundImg.src = 'images/background.png'; // gradient start: a9c2ff | gradient end: 7391d5
 
 	this.update = function() {
 		//Cloud stuff
@@ -58,7 +59,7 @@ function Background() {
 	this.draw = function() {
 		ctx.save();
 		//background
-		ctx.fillStyle = this.BGcolor;
+		ctx.fillStyle = ctx.createPattern(this.backgroundImg, 'repeat-x');
 		ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
 		//mountains
