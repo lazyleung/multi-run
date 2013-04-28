@@ -4,11 +4,12 @@ var canvasWidth;
 var canvasHeight;
 var user;
 var menuMusic = new Audio("sound/alright!.mp3");
-var socket = io.connect("http://localhost:8888");
+var socket;
 
 $(document).ready(function(){
 	loadLogin();
 	usr = new User();
+	socket = io.connect("http://localhost:8888");
 });
 
 //loads the login page
