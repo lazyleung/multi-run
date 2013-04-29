@@ -35,13 +35,9 @@ function Player(playerX, playerY) {
 		    	highJump();
 		    }
 		});
-		$('body').hammer().on("swipedown", function(event) {
-			event.gesture.preventDefault();
-		    console.log("swipedown");
-		});
 		$('body').hammer().on("swipeleft", function(event) {
 			event.gesture.preventDefault();
-		    console.log("swipeleft");
+		    this.slowDown();
 		});
 	}
 	
@@ -77,7 +73,7 @@ function Player(playerX, playerY) {
 	}.bind(this);
 
 	var slowDown = function() {
-
+		this.speed.x = this.xSpeedBase;
 	}.bind(this);
 
 	this.checkFloor = function(y, terrain){
