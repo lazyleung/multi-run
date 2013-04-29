@@ -108,6 +108,7 @@ function Level(seed){
 // 2: obstacle
 // 3: powerup
 // 4: end
+// 5: coin
 
 var flat = new Array();
 flat[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
