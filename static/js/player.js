@@ -20,6 +20,7 @@ function Player(playerX, playerY) {
 	this.end.src = "/images/end.png";
 	this.points = 0;
 	this.hit = 0;
+	// this.fireballDefau
 
 	this.init = function() {
 		// Setup touch handler
@@ -91,6 +92,10 @@ function Player(playerX, playerY) {
 				break;
 			}
 		}
+	}
+
+	this.shootFire = function(direction) {
+		level.fireballArray
 	}
 
 	this.checkAhead = function(y, terrain){

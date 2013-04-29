@@ -3,7 +3,7 @@ function Mountain(type, size) {
 	this.y = canvasHeight;
 	this.w;
 	this.h;
-	this.speed = 10;
+	this.speed = 7;
 	this.img = new Image();
 	this.img.src = "/images/mountain_sprites.png"
 	this.sx;

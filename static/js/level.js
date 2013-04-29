@@ -13,6 +13,7 @@ function Level(seed){
 	this.box.src = "/images/wooden_crate.png";
 	this.coinArray;
 	this.boxArray = new Array();
+	this.fireballArray = new Array();
 	this.animationFrame = 0;
 
 	//assign terrain data
