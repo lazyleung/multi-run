@@ -11,6 +11,8 @@ var race_progress;
 var clcount;
 var clinterval;
 
+var playerViews = new Array();
+
 function initGame(players, lobby_name) {
 	//players = list of players
 	console.log("players = ", players);
@@ -34,6 +36,11 @@ function initGame(players, lobby_name) {
 	player = new Player(canvasWidth/3, canvasHeight - 1*window.block_y);
 
 	//Create view for players
+	players.forEach(function(player){
+		if (player.name !== usr.name){
+			playerViews.push(new playerView(player.name, player.id));
+		}
+	});
 
 	// Add timer
 	timer = new Timer(5);
@@ -78,9 +85,18 @@ function draw() {
 	timer.draw();
 }
 
+function updatePlayers(data){
+	data.players.forEach(function(player_view_data){
+		player_view = players[indexOf(player_view_data.name)];
+		player_view.speed = player_view_data.speed;
+		player_view.update();
+	});
+}
+
 function update() {
 	background.update();
 	player.update(level.terrain_data);
+	socket.emit("update", {'name': usr.name, 'pos': player.speed})
 	timer.update();
 	draw();
 }

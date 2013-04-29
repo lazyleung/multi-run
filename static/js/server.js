@@ -38,13 +38,18 @@ function login(username, password){
 	    },
 	    url: "/login",
 	    success: function(data) {
+	    	console.log(data);
 			//Load user data
 			usr.name = data.username;
 			usr.pwd = data.password;
+			usr.charNum = data.charNum;
+			usr.setChar(data.charNum);
+			usr.highscores = data.highscores;
 			loadMenu();
 			showNotification("Welcome" + " " + usr.name + "!");
 	    },
 	    error: function(data) {
+	    	console.log(data);
 	    	showNotification("Login failed!");
 	    }
 	});
@@ -142,6 +147,14 @@ function initSock(){
 			clcount = 3;
 			clearInterval(clinterval);
 			clinterval = setInterval(countdown, 1000);
+		}
+	});
+
+	socket.on("update_players", function(data){
+		if(data.success){
+			updatePlayers(data);
+		} else {
+			showNotification(data.reason);
 		}
 	});
 }
