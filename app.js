@@ -87,10 +87,18 @@ io.sockets.on("connection", function(socket){
 
     //Start Game
     socket.on('start_game', function(data) {
-        console.log("******** start_game signal recieved* *********")
-        //Error checking
         var status = getPrivateLobby(data.lobby_name);
-        io.sockets.in(data.lobby_name).emit('start_game_signal', {'success': true, 'lobby_name': data.lobby_name, 'players': private_lobby_list[status].players});
+        if (status === -1){
+            //Lobby doesn't exist
+            socket.emit('leave_status', {'success': false, 'reason': "Lobby doesn't exist"});
+        }else if(private_lobby_list[status].status === "waiting"){
+            //Lobby is waiting so okay
+            private_lobby_list[status].status = "playing";
+            io.sockets.in(data.lobby_name).emit('start_game_signal', {'success': true, 'lobby_name': data.lobby_name, 'players': private_lobby_list[status].players});
+        } else {
+            //Lobby either playing or finished
+            socket.emit('leave_status', {'success': false, 'reason': "Lobby is " + private_lobby_list[status].status});
+        }
     });
 
     socket.on("disconnect", function() {

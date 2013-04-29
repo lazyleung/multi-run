@@ -12,6 +12,7 @@ function Level(seed){
 	this.box = new Image();
 	this.box.src = "/images/wooden_crate.png";
 	this.coin_array = new Array();
+	this.boxArray = new Array();
 
 	//assign terrain data
 	this.make_level = function(levels) {
@@ -21,8 +22,8 @@ function Level(seed){
 		for(var i = 0; i < levels.length; i++) {
 			this.level_data[i] = levels[i][1][0];
 		}
-		console.log(levels);
-		console.log(this.level_data);
+		// console.log(levels);
+		// console.log(this.level_data);
 	}
 
 	//Draw all the correct level terrain

@@ -1,9 +1,6 @@
 function Box(boxX, boxY) {
 	this.x = boxX;
 	this.y = boxY;
-	this.airFriction = .05;
-	this.gravity = .1;
-	this.onFloor = true;
 	this.width = 60;
 	this.height = 100;
 	this.image = new Image();
