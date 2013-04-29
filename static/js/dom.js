@@ -10,11 +10,54 @@ var socket;
 $(document).ready(function(){
 	loadLogin();
 	usr = new User();
-	socket = io.connect("http://localhost:8888");
+	initSock();
 });
+
+function initSock(){
+	socket = io.connect("http://localhost:8888");
+
+	socket.on("create_lobby_status", function(data){
+ 		if(data.success){
+ 			usr.player_id = data.player_id;
+ 			usr.lobby_name = data.lobby_name;
+ 			loadLobby(data);
+ 		} else {
+ 			showNotification(data.reason);
+ 		}
+ 	});
+
+ 	socket.on('join_status', function(data){
+ 		if (data.success) {
+ 			usr.player_id = data.player_id;
+ 			usr.lobby_name = data.lobby_name;
+ 			loadLobby(data);
+ 		} else {
+ 			showNotification(data.reason);
+ 		}
+ 	});
+
+ 	socket.on("lobby_update", function(data){
+ 		var players = $("#players");
+		players.empty();
+		for(var i = 0; i < data.players.length; i++){
+			var player = $("<li>").html(data.players[i].name);
+			players.append(player);
+		}
+		$("#count").empty();
+		$("#count").html("Players: " + String(data.players.length) + "/4");
+	});
+
+	socket.on("start_game_signal", function(data){
+		if(data.success){
+			console.log("Starting game!");
+			loadCanvas(data.players, data.lobby_name);
+		}
+	});
+}
 
 //loads the login page
 function loadLogin() {
+	removeHammer();
 	var username = $("<input>").attr("type","text").attr("id","login_username").attr("placeholder","Username");
 	var password = $("<input>").attr("type","password").attr("id","login_password").attr("placeholder","Password");
 
@@ -36,6 +79,7 @@ function loadLogin() {
 
 //loads the menu
 function loadMenu() {
+	removeHammer();
 	// Load menu music and loop it
 	menuMusic.addEventListener('ended', function() {
     	this.currentTime = 0;
@@ -72,6 +116,7 @@ function loadMenu() {
 
 //loads the canvas and init the game
 function loadCanvas(players, lobby_name) {
+	removeHammer();
  	$("body").html("Loaded!");
 
 	canvasWidth = $(window).width();
@@ -85,6 +130,7 @@ function loadCanvas(players, lobby_name) {
 }
 
 function loadCreateGame() {
+	removeHammer();
  	//UI
  	//Content area
 	var create_lobby = $("<div>").html("Create Lobby").attr("id","create_lobby_button").addClass("button");
@@ -108,20 +154,10 @@ function loadCreateGame() {
  		var	lobby_name = $("#lobby_name").val();
  		socket.emit('create_lobby',{'username': usr.name, 'lobby_name': lobby_name});
  	});
-
- 	//Sockets
- 	socket.on("create_lobby_status", function(data){
- 		if(data.success){
- 			usr.player_id = data.player_id;
- 			usr.lobby_name = data.lobby_name;
- 			loadLobby(data);
- 		} else {
- 			showNotification(data.reason);
- 		}
- 	});
 }
 
 function loadFindGame() {
+	removeHammer();
 	//UI
  	var lobby_name_input = $("<input>").attr("type","text").attr("id","lobby_name").attr("placeholder","Lobby Name");
  	var join_lobby = $("<div>").html("Join Lobby").attr("id","join_lobby_button").addClass("button");
@@ -143,19 +179,10 @@ function loadFindGame() {
 	$("#join_lobby_button").hammer().on("tap", function(){
  		socket.emit('join_lobby',{'username': usr.name, 'lobby_name': $("#lobby_name").val()});
  	});
-
- 	socket.on('join_status', function(data){
- 		if (data.success) {
- 			usr.player_id = data.player_id;
- 			usr.lobby_name = data.lobby_name;
- 			loadLobby(data);
- 		} else {
- 			showNotification(data.reason);
- 		}
- 	});
 }
 
 function loadLobby(data) {
+	removeHammer();
 	var title = $("<h1>").html(data.lobby_name + " Waiting for players");
 	var lobby_name = $("<h2>").html("Lobby: " + data.lobby_name);
 	var players_count = $("<h2>").html("Players: " + String(data.players.length) + "/4").attr("id", "count");
@@ -183,35 +210,17 @@ function loadLobby(data) {
  	navbar.append(back_button);
 
 	$("#start_button").hammer().on("tap", function(){
-
 		socket.emit('start_game', {'lobby_name': usr.lobby_name});
 	});
 	$("#back_button").hammer().on("tap", function(){
 		socket.emit('leave_lobby', {'username': usr.name, 'lobby_name': usr.lobby_name, 'player_id': usr.player_id});
 		loadMenu();
 	});
-
-	socket.on("lobby_update", function(data){
-		console.log("Update!");
-		players.empty();
-		for(var i = 0; i < data.players.length; i++){
-			var player = $("<li>").html(data.players[i].name);
-			players.append(player);
-		}
-		$("#count").empty();
-		$("#count").html("Players: " + String(data.players.length) + "/4");
-	});
-
-	socket.on("start_game_signal", function(data){
-		if(data.success){
-			console.log("Starting game!");
-			loadCanvas(data.players, data.lobby_name);
-		}
-	});
 }
 
 //loads the profile
 function loadProfile() {
+	removeHammer();
  	var username = $("<div>").html("Username: " + usr.name);
 
  	//Back Button
@@ -227,6 +236,7 @@ function loadProfile() {
 
 //loads the settings
 function loadSettings() {
+	removeHammer();
 	//Back Button
 	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
 	
@@ -249,6 +259,7 @@ function showNotification(message) { // type is "green" or "red"
 
 //Loads title and content area
 function loadContent() {
+	removeHammer();
 	var navbar = $("<div>").attr("id","navbar");
 	var title = $("<h1>").html("Multi-Run");
 	var content_area = $("<div>").attr("id","content_area");
@@ -258,4 +269,18 @@ function loadContent() {
 	body.append(navbar);
 	body.append(title);
 	body.append(content_area);
+}
+
+function removeHammer(){
+	$("#login_button").hammer().off("tap");
+	$("#register_button").hammer().off("tap");
+	$("#logout_button").hammer().off("tap");
+	$("#create_game_button").hammer().off("tap");
+	$("#join_game_button").hammer().off("tap");
+	$("#profile_button").hammer().off("tap");
+	$("#settings_button").hammer().off("tap");
+	$("#create_lobby_button").hammer().off("tap");
+	$("#back_button").hammer().off("tap");
+	$("#join_lobby_button").hammer().off("tap");
+	$("#start_button").hammer().off("tap");
 }

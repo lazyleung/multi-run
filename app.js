@@ -87,6 +87,7 @@ io.sockets.on("connection", function(socket){
 
     //Start Game
     socket.on('start_game', function(data) {
+        console.log("******** start_game signal recieved* *********")
         //Error checking
         var status = getPrivateLobby(data.lobby_name);
         io.sockets.in(data.lobby_name).emit('start_game_signal', {'success': true, 'lobby_name': data.lobby_name, 'players': private_lobby_list[status].players});
