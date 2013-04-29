@@ -144,4 +144,12 @@ function initSock(){
 			clinterval = setInterval(countdown, 1000);
 		}
 	});
+
+	socket.on("update_players", function(data){
+		if(data.success){
+			updatePlayers(data);
+		} else {
+			showNotification(data.reason);
+		}
+	});
 }

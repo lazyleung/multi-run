@@ -1,5 +1,6 @@
-function playerView(name){
+function playerView(name, id){
 	this.name = name;
+	this.id = id;
 	this.image = new Image();
 	this.image.src = "/images/dinosaur_animation.png";
 	this.speed;
@@ -7,7 +8,7 @@ function playerView(name){
 	this.height = window.block_y * 2;
 	this.animationFrame = 0;
 	this.race_progress = 0;
-	
+
 	this.draw = function() {
 		ctx.drawImage(this.image, ( 247 * Math.ceil(this.animationFrame)), 0, 247, 475, this.x, this.y - this.height, this.width, this.height);
 		// Draws player progress on minimap
