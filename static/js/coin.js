@@ -20,17 +20,16 @@ Coin.prototype.draw = function(){
 	if (this.animationFrame === 0) {
 	//	console.log("A");
 		ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-	}
-	//} else if (this.animationFrame === 1) {
+	} else if (this.animationFrame === 1) {
 	//	console.log("B");
-	//	ctx.drawImage(this.img2, this.x, this.y, this.width, this.height);
-	//} else if (this.animationFrame === 2) {	
+		ctx.drawImage(this.img2, this.x, this.y, this.width, this.height);
+	} else if (this.animationFrame === 2) {	
 	//	console.log("C");
-	//	ctx.drawImage(this.img3, this.x, this.y, this.width, this.height);
-	//} else {
+		ctx.drawImage(this.img3, this.x, this.y, this.width, this.height);
+	} else {
 		//console.log("D");
-		//ctx.drawImage(this.img4, this.x, this.y, this.width, this.height);
-	//}
-	//this.animationFrame = (this.animationFrame + 1)%4;
+		ctx.drawImage(this.img4, this.x, this.y, this.width, this.height);
+	}
+	this.animationFrame = (this.animationFrame + 1)%4;
 	//console.log(this.animationFrame);
 }

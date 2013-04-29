@@ -31,7 +31,6 @@ function Level(seed){
 		Math.floor(this.y/window.block_y);
 		var i = Math.floor(pos/window.block_x/16) - 1;
 		for(var count = 0;i < this.level_data.length && count < 3; count++){
-			console.log("i = ", i);
 			if (this.level_data[i] === "flat") {
 				for(var j = 0; j < 16; j++){
 					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
@@ -67,6 +66,9 @@ function Level(seed){
 				for(var j = 0; j < 16; j++){
 					if(j > 0 && j < 15){
 						ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - 4*window.block_y, window.block_x, window.block_y/4);
+						if (j % 3 === 0){
+							this.coin_array.push(new Coin(i*canvasWidth + j*window.block_x, canvasHeight - 5*window.block_y, window.block_x, window.block_y));
+						}
 					}
 					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
 				}
@@ -143,7 +145,7 @@ var platform = new Array();
 platform[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 0,
 			0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

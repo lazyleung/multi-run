@@ -20,6 +20,7 @@ function Player(playerX, playerY) {
 	this.end = new Image();
 	this.end.src = "/images/end.png";
 	this.points = 0;
+	this.coin_sound = new Audio("sound/coin.mp3")
 
 	this.init = function() {
 
@@ -120,9 +121,11 @@ function Player(playerX, playerY) {
 				endGame();
 				return;
 			case 5:
-				console.log("Got that $!");
-				this.points += 100;
-				console.log(this.points);
+				//console.log("Got that $!");
+				this.points += 50;
+				this.coin_sound.play();
+				//console.log(this.points);
+				//console.log("y block = ", )
 		}
 		
 		//Slowly increase player speed
