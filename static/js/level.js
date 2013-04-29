@@ -11,6 +11,7 @@ function Level(seed){
 	this.powerup.src = "/images/powerup.png";
 	this.box = new Image();
 	this.box.src = "/images/wooden_crate.png";
+	this.coin_array = new Array();
 
 	//assign terrain data
 	this.make_level = function(levels) {
@@ -30,14 +31,22 @@ function Level(seed){
 		Math.floor(this.y/window.block_y);
 		var i = Math.floor(pos/window.block_x/16) - 1;
 		for(var count = 0;i < this.level_data.length && count < 3; count++){
+			console.log("i = ", i);
 			if (this.level_data[i] === "flat") {
 				for(var j = 0; j < 16; j++){
 					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
+					if (j > 1 && j%4 === 0){
+						this.coin_array.push(new Coin(i*canvasWidth + j*window.block_x, canvasHeight-2*window.block_y, window.block_x, window.block_y));
+					}
 				}
 			} else if (this.level_data[i] === "flat_obstacle"){
 				for(var j = 0; j < 16; j++){
 					if(j === 9){
 						ctx.drawImage(this.box, i*canvasWidth + j*window.block_x, canvasHeight - 3*window.block_y, 2*window.block_y, 2*window.block_y);
+						this.coin_array.push(new Coin(i*canvasWidth + j*window.block_x, canvasHeight-5*window.block_y, window.block_x, window.block_y));
+					}
+					if(j === 10){
+						this.coin_array.push(new Coin(i*canvasWidth + j*window.block_x, canvasHeight-5*window.block_y, window.block_x, window.block_y));
 					}
 					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
 				}
@@ -71,6 +80,9 @@ function Level(seed){
 			}
 			i++;
 		}	
+		this.coin_array.forEach(function (coin){
+			coin.draw();
+		});
 	}
 
 	//generate premade or radnom level
@@ -101,7 +113,7 @@ flat[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 5,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,];
 flat[1] = ["flat"];
 
@@ -109,7 +121,7 @@ var flat_obstacle = new Array();
 flat_obstacle[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0,

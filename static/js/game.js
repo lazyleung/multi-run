@@ -29,10 +29,7 @@ function initGame(players, lobby_name) {
 	race_progress = 0;
 
 	//Coins
-	coin_array = new Array();
-	coin_array.push(new Coin(1000,500));
-	coin_array.push(new Coin(1250,500));
-	coin_array.push(new Coin(1500,500));
+
 
 	//Create new player
 	player = new Player(canvasWidth/3, canvasHeight - 1*window.block_y);
@@ -72,9 +69,9 @@ function draw() {
 	player.draw();
 
 	//Draw Coin
-	coin_array.forEach(function (coin){
-		coin.draw();
-	});
+	//coin_array.forEach(function (coin){
+		//coin.draw();
+	//});
 
 	ctx.restore();
 

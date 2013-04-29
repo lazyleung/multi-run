@@ -91,14 +91,6 @@ function Player(playerX, playerY) {
 
 	this.checkAhead = function(y, terrain){
 		return terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)];
-		if(ahead === 2){
-			console.log("hit!");
-			this.speed.x = this.xSpeedBase;
-		}else if(ahead === 4){
-			//end game
-			endGame();
-			return;
-		}
 	}
 
 	this.update = function(terrain) {
@@ -126,6 +118,8 @@ function Player(playerX, playerY) {
 			case 4:
 				endGame();
 				return;
+			case 5:
+				console.log("Got that $!");
 		}
 		
 		//Slowly increase player speed
