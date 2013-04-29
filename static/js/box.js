@@ -7,7 +7,7 @@ function Box(boxX, boxY) {
 	this.image.src = "/images/wooden_crate.png";
 }
 
-box.prototype.draw = function(ctx) {
+box.prototype.draw = function() {
 	ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 }
 

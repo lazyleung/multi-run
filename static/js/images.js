@@ -19,4 +19,7 @@ function Images(){
 	//Game
 	this.end = new Image();
 	this.end.src = "/images/end.png";
+
+	this.coin = new Image();
+	this.coin.src = "/images/coin.png";
 }
