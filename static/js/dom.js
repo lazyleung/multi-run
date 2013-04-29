@@ -3,7 +3,7 @@
 var canvasWidth;
 var canvasHeight;
 var user;
-var logo;
+var images;
 
 var music;
 var musicList = ['sound/airbrushed.mp3', 'sound/blackout_city.mp3'];
@@ -12,8 +12,8 @@ var socket;
 
 $(document).ready(function(){
 	loadLogin();
+	images = new Images();
 	usr = new User();
-	logo = new Logo();
 	initSock();
 });
 

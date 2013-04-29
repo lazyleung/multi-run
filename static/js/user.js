@@ -6,8 +6,7 @@ function User(){
 	this.highscores;
 	this.coins;
 
-	this.charImage = new Image();
-	this.charImage.src = "/images/dinosaur_animation.png";
+	this.charImage = images.dino1;
 
 	//Variables set for each lobby
 	this.lobby_name;

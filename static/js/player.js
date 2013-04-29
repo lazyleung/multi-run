@@ -8,8 +8,7 @@ function Player(playerX, playerY) {
 	this.width = window.block_y/5 * 6;
 	this.height = window.block_y * 2;
 	this.speed = {x : 5, y : 0};
-	this.image = new Image();
-	this.image.src = "/images/dinosaur_animation.png";
+	this.image = usr.charImage;
 	this.xOffset = 2*window.block_x;
 	this.jumpTimeLeft = 0;
 	this.floor = canvasHeight - window.block_y;
@@ -112,7 +111,6 @@ function Player(playerX, playerY) {
 
 		switch(this.checkAhead(y_block, terrain)){
 			case 2:
-				console.log("hit!");
 				this.speed.x = this.xSpeedBase;
 				break;
 			case 4:
