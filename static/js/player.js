@@ -9,13 +9,13 @@ function Player(playerX, playerY) {
 	this.height = window.block_y * 2;
 	this.speed = {x : 5, y : 0};
 	this.image = new Image();
+	this.image.src = "/images/dinosaur_animation.png";
 	this.xOffset = 2*window.block_x;
 	this.jumpTimeLeft = 0;
 	this.floor = canvasHeight - window.block_y;
 	this.xSpeedBase = 5;
 	this.xSpeedLimit = 25;
 	this.animationFrame = 0;
-	this.image.src = "/images/dinosaur_animation.png";
 	this.race_progress = 0;
 	this.end = new Image();
 	this.end.src = "/images/end.png";

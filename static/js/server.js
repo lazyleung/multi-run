@@ -139,7 +139,9 @@ function initSock(){
 	socket.on("start_game_signal", function(data){
 		if(data.success){
 			//Countdown
-			countdowninterval = setInterval(countdown, 1000);
+			clcount = 3;
+			clearInterval(clinterval);
+			clinterval = setInterval(countdown, 1000);
 		}
 	});
 }
