@@ -6,8 +6,7 @@ var progress;
 var background;
 var level;
 var gameInterval;
-var musicList = ['sound/airbrushed.mp3', 'sound/blackout_city.mp3'];
-var music;
+
 var race_progress;
 var clcount;
 var clinterval;
@@ -131,5 +130,6 @@ function countdown(){
 function drawLoading(){
 	ctx.clearRect(0,0,canvasWidth, canvasHeight);
 	ctx.drawImage(usr.charImage, 247 * (clcount % 5), 0, 247, 475, canvasWidth/2 - window.block_y/5 * 3, canvasHeight/2 - window.block_y, window.block_y/5 * 6, window.block_y * 2);
+	ctx.drawImage(logo.loading, 0, 0, 400, 100, canvasWidth/2 - window.block_y, canvasHeight/2 + window.block_y, window.block_y * 2, window.block_y/2);
 	clcount++;
 }

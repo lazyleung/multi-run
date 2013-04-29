@@ -3,13 +3,17 @@
 var canvasWidth;
 var canvasHeight;
 var user;
+var logo;
 
+var music;
+var musicList = ['sound/airbrushed.mp3', 'sound/blackout_city.mp3'];
 var menuMusic = new Audio("sound/koji_pocket.mp3");
 var socket;
 
 $(document).ready(function(){
 	loadLogin();
 	usr = new User();
+	logo = new Logo();
 	initSock();
 });
 
