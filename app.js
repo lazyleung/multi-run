@@ -252,19 +252,15 @@ app.get('/me', function(req, res){
 });
 
 app.post('/login', function(req, res){
-    mongoExpressAuth.login(req, res, function(e){
-        if (e)
+    mongoExpressAuth.login(req, res, function(e, result){
+        if (e){
             res.send(e);
-        else {
-            mongoExpressAuth.getAccount(req, function(err, result){
-                if (err)
-                    res.send(err);
-                else {
-                    res.send({
-                        "username": result.username,
-                        "success": true
-                    });
-                }
+        }else {
+            res.send({
+                "success": true,
+                "username": result.username,
+                "charNum": result.charNum,
+                "higscores": result.highscores
             });
         }
     });

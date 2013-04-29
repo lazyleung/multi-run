@@ -38,13 +38,18 @@ function login(username, password){
 	    },
 	    url: "/login",
 	    success: function(data) {
+	    	console.log(data);
 			//Load user data
 			usr.name = data.username;
 			usr.pwd = data.password;
+			usr.charNum = data.charNum;
+			usr.setChar(data.charNum);
+			usr.highscores = data.highscores;
 			loadMenu();
 			showNotification("Welcome" + " " + usr.name + "!");
 	    },
 	    error: function(data) {
+	    	console.log(data);
 	    	showNotification("Login failed!");
 	    }
 	});
