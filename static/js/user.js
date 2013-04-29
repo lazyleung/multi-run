@@ -4,7 +4,7 @@ function User(){
 	this.pwd;
 
 	this.highscores;
-	this.charImage;
+	this.charImage = images.dino_olive;
 
 	//Variables set for each lobby
 	this.lobby_name;
