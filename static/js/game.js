@@ -86,9 +86,11 @@ function draw() {
 }
 
 function updatePlayers(data){
-	players.forEach(function(player){
-
-	});	
+	data.players.forEach(function(player_view_data){
+		player_view = players[indexOf(player_view_data.name)];
+		player_view.speed = player_view_data.speed;
+		player_view.update();
+	});
 }
 
 function update() {
