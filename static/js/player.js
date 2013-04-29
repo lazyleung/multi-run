@@ -19,6 +19,7 @@ function Player(playerX, playerY) {
 	this.race_progress = 0;
 	this.end = new Image();
 	this.end.src = "/images/end.png";
+	this.points = 0;
 
 	this.init = function() {
 
@@ -120,6 +121,8 @@ function Player(playerX, playerY) {
 				return;
 			case 5:
 				console.log("Got that $!");
+				this.points += 100;
+				console.log(this.points);
 		}
 		
 		//Slowly increase player speed

@@ -75,6 +75,9 @@ function draw() {
 
 	ctx.restore();
 
+	ctx.font = "32px Arial";
+	ctx.fillStyle = "white";
+	ctx.fillText(String(player.points), canvasWidth-2*window.block_x, 40);
 	//Draw GUI
 	timer.draw();
 }
