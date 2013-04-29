@@ -6,6 +6,7 @@ function User(){
 	this.highscores;
 	this.coins;
 
+	//Variables set for each lobby
 	this.lobby_name;
 	this.player_id;
 }

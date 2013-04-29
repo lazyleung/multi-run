@@ -9,6 +9,8 @@ var gameInterval;
 var musicList = ['sound/airbrushed.mp3', 'sound/blackout_city.mp3'];
 var music;
 var race_progress;
+var countdown_num;
+var countdowninterval;
 
 function initGame(players, lobby_name) {
 	//players = list of players
@@ -27,12 +29,12 @@ function initGame(players, lobby_name) {
 	//Reset globals
 	progress = 0;
 	race_progress = 0;
-
-	//Coins
-
+	countdown_num = 3;
 
 	//Create new player
 	player = new Player(canvasWidth/3, canvasHeight - 1*window.block_y);
+
+	//Create other players
 
 	// Add timer
 	timer = new Timer(5);
@@ -43,8 +45,12 @@ function initGame(players, lobby_name) {
 	//Create Level
 	level = new Level(2);
 
-	//Start the game
-	startGame();
+	ctx.font = "50px Arial";
+	ctx.fillStyle = "white";
+	ctx.fillText("Loading", canvasWidth/2, canvasHeight/2);
+
+	//signal ready
+	socket.emit('ready_game', {'lobby_name': lobby_name, 'player_id': usr.player_id});
 }
 
 function draw() {
@@ -54,24 +60,15 @@ function draw() {
 	//Draw background
 	background.draw();
 
-
 	//Draw elements that we will be scrolling through
 	ctx.save();
 	ctx.translate(2*window.block_x - player.xOffset, 0);
 
-
-
 	//Draw Level
 	level.draw(player.x);
 
-
 	//Draw player
 	player.draw();
-
-	//Draw Coin
-	//coin_array.forEach(function (coin){
-		//coin.draw();
-	//});
 
 	ctx.restore();
 
@@ -96,6 +93,7 @@ function startGame() {
 	// Start music
 	music = new Audio(musicList[Math.floor(Math.random() * 2)])
 	music.play();
+	player.init();
 	gameInterval = setInterval(update, timeInterval);
 }
 
@@ -114,4 +112,18 @@ function exitGame(){
 	music.currentTime = 0;
 	loadContent();
 	loadMenu();
+}
+
+function countdown(){
+	draw();
+
+	if(countdown_num === 0){
+		clearInterval(countdowninterval);
+		startGame();
+	} else {
+		ctx.font = "50px Arial";
+		ctx.fillStyle = "white";
+		ctx.fillText(countdown_num, canvasWidth/2, canvasHeight/2);
+		countdown_num--;
+	}
 }

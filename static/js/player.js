@@ -23,8 +23,6 @@ function Player(playerX, playerY) {
 	this.coin_sound = new Audio("sound/coin.mp3")
 
 	this.init = function() {
-
-		console.log(this.speed);
 		// Setup touch handler
 		$('body').hammer().on("swipeup", function(event) {
 			event.gesture.preventDefault();
@@ -152,5 +150,4 @@ function Player(playerX, playerY) {
 		else if (!this.onFloor()) // whenever in air, add gravity
 			this.speed.y += this.gravity;
 	}
-	this.init();
 }

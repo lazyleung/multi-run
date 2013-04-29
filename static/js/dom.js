@@ -13,48 +13,6 @@ $(document).ready(function(){
 	initSock();
 });
 
-function initSock(){
-	socket = io.connect("http://localhost:8888");
-
-	socket.on("create_lobby_status", function(data){
- 		if(data.success){
- 			usr.player_id = data.player_id;
- 			usr.lobby_name = data.lobby_name;
- 			loadLobby(data);
- 		} else {
- 			showNotification(data.reason);
- 		}
- 	});
-
- 	socket.on('join_status', function(data){
- 		if (data.success) {
- 			usr.player_id = data.player_id;
- 			usr.lobby_name = data.lobby_name;
- 			loadLobby(data);
- 		} else {
- 			showNotification(data.reason);
- 		}
- 	});
-
- 	socket.on("lobby_update", function(data){
- 		var players = $("#players");
-		players.empty();
-		for(var i = 0; i < data.players.length; i++){
-			var player = $("<li>").html(data.players[i].name);
-			players.append(player);
-		}
-		$("#count").empty();
-		$("#count").html("Players: " + String(data.players.length) + "/4");
-	});
-
-	socket.on("start_game_signal", function(data){
-		if(data.success){
-			console.log("Starting game!");
-			loadCanvas(data.players, data.lobby_name);
-		}
-	});
-}
-
 //loads the login page
 function loadLogin() {
 	removeHammer();
@@ -210,7 +168,7 @@ function loadLobby(data) {
  	navbar.append(back_button);
 
 	$("#start_button").hammer().on("tap", function(){
-		socket.emit('start_game', {'lobby_name': usr.lobby_name});
+		socket.emit('load_game', {'lobby_name': usr.lobby_name});
 	});
 	$("#back_button").hammer().on("tap", function(){
 		socket.emit('leave_lobby', {'username': usr.name, 'lobby_name': usr.lobby_name, 'player_id': usr.player_id});
@@ -247,8 +205,7 @@ function loadSettings() {
 	$("#back_button").hammer().on("tap", loadMenu);
 }
 
-function showNotification(message) { // type is "green" or "red"
-	$('div').remove(".notification");
+function showNotification(message) {
 	var notification = $("<div>").addClass("notification").html($("<p>").html(message));
 	$("body").append(notification);
 	notification.hide();

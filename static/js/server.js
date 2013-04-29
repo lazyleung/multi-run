@@ -86,3 +86,60 @@ function logout(username, password){
 	    }
 	});
 }
+
+//Add socket listeners
+function initSock(){
+	socket = io.connect("http://localhost:8888");
+
+	socket.on("create_lobby_status", function(data){
+ 		if(data.success){
+ 			usr.player_id = data.player_id;
+ 			usr.lobby_name = data.lobby_name;
+ 			loadLobby(data);
+ 		} else {
+ 			showNotification(data.reason);
+ 		}
+ 	});
+
+ 	socket.on('join_status', function(data){
+ 		if (data.success) {
+ 			usr.player_id = data.player_id;
+ 			usr.lobby_name = data.lobby_name;
+ 			loadLobby(data);
+ 		} else {
+ 			showNotification(data.reason);
+ 		}
+ 	});
+
+ 	socket.on("lobby_update", function(data){
+ 		var players = $("#players");
+		players.empty();
+		for(var i = 0; i < data.players.length; i++){
+			var player = $("<li>").html(data.players[i].name);
+			players.append(player);
+		}
+		$("#count").empty();
+		$("#count").html("Players: " + String(data.players.length) + "/4");
+	});
+
+	socket.on("load_game_signal", function(data){
+		if(data.success){
+			loadCanvas(data.players, data.lobby_name);
+		}else{
+			showNotification("Cannot start game!");
+		}
+	});
+
+	socket.on("ready_game_signal"), function(data){
+		if(data.success){
+			//indicate certain player ready
+		}
+	}
+
+	socket.on("start_game_signal", function(data){
+		if(data.success){
+			//Countdown
+			countdowninterval = setInterval(countdown, 1000);
+		}
+	});
+}
