@@ -27,17 +27,15 @@ function Player(playerX, playerY) {
 			event.gesture.preventDefault();
 		    console.log(this, event);
 		    if (Math.abs(event.gesture.deltaY) <= 100) {
-		    	console.log("low jump");
 		    	lowJump();
 		    }
 		    else {
-		    	console.log("high jump");
 		    	highJump();
 		    }
 		});
 		$('body').hammer().on("swipeleft", function(event) {
 			event.gesture.preventDefault();
-		    this.slowDown();
+		    slowDown();
 		});
 	}
 	
@@ -73,7 +71,8 @@ function Player(playerX, playerY) {
 	}.bind(this);
 
 	var slowDown = function() {
-		this.speed.x = this.xSpeedBase;
+		if (this.speed.x > this.xSpeedBase + 10)
+			this.speed.x = this.xSpeedBase + 10;
 	}.bind(this);
 
 	this.checkFloor = function(y, terrain){
