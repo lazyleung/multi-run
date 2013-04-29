@@ -28,6 +28,12 @@ function initGame(players, lobby_name) {
 	progress = 0;
 	race_progress = 0;
 
+	//Coins
+	coin_array = new Array();
+	coin_array.push(new Coin(1000,500));
+	coin_array.push(new Coin(1250,500));
+	coin_array.push(new Coin(1500,500));
+
 	//Create new player
 	player = new Player(canvasWidth/3, canvasHeight - 1*window.block_y);
 
@@ -51,6 +57,7 @@ function draw() {
 	//Draw background
 	background.draw();
 
+
 	//Draw elements that we will be scrolling through
 	ctx.save();
 	ctx.translate(2*window.block_x - player.xOffset, 0);
@@ -59,12 +66,15 @@ function draw() {
 
 	//Draw Level
 	level.draw(player.x);
+
+
 	//Draw player
 	player.draw();
 
 	//Draw Coin
-	coin = new Coin(500,500);
-	coin.draw();
+	coin_array.forEach(function (coin){
+		coin.draw();
+	});
 
 	ctx.restore();
 
