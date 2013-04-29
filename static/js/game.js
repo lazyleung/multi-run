@@ -33,7 +33,7 @@ function initGame(players, lobby_name) {
 	//Create new player
 	player = new Player(canvasWidth/3, canvasHeight - 1*window.block_y);
 
-	//Create other players
+	//Create view for players
 
 	// Add timer
 	timer = new Timer(5);

@@ -44,6 +44,7 @@ function Player(playerX, playerY) {
 		    console.log("swipeleft");
 		});
 	}
+	
 	this.onFloor = function() {
 		if (this.y < this.floor)
 			return false;
