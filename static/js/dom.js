@@ -11,10 +11,10 @@ var menuMusic = new Audio("sound/koji_pocket.mp3");
 var socket;
 
 $(document).ready(function(){
-	loadLogin();
 	images = new Images();
 	usr = new User();
 	initSock();
+	checkLogin();
 });
 
 //loads the login page
@@ -34,6 +34,9 @@ function loadLogin() {
  	content_area.append(login);
  	content_area.append(register);
 
+ 	var navbar = $('#navbar');
+ 	navbar.empty();
+
  	//Add touch listeners
  	$("#login_button").hammer().on("tap", startLogin);
  	$("#register_button").hammer().on("tap", startRegister);
@@ -49,8 +52,6 @@ function loadMenu() {
 	}, false);
 	menuMusic.play();
 
-
-	var navbar = $('#navbar');
  	var menu = $("<ul>");
  	menu.append($("<li>").html("Create A Game").attr("id","create_game_button"));
  	menu.append($("<li>").html("Join A Game").attr("id", "join_game_button"));
@@ -61,6 +62,7 @@ function loadMenu() {
  	content_area.append(menu);
 
  	// Create navbar
+ 	var navbar = $('#navbar');
  	navbar.empty();
  	var settings_button = $("<img>").attr("src", "images/gear.png").attr('id', 'settings_button').height('30px').width('30px');
  	var logout = $("<div>").html("logout").attr("id","logout_button").addClass("button");
