@@ -36,11 +36,11 @@ function initGame(players, lobby_name) {
 	player = new Player(canvasWidth/3, canvasHeight - 1*window.block_y);
 
 	//Create view for players
-	players.forEach(function(player){
-		if (player.name !== usr.name){
-			playerViews.push(new playerView(player.name, player.id));
+	for(var p in players){
+		if (players[p].name !== usr.name){
+			//playerViews.push(new playerView(players[p].name));
 		}
-	});
+	}
 
 	// Add timer
 	timer = new Timer(5);
@@ -96,7 +96,7 @@ function updatePlayers(data){
 function update() {
 	background.update();
 	player.update(level.terrain_data);
-	socket.emit("update", {'name': usr.name, 'pos': player.speed})
+	//socket.emit("update", {'name': usr.name, 'pos': player.speed});
 	timer.update();
 	draw();
 }

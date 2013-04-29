@@ -19,7 +19,7 @@ function Player(playerX, playerY) {
 	this.end = new Image();
 	this.end.src = "/images/end.png";
 	this.points = 0;
-	this.coin_sound = new Audio("sound/coin.mp3")
+	this.hit = 0;
 
 	this.init = function() {
 		// Setup touch handler
@@ -47,11 +47,20 @@ function Player(playerX, playerY) {
 	}
 
 	this.draw = function() {
-		ctx.drawImage(this.image, ( 247 * Math.ceil(this.animationFrame)), 0, 247, 475, this.x, this.y - this.height, this.width, this.height);
+		if(this.hit % 2 === 0){
+			ctx.drawImage(this.image, ( 247 * Math.ceil(this.animationFrame)), 0, 247, 475, this.x, this.y - this.height, this.width, this.height);
+			if(this.hit > 0){
+				this.hit++;
+			}
+		} else {
+			if(this.hit++ > 50){
+				this.hit = 0;
+			}
+		}
+		
 		// Draws player progress on minimap
 		ctx.drawImage(this.end, (canvasWidth*.75+ this.xOffset), (canvasHeight*.1), 247/8, 475/8);
 		this.drawProgression();
-
 	}
 
 	this.drawProgression = function() {
@@ -108,16 +117,15 @@ function Player(playerX, playerY) {
 		switch(this.checkAhead(y_block, terrain)){
 			case 2:
 				this.speed.x = this.xSpeedBase;
+				if(this.hit === 0){
+					this.hit = 1;
+				}
 				break;
 			case 4:
 				endGame();
 				return;
 			case 5:
-				//console.log("Got that $!");
 				this.points += 50;
-				this.coin_sound.play();
-				//console.log(this.points);
-				//console.log("y block = ", )
 		}
 		
 		//Slowly increase player speed

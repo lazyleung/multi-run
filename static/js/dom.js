@@ -200,12 +200,14 @@ function loadProfile() {
 //loads the settings
 function loadSettings() {
 	removeHammer();
-	//Back Button
-	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
 	
 	var content_area = $("#content_area");
 	content_area.empty();
-	$("#content_area").append(back_button);
+
+	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
+ 	var navbar = $('#navbar');
+ 	navbar.empty();
+ 	navbar.append(back_button);
 
 	$("#back_button").hammer().on("tap", loadMenu);
 }
