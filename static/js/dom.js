@@ -81,7 +81,6 @@ function loadMenu() {
 //loads the canvas and init the game
 function loadCanvas(players, lobby_name) {
 	removeHammer();
- 	$("body").html("Loaded!");
 
 	canvasWidth = $(window).width();
 	canvasHeight = $(window).height();
