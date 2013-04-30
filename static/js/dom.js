@@ -146,9 +146,9 @@ function loadFindGame() {
 
 function loadLobby(data) {
 	removeHammer();
-	var title = $("<h1>").html(data.lobby_name + " Waiting for players");
-	var lobby_name = $("<h2>").html("Lobby: " + data.lobby_name);
-	var players_count = $("<h2>").html("Players: " + String(data.players_init.length) + "/4").attr("id", "count");
+	var title = $("<h1>").html(data.lobby_name + " Waiting for players").addClass("text");
+	var lobby_name = $("<h2>").html("Lobby: " + data.lobby_name).addClass("text");
+	var players_count = $("<h2>").html("Players: " + String(data.players_init.length) + "/4").attr("id", "count").addClass("text");
 	var start_game = $("<div>").html("Ready").attr("id","ready_button").addClass("button");
 	var players = $("<ul>").attr("id", "players");
 
@@ -216,6 +216,8 @@ function loadProfile() {
 	$("#back_button").hammer().on("tap", loadMenu);
 	$("#dino_green").click(function(){
 		$(this).addClass("selected").siblings(".dino").removeClass("selected");
+		usr.charNum = 1;
+		usr.setChar(1);
 	})
 	$("#dino_red").click(function(){
 		$(this).addClass("selected").siblings(".dino").removeClass("selected");
@@ -261,7 +263,7 @@ function showNotification(message) {
 function loadContent() {
 	removeHammer();
 	var navbar = $("<div>").attr("id","navbar");
-	var title = $("<h1>").html("Multi-Run");
+	var title = $("<img>").attr("src", "/images/logo.png").attr("id", "title")
 	var content_area = $("<div>").attr("id","content_area");
 	var body = $("body");
 
