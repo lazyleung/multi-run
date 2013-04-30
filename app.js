@@ -90,7 +90,7 @@ io.sockets.on("connection", function(socket){
                 //Reset readyCount for use in loading
                 private_lobby_list[status].readyCount = 0;
                 private_lobby_list[status].status = "loading";
-                io.sockets.in(data.lobby_name).emit('client_load_game', {'success': true, 'level':Math.floor(Math.random(5) + 1), 'lobby_name': data.lobby_name, 'players_init': private_lobby_list[status].players_init});
+                io.sockets.in(data.lobby_name).emit('client_load_game', {'success': true, 'level':Math.floor(Math.random()*5) + 1, 'lobby_name': data.lobby_name, 'players_init': private_lobby_list[status].players_init});
             }
         } else {
             //Lobby either playing or finished
