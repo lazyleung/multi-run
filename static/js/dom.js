@@ -153,7 +153,8 @@ function loadLobby(data) {
 	var players = $("<ul>").attr("id", "players");
 
 	for(var i = 0; i < data.players_init.length; i++){
-		var player = $("<li>").html(data.players_init[i].name).addClass("wait");
+		var player = $("<li>").html(data.players_init[i].name);
+		player.addClass(data.players_init[i].status);
 		players.append(player);
 	}
 

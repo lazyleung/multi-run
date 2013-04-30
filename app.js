@@ -37,7 +37,7 @@ io.sockets.on("connection", function(socket){
     socket.on('create_lobby', function(data) {
         if(!isPrivateLobby(data.lobby_name)){
             var player = {'name': data.username, 'pos': 0};
-            var player_init = {'name': data.username, 'charNum': data.charNum, 'status': 'wait'};
+            var player_init = {'name': data.username, 'charNum': data.charNum, 'status': 'wait', 'id': socket.id};
             var lobby = {'name': data.lobby_name, 'players': [player], 'players_init': [player_init],'readyCount': 0, 'status': 'waiting'};
 
             socket.join(data.lobby_name);
@@ -60,7 +60,7 @@ io.sockets.on("connection", function(socket){
         }else if(status >= 0){
             //Succesfully found joined lobby
             var player = {'name': data.username, 'pos': 0};
-            var player_init = {'name': data.username, 'charNum': data.charNum, 'status': 'wait'};
+            var player_init = {'name': data.username, 'charNum': data.charNum, 'status': 'wait', 'id': socket.id};
             socket.join(data.lobby_name);
             clients[socket.id] = data.lobby_name;
             private_lobby_list[status].players.push(player);
@@ -119,8 +119,13 @@ io.sockets.on("connection", function(socket){
 
     socket.on("player_update", function(data) {
         console.log(data);
-        //var lobby = getPrivateLobby(data.lobby_name);
-        socket.broadcast.to(data.lobby_name).emit('player_update', {'success': true, 'data': data});
+        var status = getPrivateLobby(data.lobby_name);
+        if(status === -1){
+            //Lobby doesn't exist
+            socket.emit('player_update', {'success': false, 'reason': "Lobby doesn't exist"});
+        }else if(status >= 0){
+            socket.broadcast.to(data.lobby_name).emit('player_update', {'success': true, 'data': data});
+        }
     });
 
     //Leave lobby
@@ -131,8 +136,12 @@ io.sockets.on("connection", function(socket){
             socket.emit('leave_status', {'success': false, 'reason': "Lobby doesn't exist"});
         }else if(private_lobby_list[status].players.length === 1){
             //Last person in lobby
-            private_lobby_list[status].players.splice(status, 1);
-            private_lobby_list[status].players_init.splice(status, 1);
+            for(var i = 0; i < private_lobby_list[status].players_init.length; i++){
+                if(private_lobby_list[status].players[i].name === data.username){
+                    private_lobby_list[status].players.splice(i, 1);
+                    private_lobby_list[status].players_init.splice(i, 1);
+                }
+            }
             private_lobby_list.splice(status,1);
             socket.leave(data.lobby_name);
             clients[socket.id] = 0;
@@ -140,8 +149,15 @@ io.sockets.on("connection", function(socket){
         }else if(status >= 0){
             //Succesfully found leave lobby
             //Take out player
-            private_lobby_list[status].players.splice(status, 1);
-            private_lobby_list[status].players_init.splice(status, 1);
+            for(var i = 0; i < private_lobby_list[status].players_init.length; i++){
+                if(private_lobby_list[status].players[i].name === data.username){
+                    if(private_lobby_list[status].players_init[i].status === "ready"){
+                        private_lobby_list[status].readyCount--;
+                    }
+                    private_lobby_list[status].players.splice(i, 1);
+                    private_lobby_list[status].players_init.splice(i, 1);
+                }
+            }
             socket.leave(data.lobby_name);
             clients[socket.id] = 0;
             socket.emit('leave_status', {'success': true});
@@ -164,18 +180,19 @@ io.sockets.on("connection", function(socket){
                 clients[socket.id] = 0;
             }else if(status >= 0){
                 //Succesfully found leave lobby
-                if(private_lobby_list[status].status === 'waiting'){
-                    socket.broadcast.to(clients[socket.id]).emit('lobby_update',{'players_init': private_lobby_list[status].players_init});
-                }
                 //Take out player
-                for(var i = 0; i < private_lobby_list[status].players.length; i++){
-                    if(private_lobby_list[status].players[i].id === socket.id){
+                for(var i = 0; i < private_lobby_list[status].players_init.length; i++){
+                    if(private_lobby_list[status].players_init[i].id === socket.id){
                         private_lobby_list[status].players.splice(i, 1);
                         private_lobby_list[status].players_init.splice(i, 1);
+                        private_lobby_list[status].readyCount--;
                     }
                 }
                 socket.leave(clients[socket.id]);
                 clients[socket.id] = 0;
+                if(private_lobby_list[status].status === 'waiting'){
+                    socket.broadcast.to(clients[socket.id]).emit('lobby_update',{'players_init': private_lobby_list[status].players_init});
+                }
             }
         }
         delete clients[socket.id]
