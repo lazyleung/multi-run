@@ -1,4 +1,4 @@
-function Background() {
+2function Background() {
 	this.clouds = new Array();
 	this.cloudSpawnTime = 10;
 	this.mountains = new Array();
@@ -21,8 +21,8 @@ function Background() {
 		if(this.clouds.length < 4 && this.cloudSpawnTime === 0 && Math.random() > 0.9) {
 			//Random type 0-1
 			var type = Math.floor((Math.random()*2));
-			//Random size 1-4
-			var size = Math.floor((Math.random()*4)+1);
+			//Random size 1-2
+			var size = Math.floor((Math.random()*2)+1);
 			this.clouds.push(new Cloud(type, size));
 			this.cloudSpawnTime = 100;
 		}

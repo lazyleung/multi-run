@@ -106,15 +106,42 @@ function Level(seed){
 	//generate premade or radnom level
 	switch(seed) {
 		case 1:
-			this.make_level([flat, flat_obstacle, flat, flat]);
+			this.make_level([flat, flat_obstacle, flat, flat, flat_coin, flat, platform, platform_coin,
+							flat, flat_obstacle, flat, flat, flat_obstacle, flat_coin, flat, platform_coin,
+							flat, flat, platform_coin, flat_obstacle, flat, flat, platform, flat,
+							flat, flat_obstacle, flat, flat, flat_coin, flat, platform, platform_coin,
+							flat, flat_obstacle, flat, flat, flat_coin, flat, flat_obstacle, flat]);
 			break;
 		case 2:
-			this.make_level([flat, flat, flat_obstacle, flat, flat, flat_coin, flat, platform_coin, flat, flat, flat, flat, flat, platform_coin, flat, flat, flat, flat]);
+			this.make_level([flat, flat, flat_coin, flat_obstacle, flat, platform_coin, flat, platform,
+							flat, flat, flat_obstacle, flat, flat_obstacle, flat_coin, flat, flat,
+							platform, flat, platform_coin, flat, platform, flat, platform_coin, flat,
+							flat_obstacle, flat, flat, flat_coin, flat, platform, platform_coin, flat,
+							flat, flat_coin, flat_obstacle, flat, platform_coin, flat, platform, flat]);
 			break;
 		case 3:
-			
+			this.make_level([flat, flat, platform, flat_obstacle, flat, platform_coin, flat, flat_obstacle,
+							flat, flat, flat_coin, flat, flat_obstacle, flat, flat, platform,
+							flat, flat, flat_obstacle, flat, platform, flat_coin, platform, flat,
+							flat_obstacle, flat, flat, flat_coin, flat, platform, platform_coin, flat,
+							flat, flat_coin, flat_obstacle, flat, flat_coin, flat, platform, flat]);
+			break;
+		case 4:
+			this.make_level([flat, flat, platform_coin, flat_obstacle, flat, flat, platform, flat,
+							flat_obstacle, flat, flat, flat_coin, flat, platform, platform_coin, flat,
+							flat, flat_coin, flat_obstacle, flat, flat_coin, flat, platform, flat,
+							flat_obstacle, flat, flat, flat_coin, flat, platform, platform_coin, flat,
+							flat, flat_obstacle, flat, flat, flat_coin, flat, platform, platform_coin]);
+			break;
+		case 5:
+			this.make_level([flat, flat, flat_coin, flat_coin, flat_coin, flat_obstacle, flat, platform,
+							flat, flat, flat_obstacle, flat, flat_obstacle, flat_coin, flat, flat
+							flat, flat, flat_obstacle, flat, platform, flat_coin, platform, flat,
+							flat_obstacle, flat, flat, flat_coin, flat, platform, flat_obstacle, flat,
+							flat, flat_coin, flat_obstacle, flat_coin, flat, flat, flat_obstacle, flat]);
+			break;
 		default:
-			this.make_level([flat, flat, flat_obstacle]);
+			this.make_level([flat, flat, flat_obstacle, flat, flat, flat_obstacle, flat, flat, flat_obstacle, flat, flat, flat_obstacle, flat, flat, flat_obstacle, flat, flat, flat_obstacle, flat, flat, flat_obstacle, flat, flat, flat_obstacle, flat, flat, flat_obstacle, flat, flat, flat_obstacle ,flat, flat, flat_obstacle ,flat, flat, flat_obstacle, flat, flat, flat_obstacle]);
 	}
 }
 
