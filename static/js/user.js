@@ -8,7 +8,6 @@ function User(){
 
 	//Variables set for each lobby
 	this.lobby_name;
-	this.player_id;
 
 	this.charNum;
 	this.setChar = function(n){

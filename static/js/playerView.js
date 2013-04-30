@@ -11,16 +11,16 @@ function playerView(name, id){
 	this.setChar = function(n){
 		switch(n){
 			case 1:
-				this.charImage = images.dino_green;
+				this.image = images.dino_green;
 				break;
 			case 2:
-				this.charImage = images.dino_blue;
+				this.image = images.dino_blue;
 				break;
 			case 3:
-				this.charImage = images.dino_red;
+				this.image = images.dino_red;
 				break;
 			case 4:
-				this.charImage = images.dino_olive;
+				this.image = images.dino_olive;
 				break;
 		}
 	}
