@@ -125,8 +125,13 @@ function loadCreateGame() {
  	//Add touch listeners
 	$("#back_button").hammer().on("tap", loadMenu);
  	$("#create_lobby_button").hammer().on("tap", function(){
- 		var	lobby_name = $("#lobby_name").val();
- 		socket.emit('create_lobby',{'username': usr.name, 'lobby_name': lobby_name, 'charNum': usr.charNum});
+ 		if ($("#lobby_name").val() !== "") {
+
+	 		var	lobby_name = $("#lobby_name").val();
+	 		socket.emit('create_lobby',{'username': usr.name, 'lobby_name': lobby_name, 'charNum': usr.charNum});
+ 		}
+ 		else
+ 			showNotification("Not a valid lobby name");
  	});
 }
 
