@@ -21,6 +21,8 @@ function Player(playerX, playerY) {
 	this.points = 0;
 	this.hit = 0;
 	// this.fireballDefau
+	this.coin_sound = new Audio("sound/coin.mp3");
+
 
 	this.init = function() {
 		// Setup touch handler
@@ -102,6 +104,27 @@ function Player(playerX, playerY) {
 		return terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)];
 	}
 
+	//Checks for coin pickup
+	this.checkCoin = function(y, terrain){
+		var ahead = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)];
+		var here = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)];
+		var hereabove = terrain[Math.floor(progress/16)][0][progress - 1 - (Math.floor(progress/16) * 16) + ((y-2) * 16)];
+		
+		if(ahead === 5){
+			terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)] = 0;
+		}else if (here === 5){
+			terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)] = 0;
+		}else if (hereabove === 5){
+			terrain[Math.floor(progress/16)][0][progress - 1 - (Math.floor(progress/16) * 16) + ((y-2) * 16)] = 0;
+		} else {
+			return false;
+		}
+
+		this.points += 50;
+		this.coin_sound.play();
+		return true;
+	}
+
 	this.update = function(terrain) {
 		// advance the animation frame
 		if (this.speed.x == 0 || !this.onFloor())
@@ -115,7 +138,7 @@ function Player(playerX, playerY) {
 		var y_block = Math.ceil(this.y/window.block_y);
 
 		//Deals with changing floor height
-		this.floor = canvasHeight;
+		this.floor = canvasHeight-window.block_y;
 
 		this.checkFloor(y_block, terrain);
 
@@ -129,14 +152,14 @@ function Player(playerX, playerY) {
 			case 4:
 				endGame();
 				return;
-			case 5:
-				this.points += 50;
 		}
+
+		this.checkCoin(y_block, terrain);
 		
 		//Slowly increase player speed
 		// Limit horizontal speed
 		if (this.speed.x < this.xSpeedLimit) {
-			this.speed.x += .3;
+			this.speed.x += .2;
 		}
 		
 		//Handle jumping

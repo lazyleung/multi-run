@@ -140,7 +140,7 @@ function loadFindGame() {
  	//Touch 
 	$("#back_button").hammer().on("tap", loadMenu);
 	$("#join_lobby_button").hammer().on("tap", function(){
- 		socket.emit('join_lobby',{'username': usr.name, 'lobby_name': $("#lobby_name").val()});
+ 		socket.emit('join_lobby',{'username': usr.name, 'lobby_name': $("#lobby_name").val(), 'charNum': usr.charNum});
  	});
 }
 
@@ -149,7 +149,7 @@ function loadLobby(data) {
 	var title = $("<h1>").html(data.lobby_name + " Waiting for players");
 	var lobby_name = $("<h2>").html("Lobby: " + data.lobby_name);
 	var players_count = $("<h2>").html("Players: " + String(data.players.length) + "/4").attr("id", "count");
-	var start_game = $("<div>").html("Start Game").attr("id","start_button").addClass("button");
+	var start_game = $("<div>").html("Ready").attr("id","ready_button").addClass("button");
 	var players = $("<ul>").attr("id", "players");
 
 	for(var i = 0; i < data.players.length; i++){
@@ -172,8 +172,8 @@ function loadLobby(data) {
  	navbar.empty();
  	navbar.append(back_button);
 
-	$("#start_button").hammer().on("tap", function(){
-		socket.emit('load_game', {'lobby_name': usr.lobby_name});
+	$("#ready_button").hammer().on("tap", function(){
+		socket.emit('ready_game', {'lobby_name': usr.lobby_name, 'player_id': usr.player_id});
 	});
 	$("#back_button").hammer().on("tap", function(){
 		socket.emit('leave_lobby', {'username': usr.name, 'lobby_name': usr.lobby_name, 'player_id': usr.player_id});
@@ -193,6 +193,12 @@ function loadProfile() {
  	content_area.empty();
 	$("#content_area").append(back_button);
 	$("#content_area").append(username);
+
+	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
+
+ 	var navbar = $('#navbar');
+ 	navbar.empty();
+ 	navbar.append(back_button);
 
 	$("#back_button").hammer().on("tap", loadMenu);
 }

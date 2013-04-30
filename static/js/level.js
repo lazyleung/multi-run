@@ -11,7 +11,7 @@ function Level(seed){
 	this.powerup.src = "/images/powerup.png";
 	this.box = new Image();
 	this.box.src = "/images/wooden_crate.png";
-	this.coinArray;
+	this.coinArray = new Array();
 	this.boxArray = new Array();
 	this.fireballArray = new Array();
 	this.animationFrame = 0;
@@ -29,8 +29,6 @@ function Level(seed){
 	//Draw all the correct level terrain
 	//Draws one section before and after in addition to current section
 	this.draw = function(pos) {
-		this.coinArray = new Array();
-
 		Math.floor(this.y/window.block_y);
 		var i = Math.floor(pos/window.block_x/16) - 1;
 		for(var count = 0;i < this.level_data.length && count < 3; count++){
@@ -38,14 +36,26 @@ function Level(seed){
 				for(var j = 0; j < 16; j++){
 					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
 				}
-			} else if (this.level_data[i] === "flat_obstacle"){
+			}else if (this.level_data[i] === "flat_obstacle"){
 				for(var j = 0; j < 16; j++){
 					if(j === 9){
 						ctx.drawImage(this.box, i*canvasWidth + j*window.block_x, canvasHeight - 3*window.block_y, 2*window.block_y, 2*window.block_y);
-						this.coinArray.push(new Coin(i*canvasWidth + j*window.block_x, canvasHeight-5*window.block_y, window.block_x, window.block_y));
+						if(this.coinArray[pos + j + i] === undefined){
+							this.coinArray[pos + j + i] = new Coin(i*canvasWidth + j*window.block_x, canvasHeight-5*window.block_y, window.block_x, window.block_y);
+						}
 					}
-					if(j === 10){
-						this.coinArray.push(new Coin(i*canvasWidth + j*window.block_x, canvasHeight-5*window.block_y, window.block_x, window.block_y));
+					if(j === 10 && this.coinArray[pos + j + i] === undefined){
+						this.coinArray[pos + j + i] = new Coin(i*canvasWidth + j*window.block_x, canvasHeight-5*window.block_y, window.block_x, window.block_y);
+					}
+					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
+				}
+			}else if (this.level_data[i] === "flat_coin"){
+				for(var j = 0; j < 16; j++){
+					if((j === 3 || j === 11) && this.coinArray[pos + j + i] === undefined){
+						this.coinArray[pos + j + i] = new Coin(i*canvasWidth + j*window.block_x, canvasHeight-2*window.block_y, window.block_x, window.block_y);
+					}
+					if((j === 7 || j === 15) && this.coinArray[pos + j + i] === undefined){
+						this.coinArray[pos + j + i] = new Coin(i*canvasWidth + j*window.block_x, canvasHeight-5*window.block_y, window.block_x, window.block_y);
 					}
 					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
 				}
@@ -62,17 +72,17 @@ function Level(seed){
 					}
 					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
 				}
-			} else if (this.level_data[i] === "platform"){
+			}else if (this.level_data[i] === "platform_coin"){
 				for(var j = 0; j < 16; j++){
 					if(j > 0 && j < 15){
 						ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - 4*window.block_y, window.block_x, window.block_y/4);
-						if (j % 3 === 0){
-							this.coinArray.push(new Coin(i*canvasWidth + j*window.block_x, canvasHeight - 5*window.block_y, window.block_x, window.block_y));
+						if (j % 3 === 0 && this.coinArray[pos + j + i] === undefined){
+							this.coinArray[pos + j + i] = new Coin(i*canvasWidth + j*window.block_x, canvasHeight - 5*window.block_y, window.block_x, window.block_y);
 						}
 					}
 					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
 				}
-			} else if (this.level_data[i] === "end") {
+			}else if (this.level_data[i] === "end") {
 				for(var j = 0; j < 22; j++){
 					if(j === 8){
 						ctx.drawImage(this.end, i*canvasWidth + j*window.block_x, canvasHeight - 5*window.block_y, 8*window.block_y/5, 4*window.block_y);
@@ -83,7 +93,9 @@ function Level(seed){
 			i++;
 		}
 		for(var c in this.coinArray){
-			this.coinArray[c].draw(this.animationFrame);
+			if(this.coinArray[c] !== undefined){
+				this.coinArray[c].draw(this.animationFrame);
+			}
 		}
 		this.animationFrame = (this.animationFrame + 1)%32;
 	}
@@ -91,10 +103,10 @@ function Level(seed){
 	//generate premade or radnom level
 	switch(seed) {
 		case 1:
-			this.make_level([flat, flat, flat_obstacle, flat, flat, flat_obstacle]);
+			this.make_level([flat, flat, platform, flat, flat, flat_obstacle]);
 			break;
 		case 2:
-			this.make_level([flat, flat, flat_obstacle, flat, flat, platform, platform_powerup, platform, flat, flat, platform_powerup, flat, flat, platform, flat, flat, platform, flat]);
+			this.make_level([flat, flat, flat_obstacle, flat_coin, flat_coin, flat_coin, flat_coin, platform_coin, flat, flat, platform_powerup, flat, flat, platform_coin, flat, flat, platform_coin, flat]);
 			break;
 		default:
 			
@@ -143,11 +155,34 @@ flat_powerup[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,];
 flat_powerup[1] = ["flat_powerup"];
 
+var flat_coin = new Array();
+flat_coin[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,];
+flat_coin[1] = ["flat_coin"];
+
+
+var platform_coin = new Array();
+platform_coin[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 0,
+			0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,];
+platform_coin[1] = ["platform_coin"];		
+
 var platform = new Array();
 platform[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -164,6 +199,17 @@ platform_powerup[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,];
 platform_powerup[1] = ["platform_powerup"];
+
+var platform_coin = new Array();
+platform_coin[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 0,
+			0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,];
+platform_coin[1] = ["platform_coin"];
 
 var end = new Array();
 end[0] = [0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4,

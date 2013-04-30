@@ -38,7 +38,7 @@ function initGame(players, lobby_name) {
 	//Create view for players
 	for(var p in players){
 		if (players[p].name !== usr.name){
-			//playerViews.push(new playerView(players[p].name));
+			playerViews.push(new playerView(players[p].name, players[p].charNum));
 		}
 	}
 
@@ -55,7 +55,7 @@ function initGame(players, lobby_name) {
 
 	//signal ready
 	setTimeout(function(){
-		socket.emit('ready_game', {'lobby_name': lobby_name, 'player_id': usr.player_id})}
+		socket.emit('load_game', {'lobby_name': lobby_name, 'player_id': usr.player_id})}
 		, 1000);
 }
 
@@ -96,7 +96,7 @@ function updatePlayers(data){
 function update() {
 	background.update();
 	player.update(level.terrain_data);
-	//socket.emit("update", {'name': usr.name, 'pos': player.speed});
+	socket.emit("player_update", {'name': usr.name, 'pos_x': player.x, 'pos_y': player.y, 'speed': player.speed, 'animation_frame': player.animationFrame});
 	timer.update();
 	draw();
 }
