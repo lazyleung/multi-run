@@ -247,17 +247,20 @@ function loadProfile() {
  	navbar.empty();
  	navbar.append(back_button);
 
- 	if (typeof(usr.charNum) === "number"){
- 		if (usr.charNum === 1){
- 			$("#dino_green").addClass("selected");
- 		} else if (usr.charNum === 2){
-  			$("#dino_blue").addClass("selected");		
- 		} else if (usr.charNum === 3){
- 			$("#dino_red").addClass("selected");
- 		} else if (usr.charNum === 4){
- 			$("#dino_olive").addClass("selected");
- 		}
+ 	if (usr.charNum === undefined){
+ 		$("#dino_olive").addClass("selected");
  	}
+
+	else if (usr.charNum === 1){
+		$("#dino_green").addClass("selected");
+	} else if (usr.charNum === 2){
+		$("#dino_blue").addClass("selected");		
+	} else if (usr.charNum === 3){
+		$("#dino_red").addClass("selected");
+	} else if (usr.charNum === 4){
+		$("#dino_olive").addClass("selected");
+	}
+ 	
 
 
 	$("#back_button").hammer().on("tap", loadMenu);
