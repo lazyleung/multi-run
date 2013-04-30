@@ -172,6 +172,14 @@ text-align: center;
 	margin: 0 auto;
 }
 
+#how {
+	font-size: 18px;
+	background: -webkit-linear-gradient(top, #DDD 0%, #CCC 100%);
+	background: -moz-linear-gradient(top, #DDD 0%, #CCC 100%);
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
 /*-------------------------------------*/
 /*-------------Profile CSS-------------*/
 /*-------------------------------------*/

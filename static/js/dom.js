@@ -64,6 +64,7 @@ function loadMenu() {
 	}
 	console.log("usr-charNum", usr.charNum);
  	var menu = $("<ul>");
+ 	menu.append($("<li>").html("How To Play").attr("id","how_to_button"));
  	menu.append($("<li>").html("Create A Game").attr("id","create_game_button"));
  	menu.append($("<li>").html("Join A Game").attr("id", "join_game_button"));
  	menu.append($("<li>").html("Profile").attr("id","profile_button"));
@@ -83,6 +84,7 @@ function loadMenu() {
 
  	//Add touch listeners
  	$("#logout_button").hammer().on("tap", startLogout);
+ 	$('#how_to_button').hammer().on("tap", loadHow);
  	$("#create_game_button").hammer().on("tap", loadCreateGame);
  	$("#join_game_button").hammer().on("tap", loadFindGame);
  	$("#profile_button").hammer().on("tap", loadProfile);
@@ -370,6 +372,7 @@ function removeHammer(){
 	$("#join_lobby_button").hammer().off("tap");
 	$("#start_button").hammer().off("tap");
 	$("#mute").hammer().off("tap");
+	$('#how_to_button').hammer().off("tap");
 }
 
 function loadEnd() {
@@ -394,4 +397,24 @@ function loadEnd() {
 		socket.emit('leave_lobby', {'username': usr.name, 'lobby_name': usr.lobby_name});
 		loadMenu();
 	});
+}
+
+function loadHow(){
+	removeHammer();
+
+ 	var how = $("<p>").attr("id","how").html("Create or join a game to play.<br>Game will start when all players are ready.<br>Swipe up to jump!<br>Swipe left to slow down<br>Tap left or right to shoot fireballs<br>Collect coins and try to finish first!<br>");
+
+ 	var content_area = $("#content_area");
+ 	content_area.empty();
+ 	content_area.append(how);
+
+ 	// Create navbar
+	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
+
+ 	var navbar = $('#navbar');
+ 	navbar.empty();
+ 	navbar.append(back_button);
+
+ 	//Add touch listeners
+ 	$("#back_button").hammer().on("tap", loadMenu);
 }
