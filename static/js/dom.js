@@ -51,7 +51,7 @@ function loadMenu() {
     	this.play();
 	}, false);
 	menuMusic.play();
-
+	console.log("usr-charNum", usr.charNum);
  	var menu = $("<ul>");
  	menu.append($("<li>").html("Create A Game").attr("id","create_game_button"));
  	menu.append($("<li>").html("Join A Game").attr("id", "join_game_button"));
@@ -184,6 +184,7 @@ function loadLobby(data) {
 
 //loads the profile
 function loadProfile() {
+
 	removeHammer();
  	var username = $("<div>").html("Username: " + usr.name).addClass("text");
  	var color = $("<div>").html("<br> Pick a Color:").addClass("text");
@@ -195,16 +196,17 @@ function loadProfile() {
 	canvasHeight = $(window).height();
  	var content_area = $("#content_area");
  	var dino_green = $("<img>").html("<br>").attr("id", "dino_green").attr("src", "/images/dino_green.png").attr("width", canvasWidth/16).attr("height", canvasHeight/8).addClass("dino");
- 	var dino_red = $("<img>").html("").attr("id", "dino_red").attr("src", "/images/dino_red.png").attr("width", canvasWidth/16).attr("height", canvasHeight/8).addClass("dino");
  	var dino_blue = $("<img>").html("").attr("id", "dino_blue").attr("src", "/images/dino_blue.png").attr("width", canvasWidth/16).attr("height", canvasHeight/8).addClass("dino");
+ 	var dino_red = $("<img>").html("").attr("id", "dino_red").attr("src", "/images/dino_red.png").attr("width", canvasWidth/16).attr("height", canvasHeight/8).addClass("dino");
  	var dino_olive = $("<img>").html("").attr("id", "dino_olive").attr("src", "/images/dino_olive.png").attr("width", canvasWidth/16).attr("height", canvasHeight/8).addClass("dino");
  
+
  	content_area.empty();
 	$("#content_area").append(username);
     $("#content_area").append(color);
 	$("#content_area").append(dino_green);
-	$("#content_area").append(dino_red);
 	$("#content_area").append(dino_blue);
+	$("#content_area").append(dino_red);
 	$("#content_area").append(dino_olive);
 
 	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
@@ -213,25 +215,40 @@ function loadProfile() {
  	navbar.empty();
  	navbar.append(back_button);
 
+ 	if (typeof(usr.charNum) === "number"){
+ 		if (usr.charNum === 1){
+ 			$("#dino_green").addClass("selected");
+ 		} else if (usr.charNum === 2){
+  			$("#dino_blue").addClass("selected");		
+ 		} else if (usr.charNum === 3){
+ 			$("#dino_red").addClass("selected");
+ 		} else if (usr.charNum === 4){
+ 			$("#dino_olive").addClass("selected");
+ 		}
+ 	}
+
+
 	$("#back_button").hammer().on("tap", loadMenu);
 	$("#dino_green").click(function(){
 		$(this).addClass("selected").siblings(".dino").removeClass("selected");
 		usr.charNum = 1;
 		usr.setChar(1);
-	})
-	$("#dino_red").click(function(){
-		$(this).addClass("selected").siblings(".dino").removeClass("selected");
 	});
 	$("#dino_blue").click(function(){
 		$(this).addClass("selected").siblings(".dino").removeClass("selected");
+		usr.charNum = 2;
+		usr.setChar(2);
+	});
+	$("#dino_red").click(function(){
+		$(this).addClass("selected").siblings(".dino").removeClass("selected");
+		usr.charNum = 3;
+		usr.setChar(3);
 	});
 	$("#dino_olive").click(function(){
 		$(this).addClass("selected").siblings(".dino").removeClass("selected");
+		usr.charNum = 4;
+		usr.setChar(4);
 	});
-
-}
-
-function selectDino(){
 
 }
 
