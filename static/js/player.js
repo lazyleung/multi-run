@@ -135,6 +135,7 @@ function Player(playerX, playerY) {
 			if (fireball.id !== usr.name &&intersectRect(fireball, player) === true) {
 				console.log("burn");
 				if(player.hit === 0){
+					player.speed.x = player.xSpeedBase
 					player.hit = 1;
 				}
 				//pop out fire ball here
