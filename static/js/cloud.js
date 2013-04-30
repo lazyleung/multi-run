@@ -6,7 +6,7 @@
 
 function Cloud(type, size){
 	this.x = canvasWidth;
-	this.y = 100;
+	this.y = 80;
 	this.w;
 	this.h;
 	this.speed = 10;
@@ -20,25 +20,25 @@ function Cloud(type, size){
 
 	switch(type){
 		case 0:
-			this.sx = 23;
-			this.sy = 31;
-			this.sw = 444;
-			this.sh = 196;
+			this.sx = 5;
+			this.sy = 6;
+			this.sw = 112;
+			this.sh = 50;
 			break;
 		case 1:
-			this.sx = 68;
-			this.sy = 288;
-			this.sw = 380;
-			this.sh = 121;
+			this.sx = 17;
+			this.sy = 71;
+			this.sw = 96;
+			this.sh = 32;
 			break;
 	}
 
 	if(size <= 0){
 		throw "cloud size is invalid";
 	}
-	this.w = this.sw/size;
-	this.h = this.sh/size;
-	this.speed /= size;
+	this.w = this.sw*size;
+	this.h = this.sh*size;
+	this.speed *= size;
 }
 
 Cloud.prototype.draw = function(){

@@ -29,7 +29,7 @@ function Player(playerX, playerY) {
 		// Setup touch handler
 		$('body').hammer().on("swipeup", function(event) {
 			event.gesture.preventDefault();
-		    console.log(this, event);
+		    //console.log(this, event);
 		    if (Math.abs(event.gesture.deltaY) <= 120) {
 		    	lowJump();
 		    }
@@ -68,7 +68,6 @@ function Player(playerX, playerY) {
 				this.hit++;
 			}
 		} else {
-			console.log("HERE");
 			if(this.hit++ > 50){
 				this.hit = 0;
 			}

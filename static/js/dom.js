@@ -291,7 +291,7 @@ function loadSettings() {
  	canvasWidth = $(window).width();
 	canvasHeight = $(window).height();
 	var text = $("<div>").html("Music:").addClass("text")
-	var m = $("<img>").attr("id","mute").attr("src", "/images/music.png").attr("width", canvasWidth/24).attr("height", canvasHeight/8);
+	var m = $("<img>").attr("id","mute").attr("src", "/images/mute.png").attr("width", canvasWidth/24).attr("height", canvasHeight/8);
 	
 	var content_area = $("#content_area");
 	content_area.empty();
@@ -308,15 +308,15 @@ function loadSettings() {
 		if(mute === 0){
 			//stop all music
 			menuMusic.pause();
-			$("#mute").removeClass("selected");
 			console.log("Mute!");
 			mute = 1;
+			$("#mute").addClass("selected");
 		} else if(mute === 1){
 			//play music
 			menuMusic.play();
 			console.log("No Mute!");
-			$("#mute").addClass("selected");
 			mute = 0;
+			$("#mute").removeClass("selected");
 		}
 		localStorage.mute = mute.toString();
 	});

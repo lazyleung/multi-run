@@ -106,8 +106,10 @@ function Level(seed){
 			this.make_level([flat, flat_obstacle]);
 			break;
 		case 2:
-			this.make_level([flat, flat, flat_obstacle, flat_coin, flat_coin, flat_coin, flat_coin, platform_coin, flat, flat, platform_powerup, flat, flat, platform_coin, flat, flat, platform_coin, flat]);
+			this.make_level([flat, flat, flat_obstacle, flat, flat, flat_coin, flat, platform_coin, flat, flat, flat, flat, flat, platform_coin, flat, flat, flat, flat]);
 			break;
+		case 3:
+		
 		default:
 			
 			//random level
