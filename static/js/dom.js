@@ -155,7 +155,9 @@ function loadLobby(data) {
 	for(var i = 0; i < data.players_init.length; i++){
 		var player = $("<li>").html(data.players_init[i].name);
 		player.addClass(data.players_init[i].status);
+		player.append(lobbyDino(data.players_init[i].charNum));
 		players.append(player);
+
 	}
 
 	var content_area = $("#content_area");
@@ -180,6 +182,25 @@ function loadLobby(data) {
 		socket.emit('leave_lobby', {'username': usr.name, 'lobby_name': usr.lobby_name});
 		loadMenu();
 	});
+}
+
+function lobbyDino(charNum){
+ 	canvasWidth = $(window).width();
+	canvasHeight = $(window).height();
+	
+	if (charNum === 1){
+		var dino_lobby_green = $("<img>").html("<br>").attr("id", "dino_lobby_green").attr("src", "/images/dino_green.png").attr("width", canvasWidth/48).attr("height", canvasHeight/24).addClass("dino_lobby");
+		return dino_lobby_green;
+	} else if (charNum === 2){
+		var dino_lobby_blue = $("<img>").html("").attr("id", "dino_lobby_blue").attr("src", "/images/dino_blue.png").attr("width", canvasWidth/48).attr("height", canvasHeight/24).addClass("dino_lobby");
+		return dino_lobby_blue;
+	} else if (charNum === 3){
+ 		var dino_lobby_red = $("<img>").html("").attr("id", "dino_lobby_red").attr("src", "/images/dino_red.png").attr("width", canvasWidth/48).attr("height", canvasHeight/24).addClass("dino_lobby");
+		return dino_lobby_red;
+	} else if (charNum === 4){
+		var dino_lobby_olive = $("<img>").html("").attr("id", "dino_lobby_olive").attr("src", "/images/dino_olive.png").attr("width", canvasWidth/48).attr("height", canvasHeight/24).addClass("dino_lobby");
+		return dino_lobby_olive;
+	} 
 }
 
 //loads the profile

@@ -83,23 +83,27 @@ function draw() {
 
 	if (typeof(window.data) !== 'undefined'){
 		//ctx.drawImage(images.dino_blue, window.data.data.pos_x, window.data.data.pos_y);
-		console.log(playerViews);
+		//console.log(playerViews);
 		for(var p in playerViews){
-			console.log(playerViews[p]);
-			console.log(playerViews[p].name, window.data.data.name);
+			//console.log(playerViews[p]);
+			//console.log(playerViews[p].name, window.data.data.name);
 			if (playerViews[p].name === window.data.data.name){
 				var player_view = playerViews[p];
 			} 
 		}
-		console.log("player_view",player_view);
+		//console.log("player_view",player_view);
 		ctx.drawImage(player_view.image, ( 247 * Math.ceil(window.data.data.animation_frame)), 0, 247, 475, window.data.data.pos_x, window.data.data.pos_y - window.block_y * 2, window.block_y/5 * 6, window.block_y * 2);
-		console.log("dino drawn", window.data, window.data.data.pos_x, window.data.data.pos_y);
+		ctx.font = "32px Arial";
+		ctx.fillStyle = "black";
+		ctx.fillText(String(player_view.name), window.data.data.pos_x+(0.1)*window.block_x, window.data.data.pos_y-2.5*window.block_y)
+		//console.log("dino drawn", window.data, window.data.data.pos_x, window.data.data.pos_y);
 	}
 	//Draw player
 	player.draw();
 	ctx.font = "32px Arial";
 	ctx.fillStyle = "black";
-	ctx.fillText(String(usr.name), player.x+(0.1)*window.block_x, player.y-2.5*window.block_y)
+	ctx.fillText(String(usr.name), player.x+(0.1)*window.block_x, player.y-2.5*window.block_y);
+	ctx.drawImage(images.arrow, player.x, player.y-4.0*window.block_y, 1.5*window.block_x, window.block_y);
 	ctx.restore();
 
 	ctx.font = "32px Arial";

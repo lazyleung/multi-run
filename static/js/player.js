@@ -116,7 +116,7 @@ function Player(playerX, playerY) {
 		var startX = direction === "left" ? this.x : this.x + this.width
 		// set a cooldown and fire fireball
 		this.fireballCooldown = this.fireballDefaultCooldown;
-		level.fireballArray.push(new Fireball(startX, this.y - this.height * .8, this.speed.x, direction))
+		level.fireballArray.push(new Fireball(startX, this.y - this.height * .8, this.speed.x, direction, 0))
 	}.bind(this);
 
 	this.checkAhead = function(y, terrain){
@@ -130,7 +130,7 @@ function Player(playerX, playerY) {
 				console.log("burn")
 				return true;
 			}
-		})
+		});
 	}
 
 	var intersectRect = function(r1, r2) {
@@ -140,35 +140,20 @@ function Player(playerX, playerY) {
 	           r2.y < r1.y - r1.height);
 	}.bind(this);
 
-	// //Checks for coin pickup
-	// this.checkCoin = function(y, terrain){
-	// 	var ahead = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)];
-	// 	//var here = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)];
-	// 	var hereabove = terrain[Math.floor(progress/16)][0][progress - 1 - (Math.floor(progress/16) * 16) + ((y-2) * 16)];
+	//Checks for coin pickup
+	this.checkCoin = function(y, terrain){
+		// var ahead = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)];
+		// var aheadabove = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)];
 		
-	// 	if(ahead === 5){
-	// 		terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)] = 0;
-	// 	//}else if (here === 5){
-	// 		//terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)] = 0;
-	// 	}else if (hereabove === 5){
-	// 		terrain[Math.floor(progress/16)][0][progress - 1 - (Math.floor(progress/16) * 16) + ((y-2) * 16)] = 0;
-	// 	} else {
-	// 		return false;
-	// 	}
+		// if(ahead !== 5 && aheadabove !== 5){
+		// 	return false;
+		// }
+		// terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)] = 0;
+		// terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)] = 0;
 
-	// 	this.points += 50;
-	// 	this.coin_sound.play();
-	// 	return true;
-	// }
-
-	this.checkCoin = function() {
-		level.coinArray.forEach(function(coin) {
-			if (intersectRect(coin, this)) {
-				this.points += 50;
-				this.coin_sound.play();
-				return true;
-			}
-		})
+		// this.points += 50;
+		// this.coin_sound.play();
+		// return true;
 	}
 
 	this.update = function(terrain) {

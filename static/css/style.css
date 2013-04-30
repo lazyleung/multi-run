@@ -213,3 +213,7 @@ li.wait{
 	background: -moz-linear-gradient(top, #B55050 0%, #E86B6B 100%);
 	cursor: default;
 }
+
+.dino_lobby{
+	float:right;
+}
