@@ -31,8 +31,7 @@ function playerView(name, id, w, h){
 	this.draw = function(offset, x, y, animationFrame) {
 		this.x = x;
 		this.y = y;
-		ctx.drawImage(this.image, 0, 0, 247, 475, (Math.floor((x + this.width)/window.block_x) * canvasWidth * .70) - canvasWidth/15 + offset, 10, 247/8, 475/8);
-
+	
 		ctx.drawImage(this.image, ( 247 * Math.ceil(animationFrame)), 0, 247, 475, x, y - this.height, this.width, this.height);
 
 		ctx.font = "32px Arial";
@@ -51,9 +50,12 @@ function playerView(name, id, w, h){
 	// Update player race progression; -8 accounts for the end being at the mid point
 	this.race_progress = (this.x + this.width)/window.block_x / ((level.level_data.length) * 16 - 8);
 	var y_block = Math.ceil(this.y/window.block_y);
-	}
-}
+	};
 
-//playerView.prototype.playerView = function(){
-	//socket.on('update_player')
-//}
+	this.intersectRect = function(r1, r2) {
+	  return !(r2.x > r1.x + r1.width || 
+	           r2.x + r2.width < r1.x || 
+	           r2.y - r2.height > r1.y ||
+	           r2.y < r1.y - r1.height);
+	};
+}

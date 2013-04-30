@@ -11,6 +11,8 @@ var clcount;
 var clinterval;
 var playerViews = new Array();
 var time;
+var fireball_sound = new Audio("/sound/explosion.mp3");
+var fire_shoot = new Audio("/sound/fire_shoot.mp3");
 
 
 function initGame(players_init, lobby_name, levelNum) {
@@ -106,14 +108,7 @@ function draw() {
 }
 
 function updatePlayers(data){
-	//console.log(data);
 	window.data = data;
-	//console.log("dino drawn");
-	//data.players.forEach(function(player_view_data){
-		//player_view = players[indexOf(player_view_data.name)];
-		//player_view.speed = player_view_data.speed;
-		//player_view.update();
-	//});
 }
 
 function updatePlayerViews(){
@@ -131,7 +126,10 @@ function drawFireballs() {
 function updateFireballs() {
 	level.fireballArray.forEach(function(fireball) {
 		fireball.update();
-	})
+		if (fireball.lifetime <= 0){
+			level.fireballArray.splice(level.fireballArray.indexOf(fireball), 1);
+		}
+	});
 }
 
 function update() {

@@ -25,17 +25,18 @@ function Player(playerX, playerY) {
 	this.coin_sound = new Audio("sound/coin.mp3");
 
 
+
 	this.init = function() {
 		// Setup touch handler
 		$('body').hammer().on("swipeup", function(event) {
 			event.gesture.preventDefault();
 		    //console.log(this, event);
-		    if (Math.abs(event.gesture.deltaY) <= 120) {
-		    	lowJump();
-		    }
-		    else {
+		    // if (Math.abs(event.gesture.deltaY) <= 120) {
+		    // 	lowJump();
+		    // }
+		    // else {
 		    	highJump();
-		    }
+		    // }
 		});
 		$('body').hammer().on("swipeleft", function(event) {
 			event.gesture.preventDefault();
@@ -120,6 +121,8 @@ function Player(playerX, playerY) {
 		this.fireballCooldown = this.fireballDefaultCooldown;
 		var fireball = new Fireball(startX, this.y - this.height * .8, this.speed.x, direction, usr.name)
 		level.fireballArray.push(fireball);
+
+		fire_shoot.play();
 		socket.emit("player_fireball", {'x': fireball.x, 'y':fireball.y, 'player_speed':fireball.playerSpeed, 'direction': fireball.direction, 'id': fireball.id, 'lobby_name':usr.lobby_name});
 		//console.log("fireball =", fireball);
 	}.bind(this);
@@ -139,6 +142,7 @@ function Player(playerX, playerY) {
 					player.speed.x = player.xSpeedBase
 					player.hit = 1;
 					fireball_sound.play();
+					usr.points -= 50;
 				}
 				//pop out fire ball here
 				level.fireballArray.splice(i, 1);
@@ -184,9 +188,12 @@ function Player(playerX, playerY) {
 		var y_block = Math.ceil(this.y/window.block_y);
 
 		// Decrement fireball cooldown
-		if (this.fireballCooldown > 0)
+		//if (this.fireballCooldown === 0){
+		//	level.fireballArray.shift();
+		//}
+		if (this.fireballCooldown > 0) {
 			this.fireballCooldown -= window.timeInterval;
-
+		}
 		//Deals with changing floor height
 		this.floor = canvasHeight-window.block_y;
 
