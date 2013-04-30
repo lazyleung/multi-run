@@ -37,6 +37,7 @@ io.sockets.on("connection", function(socket){
     socket.on('create_lobby', function(data) {
         if(!isPrivateLobby(data.lobby_name)){
             var player = {'name': data.username, 'pos': 0};
+            console.log("RES =",data.canvas_w, data.canvas_h);
             var player_init = {'name': data.username, 'charNum': data.charNum, 'status': 'wait', 'id': socket.id, 'time': 0, 'points': 0 ,'canvas_w': data.canvas_w, 'canvas_h': data.canvas_h};
             var lobby = {'name': data.lobby_name, 'players': [player], 'players_init': [player_init],'readyCount': 0, 'status': 'waiting'};
 
@@ -60,6 +61,7 @@ io.sockets.on("connection", function(socket){
         }else if(status >= 0){
             //Succesfully found joined lobby
             var player = {'name': data.username, 'pos': 0};
+            console.log("JOIN RES = ", data.canvas_w, data.canvas_h);
             var player_init = {'name': data.username, 'charNum': data.charNum, 'status': 'wait', 'id': socket.id , 'time': 0, 'points': 0, 'canvas_w': data.canvas_w, 'canvas_h': data.canvas_h};
             socket.join(data.lobby_name);
             clients[socket.id] = data.lobby_name;

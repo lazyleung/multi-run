@@ -130,7 +130,7 @@ function loadCreateGame() {
  		if ($("#lobby_name").val() !== "") {
 
 	 		var	lobby_name = $("#lobby_name").val();
-	 		socket.emit('create_lobby',{'username': usr.name, 'lobby_name': lobby_name, 'charNum': usr.charNum, 'canvas_w': canvasWidth, 'canvas_h': canvasHeight});
+	 		socket.emit('create_lobby',{'username': usr.name, 'lobby_name': lobby_name, 'charNum': usr.charNum, 'canvas_w': canvasWidth/16, 'canvas_h': canvasHeight/8});
  		}
  		else
  			showNotification("Not a valid lobby name");
@@ -160,7 +160,7 @@ function loadFindGame() {
  	//Touch 
 	$("#back_button").hammer().on("tap", loadMenu);
 	$("#join_lobby_button").hammer().on("tap", function(){
- 		socket.emit('join_lobby',{'username': usr.name, 'lobby_name': $("#lobby_name").val(), 'charNum': usr.charNum, 'canvas_w':canvasWidth, 'canvas_h':canvasHeight});
+ 		socket.emit('join_lobby',{'username': usr.name, 'lobby_name': $("#lobby_name").val(), 'charNum': usr.charNum, 'canvas_w':canvasWidth/16, 'canvas_h':canvasHeight/8});
  	});
 }
 
