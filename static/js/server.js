@@ -115,7 +115,7 @@ function logout(username, password){
 
 //Add socket listeners
 function initSock(){
-	socket = io.connect("http://128.237.126.53:8888");
+	socket = io.connect("http://localhost:8888");
 
 	socket.on("create_lobby_status", function(data){
  		if(data.success){

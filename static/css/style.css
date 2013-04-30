@@ -177,7 +177,9 @@ text-align: center;
 /*-------------------------------------*/
 
 .selected{
-    box-shadow: 0px 0px 16px #fff;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+    box-shadow: 0px 0px 16px #fff, 0px 0px 16px #fff inset;
 }
 
 .text{
