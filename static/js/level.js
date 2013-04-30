@@ -84,7 +84,7 @@ function Level(seed){
 				}
 			}else if (this.level_data[i] === "end") {
 				for(var j = 0; j < 22; j++){
-					if(j === 8){
+					if(j === 7){
 						ctx.drawImage(this.end, i*canvasWidth + j*window.block_x, canvasHeight - 5*window.block_y, 8*window.block_y/5, 4*window.block_y);
 					}
 					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
@@ -103,7 +103,7 @@ function Level(seed){
 	//generate premade or radnom level
 	switch(seed) {
 		case 1:
-			this.make_level([flat, flat, platform, flat, flat, flat_obstacle]);
+			this.make_level([flat, flat_obstacle]);
 			break;
 		case 2:
 			this.make_level([flat, flat, flat_obstacle, flat_coin, flat_coin, flat_coin, flat_coin, platform_coin, flat, flat, platform_powerup, flat, flat, platform_coin, flat, flat, platform_coin, flat]);

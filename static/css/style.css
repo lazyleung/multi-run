@@ -238,6 +238,16 @@ li.wait{
 	cursor: default;
 }
 
+li.winner{
+	font-size: 18px;
+	margin: 0px auto;
+	padding: 20px 0px;
+	width: 300px;
+	background: -webkit-linear-gradient(top, #C9DB00 0%, #EAFF00 100%);
+	background: -moz-linear-gradient(top, #C9DB00 0%, #EAFF00 100%);
+	cursor: default;
+}
+
 .dino_lobby{
 	float:right;
 }
