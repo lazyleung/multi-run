@@ -10,7 +10,7 @@ var gameInterval;
 var race_progress;
 var clcount;
 var clinterval;
-
+var playerViews = new Array();
 
 
 function initGame(players_init, lobby_name) {
@@ -20,7 +20,7 @@ function initGame(players_init, lobby_name) {
 	//Sets up the game
 	window.canvas = document.getElementById("myCanvas");
 	window.ctx = canvas.getContext("2d");
-	var playerViews = new Array();
+
 	//Screen split up 16x8 blocks
 	window.block_x = canvasWidth/16;
 	window.block_y = canvasHeight/8;
@@ -38,7 +38,9 @@ function initGame(players_init, lobby_name) {
 	//Create view for players
 	for(var p in players_init){
 		if(players_init[p].name !== usr.name){
-			playerViews.push(new playerView(players_init[p].name, players_init[p].charNum));
+			var playerview = new playerView(players_init[p].name, players_init[p].charNum);
+			playerview.setChar(playerview.id);
+			playerViews.push(playerview);
 		}
 	}
 
@@ -81,9 +83,20 @@ function draw() {
 
 	if (typeof(window.data) !== 'undefined'){
 		//ctx.drawImage(images.dino_blue, window.data.data.pos_x, window.data.data.pos_y);
-		ctx.drawImage(images.dino_blue, ( 247 * Math.ceil(window.data.data.animation_frame)), 0, 247, 475, window.data.data.pos_x, window.data.data.pos_y - window.block_y * 2, window.block_y/5 * 6, window.block_y * 2);
+		console.log(playerViews);
+		for(var p in playerViews){
+			console.log(playerViews[p]);
+			console.log(playerViews[p].name, window.data.data.name);
+			if (playerViews[p].name === window.data.data.name){
+				var player_view = playerViews[p];
+			} 
+		}
+		console.log("player_view",player_view);
+		ctx.drawImage(player_view.image, ( 247 * Math.ceil(window.data.data.animation_frame)), 0, 247, 475, window.data.data.pos_x, window.data.data.pos_y - window.block_y * 2, window.block_y/5 * 6, window.block_y * 2);
 		console.log("dino drawn", window.data, window.data.data.pos_x, window.data.data.pos_y);
 	}
+	//Draw player
+	player.draw();
 	ctx.restore();
 
 	ctx.font = "32px Arial";
