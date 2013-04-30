@@ -5,7 +5,6 @@ function playerView(name, id){
 	this.speed;
 	this.width = window.block_y/5 * 6;
 	this.height = window.block_y * 2;
-	this.animationFrame = 0;
 	this.race_progress = 0;
 
 	this.setChar = function(n){
@@ -25,16 +24,15 @@ function playerView(name, id){
 		}
 	}
 
-	this.draw = function() {
-		ctx.drawImage(this.image, ( 247 * Math.ceil(this.animationFrame)), 0, 247, 475, this.x, this.y - this.height, this.width, this.height);
-		// Draws player progress on minimap
-		ctx.drawImage(this.end, (canvasWidth*.75+ this.xOffset), (canvasHeight*.1), 247/8, 475/8);
-		this.drawProgression();
+	this.draw = function(offset, x, y, animationFrame) {
+		ctx.drawImage(this.image, 0, 0, 247, 475, (Math.floor((x + this.width)/window.block_x) * canvasWidth * .70) - canvasWidth/15 + offset, 10, 247/8, 475/8);
 
+		ctx.drawImage(this.image, ( 247 * Math.ceil(animationFrame)), 0, 247, 475, x, y - this.height, this.width, this.height);
+
+		ctx.font = "32px Arial";
+		ctx.fillStyle = "black";
+		ctx.fillText(String(this.name), window.data.data.pos_x+(0.1)*window.block_x, window.data.data.pos_y-2.5*window.block_y);
 	}
-	this.drawProgression = function() {
-		ctx.drawImage(this.image, 0, 0, 247, 475,  (this.race_progress * canvasWidth * .8) + this.xOffset - canvasWidth/15 , canvasHeight * .1, 247/8, 475/8);
-	}.bind(this)
 
 	this.update = function(terrain) {
 	// advance the animation frame

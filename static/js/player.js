@@ -74,12 +74,14 @@ function Player(playerX, playerY) {
 		}
 		
 		// Draws player progress on minimap
-		ctx.drawImage(this.end, (canvasWidth*.75+ this.xOffset), (canvasHeight*.1), 247/8, 475/8);
+		ctx.fillStyle = "#038200";
+		ctx.fillRect(this.xOffset - canvasWidth/15, 475/8 + 5, canvasWidth * .70 + 247/8, 5);
+		ctx.drawImage(this.end, (canvasWidth*.70+ this.xOffset - canvasWidth/15), 10, 247/8, 475/8);
 		this.drawProgression();
 	}
 
 	this.drawProgression = function() {
-		ctx.drawImage(this.image, 0, 0, 247, 475,  (this.race_progress * canvasWidth * .8) + this.xOffset - canvasWidth/15 , canvasHeight * .1, 247/8, 475/8);
+		ctx.drawImage(this.image, 0, 0, 247, 475, (this.race_progress * canvasWidth * .70) + this.xOffset - canvasWidth/15, 10, 247/8, 475/8);
 	}.bind(this)
 
 	var lowJump = function() {
