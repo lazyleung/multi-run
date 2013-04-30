@@ -138,6 +138,7 @@ function Player(playerX, playerY) {
 				if(player.hit === 0){
 					player.speed.x = player.xSpeedBase
 					player.hit = 1;
+					fireball_sound.play();
 				}
 				//pop out fire ball here
 				level.fireballArray.splice(i, 1);

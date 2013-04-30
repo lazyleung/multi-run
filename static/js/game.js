@@ -11,7 +11,7 @@ var clcount;
 var clinterval;
 var playerViews = new Array();
 var time;
-
+var fireball_sound = new Audio("/sound/explosion.mp3");
 
 function initGame(players_init, lobby_name, levelNum) {
 	//players = list of players

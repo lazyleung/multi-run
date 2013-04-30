@@ -305,6 +305,10 @@ function loadSettings() {
 	var text = $("<div>").html("Music:").addClass("text")
 	var m = $("<img>").attr("id","mute").attr("src", "/images/mute.png").attr("width", canvasWidth/24).attr("height", canvasHeight/8);
 	
+	if (mute ===1){
+		m.addClass('selected');
+	}
+
 	var content_area = $("#content_area");
 	content_area.empty();
 	content_area.append(text);
