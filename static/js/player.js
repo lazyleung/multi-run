@@ -20,7 +20,8 @@ function Player(playerX, playerY) {
 	this.end.src = "/images/end.png";
 	this.points = 0;
 	this.hit = 0;
-	// this.fireballDefau
+	this.fireballDefaultCooldown = 2000;
+	this.fireballCooldown = 0;
 	this.coin_sound = new Audio("sound/coin.mp3");
 
 
@@ -40,6 +41,17 @@ function Player(playerX, playerY) {
 			event.gesture.preventDefault();
 		    slowDown();
 		});
+		$('body').hammer().on("tap", function(event) { // if tap is on left side, shoot left;
+			event.gesture.preventDefault();
+
+			if (getCooldown() === 0) {
+				if (event.gesture.center.pageX < $(window).width()/2.5) {  //2.5 is to center it on the player
+					shootFireball("left")
+				}
+				else
+					shootFireball("right");
+			}
+		})
 	}
 	
 	this.onFloor = function() {
@@ -82,6 +94,10 @@ function Player(playerX, playerY) {
 		}
 	}.bind(this);
 
+	var getCooldown = function() {
+		return this.fireballCooldown
+	}.bind(this);
+
 	var slowDown = function() {
 		if (this.speed.x > this.xSpeedBase + 10)
 			this.speed.x = this.xSpeedBase + 10;
@@ -96,9 +112,12 @@ function Player(playerX, playerY) {
 		}
 	}
 
-	this.shootFire = function(direction) {
-		level.fireballArray
-	}
+	var shootFireball = function(direction) {
+		var startX = direction === "left" ? this.x : this.x + this.width
+		// set a cooldown and fire fireball
+		this.fireballCooldown = this.fireballDefaultCooldown;
+		level.fireballArray.push(new Fireball(startX, this.y - this.height, direction))
+	}.bind(this);
 
 	this.checkAhead = function(y, terrain){
 		return terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)];
@@ -136,6 +155,10 @@ function Player(playerX, playerY) {
 		// Update player race progression; -8 accounts for the end being at the mid point
 		this.race_progress = (this.x + this.width)/window.block_x / ((level.level_data.length) * 16 - 8);
 		var y_block = Math.ceil(this.y/window.block_y);
+
+		// Decrement fireball cooldown
+		if (this.fireballCooldown > 0)
+			this.fireballCooldown -= window.timeInterval;
 
 		//Deals with changing floor height
 		this.floor = canvasHeight-window.block_y;

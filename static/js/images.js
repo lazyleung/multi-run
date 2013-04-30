@@ -22,4 +22,7 @@ function Images(){
 
 	this.coin = new Image();
 	this.coin.src = "/images/coin.png";
+
+	this.fireball = new Image();
+	this.fireball.src = "/images/sun.png";
 }

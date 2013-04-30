@@ -76,6 +76,9 @@ function draw() {
 	//Draw player
 	player.draw();
 
+	// Draw Fireballs
+	drawFireballs();
+
 	ctx.restore();
 
 	ctx.font = "32px Arial";
@@ -93,9 +96,22 @@ function updatePlayers(data){
 	});
 }
 
+function drawFireballs() {
+	level.fireballArray.forEach(function(fireball) {
+		fireball.draw();
+	})
+}
+
+function updateFireballs() {
+	level.fireballArray.forEach(function(fireball) {
+		fireball.update();
+	})
+}
+
 function update() {
 	background.update();
 	player.update(level.terrain_data);
+	updateFireballs();
 	socket.emit("player_update", {'name': usr.name, 'pos_x': player.x, 'pos_y': player.y, 'speed': player.speed, 'animation_frame': player.animationFrame});
 	timer.update();
 	draw();
