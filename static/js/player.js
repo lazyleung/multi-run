@@ -68,6 +68,7 @@ function Player(playerX, playerY) {
 				this.hit++;
 			}
 		} else {
+			console.log("HERE");
 			if(this.hit++ > 50){
 				this.hit = 0;
 			}

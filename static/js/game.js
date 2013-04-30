@@ -71,9 +71,6 @@ function draw() {
 	//Draw Level
 	level.draw(player.x);
 
-	//Draw player
-	player.draw();
-
 	// Draw Fireballs
 	drawFireballs();
 
@@ -89,8 +86,10 @@ function draw() {
 		}
 		//ctx.drawImage(player_view.image, ( 247 * Math.ceil(window.data.data.animation_frame)), 0, 247, 475, window.data.data.pos_x, window.data.data.pos_y - window.block_y * 2, window.block_y/5 * 6, window.block_y * 2);
 	}
+	
 	//Draw player
 	player.draw();
+
 	ctx.font = "32px Arial";
 	ctx.fillStyle = "black";
 	ctx.fillText(String(usr.name), player.x+(0.1)*window.block_x, player.y-2.5*window.block_y);
