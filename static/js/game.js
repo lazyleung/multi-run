@@ -102,7 +102,8 @@ function draw() {
 	player.draw();
 	ctx.font = "32px Arial";
 	ctx.fillStyle = "black";
-	ctx.fillText(String(usr.name), player.x+(0.1)*window.block_x, player.y-2.5*window.block_y)
+	ctx.fillText(String(usr.name), player.x+(0.1)*window.block_x, player.y-2.5*window.block_y);
+	ctx.drawImage(images.arrow, player.x, player.y-4.0*window.block_y, 1.5*window.block_x, window.block_y);
 	ctx.restore();
 
 	ctx.font = "32px Arial";

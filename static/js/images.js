@@ -25,4 +25,7 @@ function Images(){
 
 	this.fireball = new Image();
 	this.fireball.src = "/images/sun.png";
+
+	this.arrow = new Image();
+	this.arrow.src = "/images/arrow.png";
 }
