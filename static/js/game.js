@@ -97,6 +97,9 @@ function draw() {
 	}
 	//Draw player
 	player.draw();
+	ctx.font = "32px Arial";
+	ctx.fillStyle = "black";
+	ctx.fillText(String(usr.name), player.x+(0.1)*window.block_x, player.y-2.5*window.block_y)
 	ctx.restore();
 
 	ctx.font = "32px Arial";
