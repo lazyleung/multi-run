@@ -133,9 +133,11 @@ function Player(playerX, playerY) {
 		var player = this;
 		level.fireballArray.forEach(function(fireball) {
 			if (fireball.id !== usr.name &&intersectRect(fireball, player) === true) {
+				console.log("burn");
 				if(this.hit === 0){
 					this.hit = 1;
 				}
+				//pop out fire ball here
 				return true;
 			}
 		});
