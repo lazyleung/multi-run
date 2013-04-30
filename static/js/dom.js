@@ -216,10 +216,10 @@ function loadProfile() {
  	canvasWidth = $(window).width();
 	canvasHeight = $(window).height();
  	var content_area = $("#content_area");
- 	var dino_green = $("<img>").html("<br>").attr("id", "dino_green").attr("src", "/images/dino_green.png").attr("width", canvasWidth/16).attr("height", canvasHeight/8).addClass("dino");
- 	var dino_blue = $("<img>").html("").attr("id", "dino_blue").attr("src", "/images/dino_blue.png").attr("width", canvasWidth/16).attr("height", canvasHeight/8).addClass("dino");
- 	var dino_red = $("<img>").html("").attr("id", "dino_red").attr("src", "/images/dino_red.png").attr("width", canvasWidth/16).attr("height", canvasHeight/8).addClass("dino");
- 	var dino_olive = $("<img>").html("").attr("id", "dino_olive").attr("src", "/images/dino_olive.png").attr("width", canvasWidth/16).attr("height", canvasHeight/8).addClass("dino");
+ 	var dino_green = $("<img>").html("<br>").attr("id", "dino_green").attr("src", "/images/dino_green.png").attr("height", canvasHeight/5).addClass("dino");
+ 	var dino_blue = $("<img>").html("").attr("id", "dino_blue").attr("src", "/images/dino_blue.png").attr("height", canvasHeight/5).addClass("dino");
+ 	var dino_red = $("<img>").html("").attr("id", "dino_red").attr("src", "/images/dino_red.png").attr("height", canvasHeight/5).addClass("dino");
+ 	var dino_olive = $("<img>").html("").attr("id", "dino_olive").attr("src", "/images/dino_olive.png").attr("height", canvasHeight/5).addClass("dino");
  
 
  	content_area.empty();
@@ -250,22 +250,22 @@ function loadProfile() {
 
 
 	$("#back_button").hammer().on("tap", loadMenu);
-	$("#dino_green").click(function(){
+	$("#dino_green").hammer().on("tap", function(){
 		$(this).addClass("selected").siblings(".dino").removeClass("selected");
 		usr.charNum = 1;
 		usr.setChar(1);
 	});
-	$("#dino_blue").click(function(){
+	$("#dino_blue").hammer().on("tap", function(){
 		$(this).addClass("selected").siblings(".dino").removeClass("selected");
 		usr.charNum = 2;
 		usr.setChar(2);
 	});
-	$("#dino_red").click(function(){
+	$("#dino_red").hammer().on("tap", function(){
 		$(this).addClass("selected").siblings(".dino").removeClass("selected");
 		usr.charNum = 3;
 		usr.setChar(3);
 	});
-	$("#dino_olive").click(function(){
+	$("#dino_olive").hammer().on("tap", function(){
 		$(this).addClass("selected").siblings(".dino").removeClass("selected");
 		usr.charNum = 4;
 		usr.setChar(4);

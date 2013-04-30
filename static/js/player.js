@@ -68,6 +68,7 @@ function Player(playerX, playerY) {
 				this.hit++;
 			}
 		} else {
+			console.log("HERE");
 			if(this.hit++ > 50){
 				this.hit = 0;
 			}
@@ -132,7 +133,11 @@ function Player(playerX, playerY) {
 		var player = this;
 		level.fireballArray.forEach(function(fireball) {
 			if (fireball.id !== usr.name &&intersectRect(fireball, player) === true) {
-				console.log("burn")
+				console.log("burn");
+				if(this.hit === 0){
+					this.hit = 1;
+				}
+				//pop out fire ball here
 				return true;
 			}
 		});
