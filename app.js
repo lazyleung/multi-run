@@ -119,6 +119,8 @@ io.sockets.on("connection", function(socket){
 
     socket.on("player_update", function(data) {
         console.log(data);
+        //var lobby = getPrivateLobby(data.lobby_name);
+        socket.broadcast.to(data.lobby_name).emit('player_update', {'success': true, 'data': data});
     });
 
     //Leave lobby

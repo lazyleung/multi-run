@@ -180,7 +180,8 @@ function initSock(){
 		}
 	});
 
-	socket.on("update_players", function(data){
+	socket.on("player_update", function(data){
+		console.log("player_update", data);
 		if(data.success){
 			updatePlayers(data);
 		} else {
