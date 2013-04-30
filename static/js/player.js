@@ -118,7 +118,10 @@ function Player(playerX, playerY) {
 		var startX = direction === "left" ? this.x : this.x + this.width
 		// set a cooldown and fire fireball
 		this.fireballCooldown = this.fireballDefaultCooldown;
-		level.fireballArray.push(new Fireball(startX, this.y - this.height * .8, this.speed.x, direction, 0))
+		var fireball = new Fireball(startX, this.y - this.height * .8, this.speed.x, direction, usr.name)
+		level.fireballArray.push(fireball);
+		socket.emit("player_fireball", {'x': fireball.x, 'y':fireball.y, 'player_speed':fireball.playerSpeed, 'direction': fireball.direction, 'id': fireball.id, 'lobby_name':usr.lobby_name});
+		//console.log("fireball =", fireball);
 	}.bind(this);
 
 	this.checkAhead = function(y, terrain){
@@ -128,7 +131,7 @@ function Player(playerX, playerY) {
 	this.checkFireball = function() {
 		var player = this;
 		level.fireballArray.forEach(function(fireball) {
-			if (intersectRect(fireball, player) === true) {
+			if (fireball.id !== usr.name &&intersectRect(fireball, player) === true) {
 				console.log("burn")
 				return true;
 			}

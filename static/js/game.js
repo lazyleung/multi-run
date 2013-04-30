@@ -104,7 +104,7 @@ function draw() {
 }
 
 function updatePlayers(data){
-	console.log(data);
+	//console.log(data);
 	window.data = data;
 	//console.log("dino drawn");
 	//data.players.forEach(function(player_view_data){
