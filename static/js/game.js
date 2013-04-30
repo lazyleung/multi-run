@@ -39,7 +39,7 @@ function initGame(players_init, lobby_name, levelNum) {
 	//Create view for players
 	for(var p in players_init){
 		if(players_init[p].name !== usr.name){
-			var playerview = new playerView(players_init[p].name, players_init[p].charNum);
+			var playerview = new playerView(players_init[p].name, players_init[p].charNum, players_init[p].canvas_w, players_init[p].canvas_h);
 			playerview.setChar(playerview.id);
 			playerViews.push(playerview);
 		}
@@ -83,7 +83,7 @@ function draw() {
 			//console.log(playerViews[p]);
 			//console.log(playerViews[p].name, window.data.data.name);
 			if (playerViews[p].name === window.data.data.name){
-				playerViews[p].draw(player.xOffset, window.data.data.pos_x, window.data.data.pos_y, window.data.data.animation_frame);
+				playerViews[p].draw(player.xOffset, window.data.data.pos_x/(playerViews[p].canvas_width/canvasWidth), window.data.data.pos_y/(playerViews[p].canvas_height/canvasHeight), window.data.data.animation_frame);
 			} 
 		}
 		//ctx.drawImage(player_view.image, ( 247 * Math.ceil(window.data.data.animation_frame)), 0, 247, 475, window.data.data.pos_x, window.data.data.pos_y - window.block_y * 2, window.block_y/5 * 6, window.block_y * 2);

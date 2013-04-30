@@ -105,6 +105,8 @@ function loadCanvas(players_init, lobby_name) {
 
 function loadCreateGame() {
 	removeHammer();
+	canvasWidth = $(window).width();
+	canvasHeight = $(window).height();
  	//UI
  	//Content area
 	var create_lobby = $("<div>").html("Create Lobby").attr("id","create_lobby_button").addClass("button");
@@ -128,7 +130,7 @@ function loadCreateGame() {
  		if ($("#lobby_name").val() !== "") {
 
 	 		var	lobby_name = $("#lobby_name").val();
-	 		socket.emit('create_lobby',{'username': usr.name, 'lobby_name': lobby_name, 'charNum': usr.charNum});
+	 		socket.emit('create_lobby',{'username': usr.name, 'lobby_name': lobby_name, 'charNum': usr.charNum, 'canvas_w': canvasWidth, 'canvas_h': canvasHeight});
  		}
  		else
  			showNotification("Not a valid lobby name");
@@ -137,6 +139,8 @@ function loadCreateGame() {
 
 function loadFindGame() {
 	removeHammer();
+	canvasWidth = $(window).width();
+	canvasHeight = $(window).height();
 	//UI
  	var lobby_name_input = $("<input>").attr("type","text").attr("id","lobby_name").attr("placeholder","Lobby Name");
  	var join_lobby = $("<div>").html("Join Lobby").attr("id","join_lobby_button").addClass("button");
@@ -156,7 +160,7 @@ function loadFindGame() {
  	//Touch 
 	$("#back_button").hammer().on("tap", loadMenu);
 	$("#join_lobby_button").hammer().on("tap", function(){
- 		socket.emit('join_lobby',{'username': usr.name, 'lobby_name': $("#lobby_name").val(), 'charNum': usr.charNum});
+ 		socket.emit('join_lobby',{'username': usr.name, 'lobby_name': $("#lobby_name").val(), 'charNum': usr.charNum, 'canvas_w':canvasWidth, 'canvas_h':canvasHeight});
  	});
 }
 

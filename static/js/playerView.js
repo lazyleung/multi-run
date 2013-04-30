@@ -1,4 +1,4 @@
-function playerView(name, id){
+function playerView(name, id, w, h){
 	this.name = name;
 	this.id = id;
 	this.image = images.dino_olive;
@@ -8,6 +8,8 @@ function playerView(name, id){
 	this.race_progress = 0;
 	this.x;
 	this.y;
+	this.canvas_width = w;
+	this.canvas_height = h;
 
 	this.setChar = function(n){
 		switch(n){
