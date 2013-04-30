@@ -185,15 +185,27 @@ function loadLobby(data) {
 //loads the profile
 function loadProfile() {
 	removeHammer();
- 	var username = $("<div>").html("Username: " + usr.name);
-
+ 	var username = $("<div>").html("Username: " + usr.name).addClass("text");
+ 	var color = $("<div>").html("<br> Pick a Color:").addClass("text");
  	//Back Button
  	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
  
+ 	//Dinos
+ 	canvasWidth = $(window).width();
+	canvasHeight = $(window).height();
  	var content_area = $("#content_area");
+ 	var dino_green = $("<img>").html("<br>").attr("id", "dino_green").attr("src", "/images/dino_green.png").attr("width", canvasWidth/16).attr("height", canvasHeight/8).addClass("dino");
+ 	var dino_red = $("<img>").html("").attr("id", "dino_red").attr("src", "/images/dino_red.png").attr("width", canvasWidth/16).attr("height", canvasHeight/8).addClass("dino");
+ 	var dino_blue = $("<img>").html("").attr("id", "dino_blue").attr("src", "/images/dino_blue.png").attr("width", canvasWidth/16).attr("height", canvasHeight/8).addClass("dino");
+ 	var dino_olive = $("<img>").html("").attr("id", "dino_olive").attr("src", "/images/dino_olive.png").attr("width", canvasWidth/16).attr("height", canvasHeight/8).addClass("dino");
+ 
  	content_area.empty();
-	$("#content_area").append(back_button);
 	$("#content_area").append(username);
+    $("#content_area").append(color);
+	$("#content_area").append(dino_green);
+	$("#content_area").append(dino_red);
+	$("#content_area").append(dino_blue);
+	$("#content_area").append(dino_olive);
 
 	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
 
@@ -202,6 +214,23 @@ function loadProfile() {
  	navbar.append(back_button);
 
 	$("#back_button").hammer().on("tap", loadMenu);
+	$("#dino_green").click(function(){
+		$(this).addClass("selected").siblings(".dino").removeClass("selected");
+	})
+	$("#dino_red").click(function(){
+		$(this).addClass("selected").siblings(".dino").removeClass("selected");
+	});
+	$("#dino_blue").click(function(){
+		$(this).addClass("selected").siblings(".dino").removeClass("selected");
+	});
+	$("#dino_olive").click(function(){
+		$(this).addClass("selected").siblings(".dino").removeClass("selected");
+	});
+
+}
+
+function selectDino(){
+
 }
 
 //loads the settings
