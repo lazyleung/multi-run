@@ -138,7 +138,7 @@ function update() {
 	player.update(level.terrain_data);
 	updateFireballs();
 	updatePlayerViews();
-	//socket.emit("player_update", {'name': usr.name, 'pos_x': player.x, 'pos_y': player.y, 'speed': player.speed, 'animation_frame': player.animationFrame, 'lobby_name': usr.lobby_name});
+	socket.emit("player_update", {'name': usr.name, 'pos_x': player.x, 'pos_y': player.y, 'speed': player.speed, 'animation_frame': player.animationFrame, 'lobby_name': usr.lobby_name});
 	draw();
 }
 
@@ -158,7 +158,7 @@ function startGame() {
 	}
 	player.init();
 	gameInterval = setInterval(update, timeInterval);
-	setInterval(playerUpdate, 100);
+	//setInterval(playerUpdate, 50);
 };
 
 function endGame() {
