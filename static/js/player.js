@@ -116,11 +116,25 @@ function Player(playerX, playerY) {
 		var startX = direction === "left" ? this.x : this.x + this.width
 		// set a cooldown and fire fireball
 		this.fireballCooldown = this.fireballDefaultCooldown;
-		level.fireballArray.push(new Fireball(startX, this.y - this.height * .8, direction))
+		level.fireballArray.push(new Fireball(startX, this.y - this.height * .8, this.speed.x, direction))
 	}.bind(this);
 
 	this.checkAhead = function(y, terrain){
 		return terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)];
+	}
+
+	this.checkFireball = function() {
+		levels.fireballArray.forEach(function(fireball) {
+			if (intersectRect(fireball, this))
+				console.log("YOU GOT BURN");
+		})
+	}
+
+	function intersectRect(r1, r2) {
+	  return !(r2.x > r1.x + r1.width || 
+	           r2.x + r2.width < r1.x || 
+	           r2.y - r2.height > r1.y ||
+	           r2.y < r1.y - r1.height);
 	}
 
 	//Checks for coin pickup
