@@ -140,13 +140,13 @@ function Player(playerX, playerY) {
 	//Checks for coin pickup
 	this.checkCoin = function(y, terrain){
 		var ahead = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)];
-		var here = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)];
+		//var here = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)];
 		var hereabove = terrain[Math.floor(progress/16)][0][progress - 1 - (Math.floor(progress/16) * 16) + ((y-2) * 16)];
 		
 		if(ahead === 5){
 			terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)] = 0;
-		}else if (here === 5){
-			terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)] = 0;
+		//}else if (here === 5){
+			//terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)] = 0;
 		}else if (hereabove === 5){
 			terrain[Math.floor(progress/16)][0][progress - 1 - (Math.floor(progress/16) * 16) + ((y-2) * 16)] = 0;
 		} else {

@@ -19,7 +19,7 @@ function Level(seed){
 	//assign terrain data
 	this.make_level = function(levels) {
 		levels.push(end);
-		this.terrain_data = levels;
+		this.terrain_data = $.extend(true, [], levels);
 		this.level_data = new Array();
 		for(var i = 0; i < levels.length; i++) {
 			this.level_data[i] = levels[i][1][0];
