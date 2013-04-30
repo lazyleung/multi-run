@@ -142,6 +142,10 @@ function update() {
 	draw();
 }
 
+function playerUpdate() {
+	socket.emit("player_update", {'name': usr.name, 'pos_x': player.x, 'pos_y': player.y, 'speed': player.speed, 'animation_frame': player.animationFrame, 'lobby_name': usr.lobby_name});
+}
+
 function startGame() {
 	// end menuMusic() and remove listener
 	if(mute === 0){
@@ -154,6 +158,7 @@ function startGame() {
 	}
 	player.init();
 	gameInterval = setInterval(update, timeInterval);
+	//setInterval(playerUpdate, 50);
 };
 
 function endGame() {

@@ -205,16 +205,16 @@ function lobbyDino(charNum){
 	canvasHeight = $(window).height();
 	
 	if (charNum === 1){
-		var dino_lobby_green = $("<img>").html("<br>").attr("id", "dino_lobby_green").attr("src", "/images/dino_green.png").attr("width", canvasWidth/48).attr("height", canvasHeight/24).addClass("dino_lobby");
+		var dino_lobby_green = $("<img>").html("<br>").attr("id", "dino_lobby_green").attr("src", "/images/dino_green.png").attr("width", canvasWidth/32).attr("height", canvasHeight/16).addClass("dino_lobby");
 		return dino_lobby_green;
 	} else if (charNum === 2){
-		var dino_lobby_blue = $("<img>").html("").attr("id", "dino_lobby_blue").attr("src", "/images/dino_blue.png").attr("width", canvasWidth/48).attr("height", canvasHeight/24).addClass("dino_lobby");
+		var dino_lobby_blue = $("<img>").html("").attr("id", "dino_lobby_blue").attr("src", "/images/dino_blue.png").attr("width", canvasWidth/32).attr("height", canvasHeight/16).addClass("dino_lobby");
 		return dino_lobby_blue;
 	} else if (charNum === 3){
- 		var dino_lobby_red = $("<img>").html("").attr("id", "dino_lobby_red").attr("src", "/images/dino_red.png").attr("width", canvasWidth/48).attr("height", canvasHeight/24).addClass("dino_lobby");
+ 		var dino_lobby_red = $("<img>").html("").attr("id", "dino_lobby_red").attr("src", "/images/dino_red.png").attr("width", canvasWidth/32).attr("height", canvasHeight/16).addClass("dino_lobby");
 		return dino_lobby_red;
 	} else if (charNum === 4){
-		var dino_lobby_olive = $("<img>").html("").attr("id", "dino_lobby_olive").attr("src", "/images/dino_olive.png").attr("width", canvasWidth/48).attr("height", canvasHeight/24).addClass("dino_lobby");
+		var dino_lobby_olive = $("<img>").html("").attr("id", "dino_lobby_olive").attr("src", "/images/dino_olive.png").attr("width", canvasWidth/32).attr("height", canvasHeight/16).addClass("dino_lobby");
 		return dino_lobby_olive;
 	} 
 }
@@ -296,10 +296,14 @@ function loadProfile() {
 function loadSettings() {
 	removeHammer();
 
-	var m = $("<img>").attr("id","mute").attr("src", "/images/arrow.png");
+ 	canvasWidth = $(window).width();
+	canvasHeight = $(window).height();
+	var text = $("<div>").html("Music:").addClass("text")
+	var m = $("<img>").attr("id","mute").attr("src", "/images/mute.png").attr("width", canvasWidth/24).attr("height", canvasHeight/8);
 	
 	var content_area = $("#content_area");
 	content_area.empty();
+	content_area.append(text);
 	content_area.append(m);
 
 	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
@@ -314,11 +318,13 @@ function loadSettings() {
 			menuMusic.pause();
 			console.log("Mute!");
 			mute = 1;
+			$("#mute").addClass("selected");
 		} else if(mute === 1){
 			//play music
 			menuMusic.play();
 			console.log("No Mute!");
 			mute = 0;
+			$("#mute").removeClass("selected");
 		}
 		localStorage.mute = mute.toString();
 	});

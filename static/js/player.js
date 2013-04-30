@@ -29,7 +29,7 @@ function Player(playerX, playerY) {
 		// Setup touch handler
 		$('body').hammer().on("swipeup", function(event) {
 			event.gesture.preventDefault();
-		    console.log(this, event);
+		    //console.log(this, event);
 		    if (Math.abs(event.gesture.deltaY) <= 120) {
 		    	lowJump();
 		    }
@@ -68,7 +68,6 @@ function Player(playerX, playerY) {
 				this.hit++;
 			}
 		} else {
-			console.log("HERE");
 			if(this.hit++ > 50){
 				this.hit = 0;
 			}
@@ -131,7 +130,9 @@ function Player(playerX, playerY) {
 
 	this.checkFireball = function() {
 		var player = this;
-		level.fireballArray.forEach(function(fireball) {
+		for (i = 0; i < level.fireballArray.length; i++){
+			var fireball = level.fireballArray[i];
+		//level.fireballArray.forEach(function(fireball) {
 			if (fireball.id !== usr.name &&intersectRect(fireball, player) === true) {
 				console.log("burn");
 				if(player.hit === 0){
@@ -139,9 +140,11 @@ function Player(playerX, playerY) {
 					player.hit = 1;
 				}
 				//pop out fire ball here
+				level.fireballArray.splice(i, 1);
 				return true;
 			}
-		});
+		//});
+		}
 	}
 
 	var intersectRect = function(r1, r2) {

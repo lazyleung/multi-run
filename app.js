@@ -86,7 +86,7 @@ io.sockets.on("connection", function(socket){
                 }
             }
             io.sockets.in(data.lobby_name).emit('lobby_update', {'success': true, 'players_init':  private_lobby_list[status].players_init});
-            if(++private_lobby_list[status].readyCount === private_lobby_list[status].players.length){
+            if(++private_lobby_list[status].readyCount === private_lobby_list[status].players_init.length){
                 //Reset readyCount for use in loading
                 private_lobby_list[status].readyCount = 0;
                 private_lobby_list[status].status = "loading";
@@ -107,7 +107,7 @@ io.sockets.on("connection", function(socket){
         }else if(private_lobby_list[status].status === "loading"){
             //Lobby is loading so okay
             socket.emit('load_game_signal', {'success': true});
-            if(++private_lobby_list[status].readyCount === private_lobby_list[status].players.length){
+            if(++private_lobby_list[status].readyCount === private_lobby_list[status].players_init.length){
                 private_lobby_list[status].readyCount = 0;
                 private_lobby_list[status].status = "playing";
                 io.sockets.in(data.lobby_name).emit('start_game_signal', {'success': true});

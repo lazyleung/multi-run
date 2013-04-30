@@ -18,11 +18,11 @@ function Background() {
 			}
 		}
 		//Add clouds at a reasonable frequency
-		if(this.clouds.length < 5 && this.cloudSpawnTime === 0 && Math.random() > 0.9) {
+		if(this.clouds.length < 4 && this.cloudSpawnTime === 0 && Math.random() > 0.9) {
 			//Random type 0-1
 			var type = Math.floor((Math.random()*2));
-			//Random size 2-6
-			var size = Math.floor((Math.random()*4)+2);
+			//Random size 1-4
+			var size = Math.floor((Math.random()*4)+1);
 			this.clouds.push(new Cloud(type, size));
 			this.cloudSpawnTime = 100;
 		}
@@ -43,7 +43,7 @@ function Background() {
 		}
 
 		//Add mountains at a reasonable frequency
-		if(this.mountains.length < 5 && this.mountainSpawnTime === 0 && Math.random() > 0.9) {
+		if(this.mountains.length < 3 && this.mountainSpawnTime === 0 && Math.random() > 0.9) {
 			//Random type 0-2
 			var type = Math.floor((Math.random()*3));
 			//Random size 1-2

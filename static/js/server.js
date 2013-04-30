@@ -188,7 +188,7 @@ function initSock(){
 		if(data.success){
 			updatePlayers(data);
 		} else {
-			showNotification(data.reason);
+			//showNotification(data.reason);
 		}
 	});
 
