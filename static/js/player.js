@@ -124,38 +124,51 @@ function Player(playerX, playerY) {
 	}
 
 	this.checkFireball = function() {
-		levels.fireballArray.forEach(function(fireball) {
-			if (intersectRect(fireball, this))
-				console.log("YOU GOT BURN");
+		var player = this;
+		level.fireballArray.forEach(function(fireball) {
+			if (intersectRect(fireball, player) === true) {
+				console.log("burn")
+				return true;
+			}
 		})
 	}
 
-	function intersectRect(r1, r2) {
+	var intersectRect = function(r1, r2) {
 	  return !(r2.x > r1.x + r1.width || 
 	           r2.x + r2.width < r1.x || 
 	           r2.y - r2.height > r1.y ||
 	           r2.y < r1.y - r1.height);
-	}
+	}.bind(this);
 
-	//Checks for coin pickup
-	this.checkCoin = function(y, terrain){
-		var ahead = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)];
-		//var here = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)];
-		var hereabove = terrain[Math.floor(progress/16)][0][progress - 1 - (Math.floor(progress/16) * 16) + ((y-2) * 16)];
+	// //Checks for coin pickup
+	// this.checkCoin = function(y, terrain){
+	// 	var ahead = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)];
+	// 	//var here = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)];
+	// 	var hereabove = terrain[Math.floor(progress/16)][0][progress - 1 - (Math.floor(progress/16) * 16) + ((y-2) * 16)];
 		
-		if(ahead === 5){
-			terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)] = 0;
-		//}else if (here === 5){
-			//terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)] = 0;
-		}else if (hereabove === 5){
-			terrain[Math.floor(progress/16)][0][progress - 1 - (Math.floor(progress/16) * 16) + ((y-2) * 16)] = 0;
-		} else {
-			return false;
-		}
+	// 	if(ahead === 5){
+	// 		terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)] = 0;
+	// 	//}else if (here === 5){
+	// 		//terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)] = 0;
+	// 	}else if (hereabove === 5){
+	// 		terrain[Math.floor(progress/16)][0][progress - 1 - (Math.floor(progress/16) * 16) + ((y-2) * 16)] = 0;
+	// 	} else {
+	// 		return false;
+	// 	}
 
-		this.points += 50;
-		this.coin_sound.play();
-		return true;
+	// 	this.points += 50;
+	// 	this.coin_sound.play();
+	// 	return true;
+	// }
+
+	this.checkCoin = function() {
+		level.coinArray.forEach(function(coin) {
+			if (intersectRect(coin, this)) {
+				this.points += 50;
+				this.coin_sound.play();
+				return true;
+			}
+		})
 	}
 
 	this.update = function(terrain) {
@@ -191,7 +204,8 @@ function Player(playerX, playerY) {
 				return;
 		}
 
-		this.checkCoin(y_block, terrain);
+		this.checkCoin();
+		this.checkFireball();
 		
 		//Slowly increase player speed
 		// Limit horizontal speed
