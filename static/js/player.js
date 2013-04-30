@@ -116,7 +116,7 @@ function Player(playerX, playerY) {
 		var startX = direction === "left" ? this.x : this.x + this.width
 		// set a cooldown and fire fireball
 		this.fireballCooldown = this.fireballDefaultCooldown;
-		level.fireballArray.push(new Fireball(startX, this.y - this.height, direction))
+		level.fireballArray.push(new Fireball(startX, this.y - this.height * .8, direction))
 	}.bind(this);
 
 	this.checkAhead = function(y, terrain){

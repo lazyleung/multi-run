@@ -2,8 +2,8 @@ function Fireball(X, Y, direction) {
 	this.x = X
 	this.y = Y
 	this.image = images.fireball;
-	this.width = 100;
-	this.height = 100;
+	this.width = window.block_y;
+	this.height = window.block_y;
 	this.direction = direction;
 	this.speed = direction === "left" ? -5 : 40;
 

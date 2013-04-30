@@ -120,16 +120,17 @@ function update() {
 	background.update();
 	player.update(level.terrain_data);
 	updateFireballs();
-	
+
 	socket.emit("player_update", {'name': usr.name, 'pos_x': player.x, 'pos_y': player.y, 'speed': player.speed, 'animation_frame': player.animationFrame, 'lobby_name': usr.lobby_name});
 	timer.update();
 	draw();
 }
 
 function startGame() {
-	// end menuMusic()
+	// end menuMusic() and remove listener
 	menuMusic.pause();
-	menuMusic.currentTime = 0;
+	menuMusic.removeEventListener('ended', false);
+	// menuMusic.currentTime = 0;
 	// Start music
 	music = new Audio(musicList[Math.floor(Math.random() * 2)])
 	music.play();
@@ -149,7 +150,7 @@ function endGame() {
 function exitGame(){
 	//stop music
 	music.pause();
-	music.currentTime = 0;
+	// music.currentTime = 0; COULD BE REMOVED MAYUBE
 	loadContent();
 	loadMenu();
 }
