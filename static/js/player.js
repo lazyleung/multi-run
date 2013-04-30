@@ -27,7 +27,7 @@ function Player(playerX, playerY) {
 		$('body').hammer().on("swipeup", function(event) {
 			event.gesture.preventDefault();
 		    console.log(this, event);
-		    if (Math.abs(event.gesture.deltaY) <= 100) {
+		    if (Math.abs(event.gesture.deltaY) <= 120) {
 		    	lowJump();
 		    }
 		    else {
@@ -70,13 +70,13 @@ function Player(playerX, playerY) {
 
 	var lowJump = function() {
 		if (this.onFloor() == true) {
-			this.jumpTimeLeft = 100;
+			this.jumpTimeLeft = 75;
 		}
 	}.bind(this);
 
 	var highJump = function() {
 		if (this.onFloor() == true) {
-			this.jumpTimeLeft = 130;
+			this.jumpTimeLeft = 100;
 		}
 	}.bind(this);
 
