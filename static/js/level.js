@@ -11,9 +11,10 @@ function Level(seed){
 	this.powerup.src = "/images/powerup.png";
 	this.box = new Image();
 	this.box.src = "/images/wooden_crate.png";
-	this.coinArray = new Array();
+	//this.coinArray = new Array();
 	this.boxArray = new Array();
 	this.fireballArray = new Array();
+	this.coin = images.coin;
 
 	//assign terrain data
 	this.make_level = function(levels) {
@@ -39,22 +40,22 @@ function Level(seed){
 				for(var j = 0; j < 16; j++){
 					if(j === 9){
 						ctx.drawImage(this.box, i*canvasWidth + j*window.block_x, canvasHeight - 3*window.block_y, 2*window.block_y, 2*window.block_y);
-						if(this.coinArray[pos + j + i] === undefined){
-							this.coinArray[pos + j + i] = new Coin(i*canvasWidth + j*window.block_x, canvasHeight-5*window.block_y, window.block_x, window.block_y);
-						}
+						//if(this.coinArray[pos + j + i] === undefined){
+							ctx.drawImage(this.coin, 0, 0, 258, 256,i*canvasWidth + j*window.block_x, canvasHeight-5*window.block_y, window.block_x, window.block_y);
+						//}
 					}
-					if(j === 10 && this.coinArray[pos + j + i] === undefined){
-						this.coinArray[pos + j + i] = new Coin(i*canvasWidth + j*window.block_x, canvasHeight-5*window.block_y, window.block_x, window.block_y);
+					if(j === 10){
+						ctx.drawImage(this.coin, 0, 0, 258, 256, i*canvasWidth + j*window.block_x, canvasHeight-5*window.block_y, window.block_x, window.block_y);
 					}
 					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
 				}
 			}else if (this.level_data[i] === "flat_coin"){
 				for(var j = 0; j < 16; j++){
-					if((j === 3 || j === 11) && this.coinArray[pos + j + i] === undefined){
-						this.coinArray[pos + j + i] = new Coin(i*canvasWidth + j*window.block_x, canvasHeight-2*window.block_y, window.block_x, window.block_y);
+					if((j === 3 || j === 11)){
+						ctx.drawImage(this.coin, 0, 0, 258, 256,i*canvasWidth + j*window.block_x, canvasHeight-2*window.block_y, window.block_x, window.block_y);
 					}
-					if((j === 7 || j === 15) && this.coinArray[pos + j + i] === undefined){
-						this.coinArray[pos + j + i] = new Coin(i*canvasWidth + j*window.block_x, canvasHeight-5*window.block_y, window.block_x, window.block_y);
+					if((j === 7 || j === 15)){
+						ctx.drawImage(this.coin, 0, 0, 258, 256,i*canvasWidth + j*window.block_x, canvasHeight-5*window.block_y, window.block_x, window.block_y);
 					}
 					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
 				}
@@ -84,8 +85,8 @@ function Level(seed){
 				for(var j = 0; j < 16; j++){
 					if(j > 0 && j < 15){
 						ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - 4*window.block_y, window.block_x, window.block_y/4);
-						if (j % 4 === 0 && this.coinArray[pos + j + i] === undefined){
-							this.coinArray[pos + j + i] = new Coin(i*canvasWidth + j*window.block_x, canvasHeight - 5*window.block_y, window.block_x, window.block_y);
+						if (j % 4 === 0){
+							ctx.drawImage(this.coin, 0, 0, 258, 256,i*canvasWidth + j*window.block_x, canvasHeight - 5*window.block_y, window.block_x, window.block_y);
 						}
 					}
 					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
@@ -105,11 +106,11 @@ function Level(seed){
 		// 		this.coinArray[c].draw();
 		// 	}
 		// }
-		for(var c in this.coinArray){
-			if(this.coinArray[c] !== undefined){
-				this.coinArray[c].draw();
-			}
-		}
+		// for(var c in this.coinArray){
+		// 	if(this.coinArray[c] !== undefined){
+		// 		this.coinArray[c].draw();
+		// 	}
+		// }
 	}
 
 	//generate premade or radnom level
