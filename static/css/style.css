@@ -185,6 +185,30 @@ text-align: center;
 .text{
 	color:white;
 }
+
+#dino_green {
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top:10px;
+}
+
+#dino_blue {
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top:10px;
+}
+
+#dino_red{
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top:10px;
+}
+
+#dino_olive{
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top:10px;
+}
 /*-------------------------------------*/
 /*-------------Lobby CSS-------------*/
 /*-------------------------------------*/
