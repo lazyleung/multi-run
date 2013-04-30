@@ -10,7 +10,6 @@ function User(){
 	this.lobby_name;
 	this.player_id;
 
-
 	this.charNum;
 	this.setChar = function(n){
 		switch(n){

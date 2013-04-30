@@ -28,7 +28,16 @@ var public_lobby_list = [{'name': 'Alpha', 'players': []}, {'beta': 'Alpha', 'pl
  * status can be waiting, loading, playing, and end
  * players have username and id
 */
-
+var platform_coin = new Array();
+platform_coin[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 0,
+            0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,];
+platform_coin[1] = ["platform_coin"];
 // Tell socket io to listen for new connections
 io.sockets.on("connection", function(socket){
     clients[socket.id] = 0;
@@ -36,8 +45,9 @@ io.sockets.on("connection", function(socket){
     //Create Lobby
     socket.on('create_lobby', function(data) {
         if(!isPrivateLobby(data.lobby_name)){
-            var player = {'name': data.username, 'id': socket.id};
-            var lobby = {'name': data.lobby_name, 'players': [player], 'readyCount': 0, 'status': 'waiting'};
+            var player = {'name': data.username, 'id': socket.id, 'speed': 0};
+            var player_init = {'name': data.username, 'charNum': data.charNum};
+            var lobby = {'name': data.lobby_name, 'players': [player], 'init_players': [player_init],'readyCount': 0, 'status': 'waiting'};
 
             socket.join(data.lobby_name);
             clients[socket.id] = data.lobby_name;

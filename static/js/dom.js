@@ -140,7 +140,7 @@ function loadFindGame() {
  	//Touch 
 	$("#back_button").hammer().on("tap", loadMenu);
 	$("#join_lobby_button").hammer().on("tap", function(){
- 		socket.emit('join_lobby',{'username': usr.name, 'lobby_name': $("#lobby_name").val()});
+ 		socket.emit('join_lobby',{'username': usr.name, 'lobby_name': $("#lobby_name").val(), 'charNum': usr.charNum});
  	});
 }
 
@@ -193,6 +193,12 @@ function loadProfile() {
  	content_area.empty();
 	$("#content_area").append(back_button);
 	$("#content_area").append(username);
+
+	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
+
+ 	var navbar = $('#navbar');
+ 	navbar.empty();
+ 	navbar.append(back_button);
 
 	$("#back_button").hammer().on("tap", loadMenu);
 }
