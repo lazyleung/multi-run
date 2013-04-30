@@ -11,16 +11,16 @@ var race_progress;
 var clcount;
 var clinterval;
 
-var playerViews = new Array();
 
-function initGame(players, lobby_name) {
+
+function initGame(players_init, lobby_name) {
 	//players = list of players
-	console.log("players = ", players);
+	console.log("players_init = ", players_init);
 	console.log("lobby_name = ", lobby_name);
 	//Sets up the game
 	window.canvas = document.getElementById("myCanvas");
 	window.ctx = canvas.getContext("2d");
-
+	var playerViews = new Array();
 	//Screen split up 16x8 blocks
 	window.block_x = canvasWidth/16;
 	window.block_y = canvasHeight/8;
@@ -36,9 +36,9 @@ function initGame(players, lobby_name) {
 	player = new Player(canvasWidth/3, canvasHeight - 1*window.block_y);
 
 	//Create view for players
-	for(var p in players){
-		if (players[p].name !== usr.name){
-			playerViews.push(new playerView(players[p].name, players[p].charNum));
+	for(var p in players_init){
+		if(players_init[p].name !== usr.name){
+			playerViews.push(new playerView(players_init[p].name, players_init[p].charNum));
 		}
 	}
 
@@ -79,6 +79,11 @@ function draw() {
 	// Draw Fireballs
 	drawFireballs();
 
+	if (typeof(window.data) !== 'undefined'){
+		//ctx.drawImage(images.dino_blue, window.data.data.pos_x, window.data.data.pos_y);
+		ctx.drawImage(images.dino_blue, ( 247 * Math.ceil(window.data.data.animation_frame)), 0, 247, 475, window.data.data.pos_x, window.data.data.pos_y - window.block_y * 2, window.block_y/5 * 6, window.block_y * 2);
+		console.log("dino drawn", window.data, window.data.data.pos_x, window.data.data.pos_y);
+	}
 	ctx.restore();
 
 	ctx.font = "32px Arial";
@@ -89,11 +94,14 @@ function draw() {
 }
 
 function updatePlayers(data){
-	data.players.forEach(function(player_view_data){
-		player_view = players[indexOf(player_view_data.name)];
-		player_view.speed = player_view_data.speed;
-		player_view.update();
-	});
+	console.log(data);
+	window.data = data;
+	//console.log("dino drawn");
+	//data.players.forEach(function(player_view_data){
+		//player_view = players[indexOf(player_view_data.name)];
+		//player_view.speed = player_view_data.speed;
+		//player_view.update();
+	//});
 }
 
 function drawFireballs() {
@@ -112,7 +120,8 @@ function update() {
 	background.update();
 	player.update(level.terrain_data);
 	updateFireballs();
-	socket.emit("player_update", {'name': usr.name, 'pos_x': player.x, 'pos_y': player.y, 'speed': player.speed, 'animation_frame': player.animationFrame});
+	
+	socket.emit("player_update", {'name': usr.name, 'pos_x': player.x, 'pos_y': player.y, 'speed': player.speed, 'animation_frame': player.animationFrame, 'lobby_name': usr.lobby_name});
 	timer.update();
 	draw();
 }

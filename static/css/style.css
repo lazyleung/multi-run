@@ -175,3 +175,33 @@ text-align: center;
 /*-------------Profile CSS-------------*/
 /*-------------------------------------*/
 
+
+
+/*-------------------------------------*/
+/*-------------Lobby CSS-------------*/
+/*-------------------------------------*/
+
+ul{
+	text-align: center;
+	margin: 20px auto;
+}
+
+li.ready{
+	font-size: 18px;
+	margin: 0px auto;
+	padding: 20px 0px;
+	width: 300px;
+	background: -webkit-linear-gradient(top, #26BD3A 0%, #27F25A 100%);
+	background: -moz-linear-gradient(top, #26BD3A 0%, #27F25A 100%);
+	cursor: default;
+}
+
+li.wait{
+	font-size: 18px;
+	margin: 0px auto;
+	padding: 20px 0px;
+	width: 300px;
+	background: -webkit-linear-gradient(top, #B55050 0%, #E86B6B 100%);
+	background: -moz-linear-gradient(top, #B55050 0%, #E86B6B 100%);
+	cursor: default;
+}
