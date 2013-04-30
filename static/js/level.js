@@ -71,6 +71,15 @@ function Level(seed){
 					}
 					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
 				}
+			}else if (this.level_data[i] === "platform"){
+				//Need to modify
+				for(var j = 0; j < 16; j++){
+					//Draw platform
+					if(j > 0 && j < 15){
+						ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - 4*window.block_y, window.block_x, window.block_y/4);
+					}
+					ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - window.block_y, window.block_x, window.block_y);
+				}
 			}else if (this.level_data[i] === "platform_coin"){
 				for(var j = 0; j < 16; j++){
 					if(j > 0 && j < 15){
@@ -135,7 +144,7 @@ function Level(seed){
 			break;
 		case 5:
 			this.make_level([flat, flat, flat_coin, flat_coin, flat_coin, flat_obstacle, flat, platform,
-							flat, flat, flat_obstacle, flat, flat_obstacle, flat_coin, flat, flat
+							flat, flat, flat_obstacle, flat, flat_obstacle, flat_coin, flat, flat,
 							flat, flat, flat_obstacle, flat, platform, flat_coin, platform, flat,
 							flat_obstacle, flat, flat, flat_coin, flat, platform, flat_obstacle, flat,
 							flat, flat_coin, flat_obstacle, flat_coin, flat, flat, flat_obstacle, flat]);

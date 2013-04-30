@@ -17,6 +17,7 @@ function initGame(players_init, lobby_name, levelNum) {
 	//players = list of players
 	console.log("players_init = ", players_init);
 	console.log("lobby_name = ", lobby_name);
+	console.log("level = ", levelNum);
 	//Sets up the game
 	window.canvas = document.getElementById("myCanvas");
 	window.ctx = canvas.getContext("2d");

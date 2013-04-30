@@ -90,7 +90,7 @@ function loadMenu() {
 }
 
 //loads the canvas and init the game
-function loadCanvas(players_init, lobby_name) {
+function loadCanvas(players_init, lobby_name, levelNum) {
 	removeHammer();
 
 	canvasWidth = $(window).width();
@@ -100,7 +100,7 @@ function loadCanvas(players_init, lobby_name) {
 
 	$("body").html(c);
 
-	initGame(players_init, lobby_name);
+	initGame(players_init, lobby_name, levelNum);
 }
 
 function loadCreateGame() {

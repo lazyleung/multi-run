@@ -1,4 +1,4 @@
-2function Background() {
+function Background() {
 	this.clouds = new Array();
 	this.cloudSpawnTime = 10;
 	this.mountains = new Array();
