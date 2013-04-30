@@ -24,7 +24,7 @@ function Images(){
 	this.coin.src = "/images/coin.png";
 
 	this.fireball = new Image();
-	this.fireball.src = "/images/sun.png";
+	this.fireball.src = "/images/fireball.png";
 
 	this.arrow = new Image();
 	this.arrow.src = "/images/arrow.png";
