@@ -144,12 +144,14 @@ function update() {
 
 function startGame() {
 	// end menuMusic() and remove listener
-	menuMusic.pause();
-	menuMusic.removeEventListener('ended', false);
-	// menuMusic.currentTime = 0;
-	// Start music
-	music = new Audio(musicList[Math.floor(Math.random() * 2)])
-	music.play();
+	if(mute === 0){
+		menuMusic.pause();
+		menuMusic.removeEventListener('ended', false);
+		// menuMusic.currentTime = 0;
+		// Start music
+		music = new Audio(musicList[Math.floor(Math.random() * 2)])
+		music.play();
+	}
 	player.init();
 	gameInterval = setInterval(update, timeInterval);
 };
@@ -164,7 +166,9 @@ function endGame() {
 
 function exitGame(){
 	//stop music
-	music.pause();
+	if(mute === 0){
+		music.pause();
+	}
 	// music.currentTime = 0; COULD BE REMOVED MAYUBE
 	loadContent();
 	loadEnd();

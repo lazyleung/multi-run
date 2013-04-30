@@ -9,8 +9,17 @@ var music;
 var musicList = ['sound/airbrushed.mp3', 'sound/blackout_city.mp3'];
 var menuMusic = new Audio("sound/koji_pocket.mp3");
 var socket;
+var mute;
 
 $(document).ready(function(){
+	if (typeof(localStorage) !== "undefined") {
+		if(localStorage.mute !== "0" || localStorage.mute !== "1"){
+			localStorage.mute = "0";
+		}
+		mute = parseInt(localStorage.mute);
+	} else {
+		mute = 0;
+	}
 	images = new Images();
 	usr = new User();
 	initSock();
@@ -46,11 +55,13 @@ function loadLogin() {
 function loadMenu() {
 	removeHammer();
 	// Load menu music and loop it
-	menuMusic.addEventListener('ended', function() {
-    	this.currentTime = 0;
-    	this.play();
-	}, false);
-	menuMusic.play();
+	if(mute === 0) {
+		menuMusic.addEventListener('ended', function() {
+			this.currentTime = 0;
+	    	this.play();
+		}, false);
+		menuMusic.play();
+	}
 	console.log("usr-charNum", usr.charNum);
  	var menu = $("<ul>");
  	menu.append($("<li>").html("Create A Game").attr("id","create_game_button"));
@@ -276,9 +287,12 @@ function loadProfile() {
 //loads the settings
 function loadSettings() {
 	removeHammer();
+
+	var m = $("<img>").attr("id","mute").attr("src", "/images/arrow.png");
 	
 	var content_area = $("#content_area");
 	content_area.empty();
+	content_area.append(m);
 
 	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
  	var navbar = $('#navbar');
@@ -286,6 +300,20 @@ function loadSettings() {
  	navbar.append(back_button);
 
 	$("#back_button").hammer().on("tap", loadMenu);
+	$("#mute").hammer().on("tap", function(){
+		if(mute === 0){
+			//stop all music
+			menuMusic.pause();
+			console.log("Mute!");
+			mute = 1;
+		} else if(mute === 1){
+			//play music
+			menuMusic.play();
+			console.log("No Mute!");
+			mute = 0;
+		}
+		localStorage.mute = mute.toString();
+	});
 }
 
 function showNotification(message) {
@@ -323,6 +351,7 @@ function removeHammer(){
 	$("#back_button").hammer().off("tap");
 	$("#join_lobby_button").hammer().off("tap");
 	$("#start_button").hammer().off("tap");
+	$("#mute").hammer().off("tap");
 }
 
 function loadEnd() {

@@ -250,11 +250,13 @@ function initSock(){
 			players.empty();
 
 			for(var i = 0; i < data.players_init.length; i++){
-				var player = $("<li>").html(data.players_init[i].place + ". " + data.players_init[i].name + ": " + data.players_init[i].points);
-				if(data.winner === i){
-					player.addClass("winner");
+				if(data.players_init[i].place !== undefined){
+					var player = $("<li>").html(data.players_init[i].place + ". " + data.players_init[i].name + ": " + data.players_init[i].points);
+					if(data.winner === i){
+						player.addClass("winner");
+					}
+					players.append(player);
 				}
-				players.append(player);
 			}
 
 			var lobby_name = $("<h1>").html("Lobby: " + usr.lobby_name).addClass("text");

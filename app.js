@@ -146,24 +146,26 @@ io.sockets.on("connection", function(socket){
         } else if (status >= 0){
                 var place =  ++private_lobby_list[status].readyCount;
             for(var i = 0; i < private_lobby_list[status].players_init.length; i++){
-                private_lobby_list[status].players_init[i].place = place;
-                var points = private_lobby_list[status].players_init[i].points;
-                switch(place){
-                    case 1:
-                        points += 500
-                        break;
-                    case 2:
-                        points += 350
-                        break;
-                    case 3:
-                        points += 200
-                        break;
-                    case 4:
-                        points += 50
-                        break;  
-                }
-                private_lobby_list[status].players_init[i].points = data.points + points;
-                private_lobby_list[status].players_init[i].time = data.time;
+                if(private_lobby_list[status].players_init[i].name === data.username){
+                    private_lobby_list[status].players_init[i].place = place;
+                    var points = private_lobby_list[status].players_init[i].points;
+                    switch(place){
+                        case 1:
+                            points += 500
+                            break;
+                        case 2:
+                            points += 350
+                            break;
+                        case 3:
+                            points += 200
+                            break;
+                        case 4:
+                            points += 50
+                            break;  
+                    }
+                    private_lobby_list[status].players_init[i].points = data.points + points;
+                    private_lobby_list[status].players_init[i].time = data.time;
+                }  
             }
             io.sockets.in(data.lobby_name).emit('end_game_signal', {'success': true, 'players_init': private_lobby_list[status].players_init});
             if(private_lobby_list[status].readyCount === private_lobby_list[status].players_init.length){
