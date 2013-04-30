@@ -13,7 +13,7 @@ var playerViews = new Array();
 var time;
 
 
-function initGame(players_init, lobby_name) {
+function initGame(players_init, lobby_name, levelNum) {
 	//players = list of players
 	console.log("players_init = ", players_init);
 	console.log("lobby_name = ", lobby_name);
@@ -49,7 +49,7 @@ function initGame(players_init, lobby_name) {
 	background = new Background();
 
 	//Create Level
-	level = new Level(2);
+	level = new Level(levelNum);
 
 	clinterval = setInterval(drawLoading, 75);
 

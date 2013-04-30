@@ -158,7 +158,7 @@ function initSock(){
 
 	socket.on("client_load_game", function(data){
 		if(data.success){
-			loadCanvas(data.players_init, data.lobby_name);
+			loadCanvas(data.players_init, data.lobby_name, data.level);
 		}else{
 			showNotification("Cannot start game!");
 			socket.emit("leave_lobby", {'username': usr.name, 'lobby_name': usr.lobby_name, 'player_id': usr.player_id});

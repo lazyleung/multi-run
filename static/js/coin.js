@@ -6,10 +6,6 @@ function Coin(coinX, coinY, coinWidth, coinHeight){
 	this.height = coinHeight;
 }
 
-Coin.prototype.draw = function(i){
-	ctx.drawImage(this.img, 256 * Math.floor(i/8), 0, 256, 256, this.x, this.y, this.width, this.height);
-}
-
-Coin.prototype.hit = function(){
-
+Coin.prototype.draw = function(){
+	ctx.drawImage(this.img, 0, 0, 258, 256, this.x, this.y, this.width, this.height);
 }

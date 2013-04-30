@@ -14,7 +14,6 @@ function Level(seed){
 	this.coinArray = new Array();
 	this.boxArray = new Array();
 	this.fireballArray = new Array();
-	this.animationFrame = 0;
 
 	//assign terrain data
 	this.make_level = function(levels) {
@@ -76,7 +75,7 @@ function Level(seed){
 				for(var j = 0; j < 16; j++){
 					if(j > 0 && j < 15){
 						ctx.drawImage(this.ground, i*canvasWidth + j*window.block_x, canvasHeight - 4*window.block_y, window.block_x, window.block_y/4);
-						if (j % 3 === 0 && this.coinArray[pos + j + i] === undefined){
+						if (j % 4 === 0 && this.coinArray[pos + j + i] === undefined){
 							this.coinArray[pos + j + i] = new Coin(i*canvasWidth + j*window.block_x, canvasHeight - 5*window.block_y, window.block_x, window.block_y);
 						}
 					}
@@ -92,27 +91,30 @@ function Level(seed){
 			}
 			i++;
 		}
+		// for(var c = pos; c < this.coinArray.length; c++){
+		// 	if(this.coinArray[c] !== undefined){
+		// 		this.coinArray[c].draw();
+		// 	}
+		// }
 		for(var c in this.coinArray){
 			if(this.coinArray[c] !== undefined){
-				this.coinArray[c].draw(this.animationFrame);
+				this.coinArray[c].draw();
 			}
 		}
-		this.animationFrame = (this.animationFrame + 1)%32;
 	}
 
 	//generate premade or radnom level
 	switch(seed) {
 		case 1:
-			this.make_level([flat, flat_obstacle]);
+			this.make_level([flat, flat_obstacle, flat, flat]);
 			break;
 		case 2:
 			this.make_level([flat, flat, flat_obstacle, flat, flat, flat_coin, flat, platform_coin, flat, flat, flat, flat, flat, platform_coin, flat, flat, flat, flat]);
 			break;
 		case 3:
-		
-		default:
 			
-			//random level
+		default:
+			this.make_level([flat, flat, flat_obstacle]);
 	}
 }
 
@@ -173,7 +175,7 @@ var platform_coin = new Array();
 platform_coin[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 0,
+			0, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0,
 			0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -201,17 +203,6 @@ platform_powerup[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,];
 platform_powerup[1] = ["platform_powerup"];
-
-var platform_coin = new Array();
-platform_coin[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 0,
-			0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,];
-platform_coin[1] = ["platform_coin"];
 
 var end = new Array();
 end[0] = [0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4,
