@@ -142,18 +142,18 @@ function Player(playerX, playerY) {
 
 	//Checks for coin pickup
 	this.checkCoin = function(y, terrain){
-		// var ahead = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)];
-		// var aheadabove = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)];
+		var ahead = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)];
+		var aheadabove = terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)];
 		
-		// if(ahead !== 5 && aheadabove !== 5){
-		// 	return false;
-		// }
-		// terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)] = 0;
-		// terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)] = 0;
+		if(ahead !== 5 && aheadabove !== 5){
+			return false;
+		}
+		terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-1) * 16)] = 0;
+		terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)] = 0;
 
-		// this.points += 50;
-		// this.coin_sound.play();
-		// return true;
+		this.points += 50;
+		this.coin_sound.play();
+		return true;
 	}
 
 	this.update = function(terrain) {
@@ -189,7 +189,7 @@ function Player(playerX, playerY) {
 				return;
 		}
 
-		this.checkCoin();
+		this.checkCoin(y_block, terrain);
 		this.checkFireball();
 		
 		//Slowly increase player speed
