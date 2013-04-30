@@ -185,8 +185,8 @@ function loadLobby(data) {
 //loads the profile
 function loadProfile() {
 	removeHammer();
- 	var username = $("<div>").html("Username: " + usr.name);
- 	var color = $("<div>").html("<br> Pick a Color:");
+ 	var username = $("<div>").html("Username: " + usr.name).addClass("text");
+ 	var color = $("<div>").html("<br> Pick a Color:").addClass("text");
  	//Back Button
  	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
  
