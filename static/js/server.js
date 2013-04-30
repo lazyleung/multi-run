@@ -148,19 +148,29 @@ function initSock(){
 		$("#count").html("Players: " + String(data.players.length) + "/4");
 	});
 
-	socket.on("load_game_signal", function(data){
-		if(data.success){
-			loadCanvas(data.players, data.lobby_name);
-		}else{
-			showNotification("Cannot start game!");
-		}
-	});
-
-	socket.on("ready_game_signal"), function(data){
+	socket.on("ready_game_signal", function(data){
 		if(data.success){
 			//indicate certain player ready
 		}
-	}
+	});
+
+	socket.on("client_load_game", function(data){
+		if(data.success){
+			loadCanvas(data.players_init, data.lobby_name);
+		}else{
+			showNotification("Cannot start game!");
+			socket.emit("leave_lobby", {'username': usr.name, 'lobby_name': usr.lobby_name, 'player_id': usr.player_id});
+			loadMenu();
+		}
+	});
+
+	socket.on("load_game_signal", function(data){
+		if(!data.success){
+			showNotification("Cannot load game!");
+			socket.emit("leave_lobby", {'username': usr.name, 'lobby_name': usr.lobby_name, 'player_id': usr.player_id});
+			loadMenu();
+		}
+	});
 
 	socket.on("start_game_signal", function(data){
 		if(data.success){

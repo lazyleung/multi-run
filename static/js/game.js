@@ -55,7 +55,7 @@ function initGame(players, lobby_name) {
 
 	//signal ready
 	setTimeout(function(){
-		socket.emit('ready_game', {'lobby_name': lobby_name, 'player_id': usr.player_id})}
+		socket.emit('load_game', {'lobby_name': lobby_name, 'player_id': usr.player_id})}
 		, 1000);
 }
 
