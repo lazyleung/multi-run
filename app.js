@@ -37,7 +37,7 @@ io.sockets.on("connection", function(socket){
     socket.on('create_lobby', function(data) {
         if(!isPrivateLobby(data.lobby_name)){
             var player = {'name': data.username, 'pos': 0};
-            var player_init = {'name': data.username, 'charNum': data.charNum, 'status': 'wait', 'id': socket.id};
+            var player_init = {'name': data.username, 'charNum': data.charNum, 'status': 'wait', 'id': socket.id, 'time': 0, 'points': 0};
             var lobby = {'name': data.lobby_name, 'players': [player], 'players_init': [player_init],'readyCount': 0, 'status': 'waiting'};
 
             socket.join(data.lobby_name);
@@ -60,7 +60,7 @@ io.sockets.on("connection", function(socket){
         }else if(status >= 0){
             //Succesfully found joined lobby
             var player = {'name': data.username, 'pos': 0};
-            var player_init = {'name': data.username, 'charNum': data.charNum, 'status': 'wait', 'id': socket.id};
+            var player_init = {'name': data.username, 'charNum': data.charNum, 'status': 'wait', 'id': socket.id , 'time': 0, 'points': 0};
             socket.join(data.lobby_name);
             clients[socket.id] = data.lobby_name;
             private_lobby_list[status].players.push(player);
@@ -108,6 +108,7 @@ io.sockets.on("connection", function(socket){
             //Lobby is loading so okay
             socket.emit('load_game_signal', {'success': true});
             if(++private_lobby_list[status].readyCount === private_lobby_list[status].players.length){
+                private_lobby_list[status].readyCount = 0;
                 private_lobby_list[status].status = "playing";
                 io.sockets.in(data.lobby_name).emit('start_game_signal', {'success': true});
             }
@@ -135,6 +136,49 @@ io.sockets.on("connection", function(socket){
             socket.emit('fireball_update', {'success': false, 'reason': "Lobby doesn't exist"});
         } else if (status >= 0){
             socket.broadcast.to(data.lobby_name).emit('fireball_update', {'success': true, 'data':data});
+        }
+    });
+
+    socket.on("end_game", function(data){
+        var status = getPrivateLobby(data.lobby_name);
+        if(status === -1){
+            //socket.emit('end_game_status', {'success': false, 'reason': "Lobby doesn't exist"});
+        } else if (status >= 0){
+                var place =  ++private_lobby_list[status].readyCount;
+            for(var i = 0; i < private_lobby_list[status].players_init.length; i++){
+                private_lobby_list[status].players_init[i].place = place;
+                var points = private_lobby_list[status].players_init[i].points;
+                switch(place){
+                    case 1:
+                        points += 500
+                        break;
+                    case 2:
+                        points += 350
+                        break;
+                    case 3:
+                        points += 200
+                        break;
+                    case 4:
+                        points += 50
+                        break;  
+                }
+                private_lobby_list[status].players_init[i].points = data.points + points;
+                private_lobby_list[status].players_init[i].time = data.time;
+            }
+            io.sockets.in(data.lobby_name).emit('end_game_signal', {'success': true, 'players_init': private_lobby_list[status].players_init});
+            if(private_lobby_list[status].readyCount === private_lobby_list[status].players_init.length){
+                var max = 0;
+                var winner = 0;
+                for(var i = 0; i < private_lobby_list[status].players_init.length; i++){
+                    var points = private_lobby_list[status].players_init[i].points;
+                    if(max < points){
+                        max = points;
+                        winner = i;
+                    }
+                }
+
+                io.sockets.in(data.lobby_name).emit('end_game_winner_signal', {'success': true, 'winner': winner, 'players_init': private_lobby_list[status].players_init});
+            }
         }
     });
 

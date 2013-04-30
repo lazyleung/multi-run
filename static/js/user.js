@@ -8,6 +8,7 @@ function User(){
 
 	//Variables set for each lobby
 	this.lobby_name;
+	this.isDone = false;
 
 	this.charNum;
 	this.setChar = function(n){

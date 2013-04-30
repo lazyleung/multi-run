@@ -136,16 +136,18 @@ function initSock(){
  	});
 
  	socket.on("lobby_update", function(data){
- 		var players = $("#players");
-		players.empty();
-		for(var i = 0; i < data.players_init.length; i++){
-			var player = $("<li>").html(data.players_init[i].name);
-			player.addClass(data.players_init[i].status);
-			player.append(lobbyDino(data.players_init[i].charNum));
-			players.append(player);
-		}
-		$("#count").empty();
-		$("#count").html("Players: " + String(data.players_init.length) + "/4");
+ 		if(usr.isDone !== true){
+ 			var players = $("#players");
+			players.empty();
+			for(var i = 0; i < data.players_init.length; i++){
+				var player = $("<li>").html(data.players_init[i].name);
+				player.addClass(data.players_init[i].status);
+				player.append(lobbyDino(data.players_init[i].charNum));
+				players.append(player);
+			}
+			$("#count").empty();
+			$("#count").html("Players: " + String(data.players_init.length) + "/4");
+ 		}
 	});
 
 	socket.on("ready_game_signal", function(data){
@@ -199,5 +201,70 @@ function initSock(){
 		} else {
 			showNotification(data.reason);
 		} 
+	});
+
+	socket.on("end_game_signal", function(data){
+		if(data.success == true && usr.isDone === true){
+			var players = $("#players");
+			players.empty();
+			for(var i = 0; i < data.players_init.length; i++){
+				var player = $("<li>").html(data.players_init[i].place + ". " + data.players_init[i].name + ": " + data.players_init[i].points);
+				players.append(player);
+			}
+
+			var lobby_name = $("<h2>").html("Lobby: " + usr.lobby_name).addClass("text");
+
+			var content_area = $("#content_area");
+			content_area.empty();
+			content_area.append(lobby_name);
+			content_area.append(players);
+		}else{
+			showNotification(data.reason);
+		}
+	});
+
+	socket.on("end_game_signal", function(data){
+		if(data.success == true && usr.isDone === true){
+			var players = $("#players");
+			players.empty();
+
+			for(var i = 0; i < data.players_init.length; i++){
+				var player = $("<li>").html(data.players_init[i].place + ". " + data.players_init[i].name + ": " + data.players_init[i].points);
+				players.append(player);
+			}
+
+			var lobby_name = $("<h1>").html("Lobby: " + usr.lobby_name).addClass("text");
+
+			var content_area = $("#content_area");
+			content_area.empty();
+			content_area.append(lobby_name);
+			content_area.append(players);
+		}else{
+			showNotification(data.reason);
+		}
+	});
+
+	socket.on("end_game_winner_signal", function(data){
+		if(data.success == true && usr.isDone === true){
+			var players = $("#players");
+			players.empty();
+
+			for(var i = 0; i < data.players_init.length; i++){
+				var player = $("<li>").html(data.players_init[i].place + ". " + data.players_init[i].name + ": " + data.players_init[i].points);
+				if(data.winner === i){
+					player.addClass("winner");
+				}
+				players.append(player);
+			}
+
+			var lobby_name = $("<h1>").html("Lobby: " + usr.lobby_name).addClass("text");
+
+			var content_area = $("#content_area");
+			content_area.empty();
+			content_area.append(lobby_name);
+			content_area.append(players);
+		}else{
+			showNotification(data.reason);
+		}
 	});
 }

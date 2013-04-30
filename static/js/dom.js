@@ -324,3 +324,27 @@ function removeHammer(){
 	$("#join_lobby_button").hammer().off("tap");
 	$("#start_button").hammer().off("tap");
 }
+
+function loadEnd() {
+	removeHammer();
+	var lobby_name = $("<h1>").html("Lobby: " + usr.lobby_name).addClass("text");
+	var players = $("<ul>").attr("id", "players");
+
+	var content_area = $("#content_area");
+	content_area.empty();
+	content_area.append(lobby_name);
+	content_area.append(players);
+
+	//Navbar
+ 	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
+
+ 	var navbar = $('#navbar');
+ 	navbar.empty();
+ 	navbar.append(back_button);
+
+	$("#back_button").hammer().on("tap", function(){
+		usr.isDone = false;
+		socket.emit('leave_lobby', {'username': usr.name, 'lobby_name': usr.lobby_name});
+		loadMenu();
+	});
+}

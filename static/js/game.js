@@ -10,6 +10,7 @@ var race_progress;
 var clcount;
 var clinterval;
 var playerViews = new Array();
+var time;
 
 
 function initGame(players_init, lobby_name) {
@@ -30,6 +31,7 @@ function initGame(players_init, lobby_name) {
 	progress = 0;
 	race_progress = 0;
 	clcount = 0;
+	time = 0;
 
 	//Create new player
 	player = new Player(canvasWidth/3, canvasHeight - 1*window.block_y);
@@ -47,7 +49,7 @@ function initGame(players_init, lobby_name) {
 	background = new Background();
 
 	//Create Level
-	level = new Level(2);
+	level = new Level(1);
 
 	clinterval = setInterval(drawLoading, 75);
 
@@ -86,7 +88,7 @@ function draw() {
 		}
 		//ctx.drawImage(player_view.image, ( 247 * Math.ceil(window.data.data.animation_frame)), 0, 247, 475, window.data.data.pos_x, window.data.data.pos_y - window.block_y * 2, window.block_y/5 * 6, window.block_y * 2);
 	}
-	
+
 	//Draw player
 	player.draw();
 
@@ -150,15 +152,14 @@ function startGame() {
 	music.play();
 	player.init();
 	gameInterval = setInterval(update, timeInterval);
-}
+};
 
 function endGame() {
 	console.log("end!");
 	clearInterval(gameInterval);
-	socket.emit('leave_lobby', {'username': usr.name, 'lobby_name': usr.lobby_name, 'player_id': usr.player_id});
 
 	//5 Second pause before exiting
-	setTimeout(exitGame,5000);
+	setTimeout(exitGame,1000);
 }
 
 function exitGame(){
@@ -166,7 +167,9 @@ function exitGame(){
 	music.pause();
 	// music.currentTime = 0; COULD BE REMOVED MAYUBE
 	loadContent();
-	loadMenu();
+	loadEnd();
+	usr.isDone = true;
+	socket.emit("end_game", {'points': player.points, 'time': time, 'lobby_name': usr.lobby_name, 'username': usr.name});
 }
 
 //Countdown for start of game
