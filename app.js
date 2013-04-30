@@ -125,6 +125,10 @@ io.sockets.on("connection", function(socket){
         }
     });
 
+    socket.on("player_update", function(data) {
+        console.log(data);
+    });
+
     socket.on("disconnect", function() {
         if(clients[socket.id] !== 0){
             var status = getPrivateLobby(clients[socket.id]);

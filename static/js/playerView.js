@@ -1,13 +1,29 @@
 function playerView(name, id){
 	this.name = name;
 	this.id = id;
-	this.image = new Image();
-	this.image.src = "/images/dinosaur_animation.png";
+	this.image = images.dino_olive;
 	this.speed;
 	this.width = window.block_y/5 * 6;
 	this.height = window.block_y * 2;
 	this.animationFrame = 0;
 	this.race_progress = 0;
+
+	this.setChar = function(n){
+		switch(n){
+			case 1:
+				this.charImage = images.dino_green;
+				break;
+			case 2:
+				this.charImage = images.dino_blue;
+				break;
+			case 3:
+				this.charImage = images.dino_red;
+				break;
+			case 4:
+				this.charImage = images.dino_olive;
+				break;
+		}
+	}
 
 	this.draw = function() {
 		ctx.drawImage(this.image, ( 247 * Math.ceil(this.animationFrame)), 0, 247, 475, this.x, this.y - this.height, this.width, this.height);

@@ -110,7 +110,7 @@ function Player(playerX, playerY) {
 		var y_block = Math.ceil(this.y/window.block_y);
 
 		//Deals with changing floor height
-		this.floor = canvasHeight;
+		this.floor = canvasHeight-window.block_y;
 
 		this.checkFloor(y_block, terrain);
 
@@ -131,7 +131,7 @@ function Player(playerX, playerY) {
 		//Slowly increase player speed
 		// Limit horizontal speed
 		if (this.speed.x < this.xSpeedLimit) {
-			this.speed.x += .3;
+			this.speed.x += .2;
 		}
 		
 		//Handle jumping
