@@ -14,7 +14,7 @@
 }
 
 body {
-	background-color: #526BA3;
+	background: url("/images/mainbackground.png") bottom;
 	text-align: center;
 	font-family: Raleway;
 	margin: 0px;

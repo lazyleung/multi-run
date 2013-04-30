@@ -1,7 +1,7 @@
 function Images(){
 	//Text
 	this.loading = new Image();
-	this.loading.src = "/images/loading.png"
+	this.loading.src = "/images/loading.png";
 
 	// Dino Images
 	this.dino_green = new Image();

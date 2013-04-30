@@ -186,13 +186,9 @@ function loadLobby(data) {
 function loadProfile() {
 	removeHammer();
  	var username = $("<div>").html("Username: " + usr.name);
-
- 	//Back Button
- 	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
  
  	var content_area = $("#content_area");
  	content_area.empty();
-	$("#content_area").append(back_button);
 	$("#content_area").append(username);
 
 	var back_button = $("<div>").html("back").attr("id", "back_button").addClass("button");
