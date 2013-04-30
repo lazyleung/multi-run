@@ -141,6 +141,7 @@ function initSock(){
 		for(var i = 0; i < data.players_init.length; i++){
 			var player = $("<li>").html(data.players_init[i].name);
 			player.addClass(data.players_init[i].status);
+			player.append(lobbyDino(data.players_init[i].charNum));
 			players.append(player);
 		}
 		$("#count").empty();
