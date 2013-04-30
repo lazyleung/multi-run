@@ -119,7 +119,6 @@ function initSock(){
 
 	socket.on("create_lobby_status", function(data){
  		if(data.success){
- 			usr.player_id = data.player_id;
  			usr.lobby_name = data.lobby_name;
  			loadLobby(data);
  		} else {
@@ -129,7 +128,6 @@ function initSock(){
 
  	socket.on('join_status', function(data){
  		if (data.success) {
- 			usr.player_id = data.player_id;
  			usr.lobby_name = data.lobby_name;
  			loadLobby(data);
  		} else {
@@ -140,17 +138,18 @@ function initSock(){
  	socket.on("lobby_update", function(data){
  		var players = $("#players");
 		players.empty();
-		for(var i = 0; i < data.players.length; i++){
-			var player = $("<li>").html(data.players[i].name);
+		for(var i = 0; i < data.players_init.length; i++){
+			var player = $("<li>").html(data.players_init[i].name);
+			player.addClass(data.players_init[i].status);
 			players.append(player);
 		}
 		$("#count").empty();
-		$("#count").html("Players: " + String(data.players.length) + "/4");
+		$("#count").html("Players: " + String(data.players_init.length) + "/4");
 	});
 
 	socket.on("ready_game_signal", function(data){
-		if(data.success){
-			//indicate certain player ready
+		if(!data.success){
+			showNotification(data.reason);
 		}
 	});
 

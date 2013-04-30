@@ -37,12 +37,12 @@ io.sockets.on("connection", function(socket){
     socket.on('create_lobby', function(data) {
         if(!isPrivateLobby(data.lobby_name)){
             var player = {'name': data.username, 'pos': 0};
-            var player_init = {'name': data.username, 'charNum': data.charNum};
+            var player_init = {'name': data.username, 'charNum': data.charNum, 'status': 'wait'};
             var lobby = {'name': data.lobby_name, 'players': [player], 'players_init': [player_init],'readyCount': 0, 'status': 'waiting'};
 
             socket.join(data.lobby_name);
             clients[socket.id] = data.lobby_name;
-            socket.emit('create_lobby_status', {'success': true, 'lobby_name': data.lobby_name, 'players': private_lobby_list[ private_lobby_list.push(lobby)-1].players,'player_id': 1});
+            socket.emit('create_lobby_status', {'success': true, 'lobby_name': data.lobby_name, 'players_init': private_lobby_list[private_lobby_list.push(lobby)-1].players_init});
         } else {
             socket.emit('create_lobby_status', {'success': false, 'reason': "Lobby name already exist"});
         }
@@ -59,11 +59,14 @@ io.sockets.on("connection", function(socket){
             socket.emit('join_status', {'success': false, 'reason': "Lobby full"});
         }else if(status >= 0){
             //Succesfully found joined lobby
-            var player = {'name': data.username, 'id': socket.id};
+            var player = {'name': data.username, 'pos': 0};
+            var player_init = {'name': data.username, 'charNum': data.charNum, 'status': 'wait'};
             socket.join(data.lobby_name);
             clients[socket.id] = data.lobby_name;
-            socket.emit('join_status', {'success': true, 'lobby_name': data.lobby_name, 'players': private_lobby_list[status].players, 'player_id': private_lobby_list[status].players.push(player)});
-            io.sockets.in(data.lobby_name).emit('lobby_update',{'players': private_lobby_list[status].players});
+            private_lobby_list[status].players.push(player);
+             private_lobby_list[status].players_init.push(player_init);
+            socket.emit('join_status', {'success': true, 'lobby_name': data.lobby_name, 'players_init': private_lobby_list[status].players_init});
+            socket.broadcast.to(data.lobby_name).emit('lobby_update',{'success': true, 'players_init': private_lobby_list[status].players_init});
         }
     });
 
@@ -76,7 +79,13 @@ io.sockets.on("connection", function(socket){
             socket.emit('ready_game_signal', {'success': false, 'reason': "Lobby doesn't exist"});
         }else if(private_lobby_list[status].status === "waiting"){
             //Lobby is waiting so okay
-            io.sockets.in(data.lobby_name).emit('ready_game_signal', {'success': true, 'player_id': data.player_id});
+            for(var i = 0; i < private_lobby_list[status].players_init.length; i++){
+                if(private_lobby_list[status].players_init[i].name === data.username){
+                    private_lobby_list[status].players_init[i].status = "ready";
+                    break;
+                }
+            }
+            io.sockets.in(data.lobby_name).emit('lobby_update', {'success': true, 'players_init':  private_lobby_list[status].players_init});
             if(++private_lobby_list[status].readyCount === private_lobby_list[status].players.length){
                 //Reset readyCount for use in loading
                 private_lobby_list[status].readyCount = 0;
@@ -129,11 +138,12 @@ io.sockets.on("connection", function(socket){
         }else if(status >= 0){
             //Succesfully found leave lobby
             //Take out player
-            private_lobby_list[status].players.splice(data.player_id-1, 1);
+            private_lobby_list[status].players.splice(status, 1);
+            private_lobby_list[status].players_init.splice(status, 1);
             socket.leave(data.lobby_name);
             clients[socket.id] = 0;
             socket.emit('leave_status', {'success': true});
-            socket.broadcast.to(data.lobby_name).emit('lobby_update',{'players': private_lobby_list[status].players});
+            socket.broadcast.to(data.lobby_name).emit('lobby_update',{'players_init': private_lobby_list[status].players_init});
         }
     });
     
@@ -143,7 +153,6 @@ io.sockets.on("connection", function(socket){
             var status = getPrivateLobby(clients[socket.id]);
             if (status === -1){
                 //Lobby doesn't exist
-                socket.emit('leave_status', {'success': false, 'reason': "Lobby doesn't exist"});
             }else if(private_lobby_list[status].players.length === 1){
                 //Last person in lobby
                 private_lobby_list[status].players.splice(status, 1);
@@ -151,19 +160,20 @@ io.sockets.on("connection", function(socket){
                 private_lobby_list.splice(status,1);
                 socket.leave(clients[socket.id]);
                 clients[socket.id] = 0;
-                socket.emit('leave_status', {'success': true});
             }else if(status >= 0){
                 //Succesfully found leave lobby
+                if(private_lobby_list[status].status === 'waiting'){
+                    socket.broadcast.to(clients[socket.id]).emit('lobby_update',{'players_init': private_lobby_list[status].players_init});
+                }
                 //Take out player
                 for(var i = 0; i < private_lobby_list[status].players.length; i++){
                     if(private_lobby_list[status].players[i].id === socket.id){
                         private_lobby_list[status].players.splice(i, 1);
+                        private_lobby_list[status].players_init.splice(i, 1);
                     }
                 }
                 socket.leave(clients[socket.id]);
                 clients[socket.id] = 0;
-                socket.emit('leave_status', {'success': true});
-                socket.broadcast.to(clients[socket.id]).emit('lobby_update',{'players': private_lobby_list[status].players});
             }
         }
         delete clients[socket.id]

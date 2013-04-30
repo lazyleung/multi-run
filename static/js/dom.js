@@ -79,7 +79,7 @@ function loadMenu() {
 }
 
 //loads the canvas and init the game
-function loadCanvas(players, lobby_name) {
+function loadCanvas(players_init, lobby_name) {
 	removeHammer();
 
 	canvasWidth = $(window).width();
@@ -89,7 +89,7 @@ function loadCanvas(players, lobby_name) {
 
 	$("body").html(c);
 
-	initGame(players, lobby_name);
+	initGame(players_init, lobby_name);
 }
 
 function loadCreateGame() {
@@ -115,7 +115,7 @@ function loadCreateGame() {
 	$("#back_button").hammer().on("tap", loadMenu);
  	$("#create_lobby_button").hammer().on("tap", function(){
  		var	lobby_name = $("#lobby_name").val();
- 		socket.emit('create_lobby',{'username': usr.name, 'lobby_name': lobby_name});
+ 		socket.emit('create_lobby',{'username': usr.name, 'lobby_name': lobby_name, 'charNum': usr.charNum});
  	});
 }
 
@@ -148,12 +148,12 @@ function loadLobby(data) {
 	removeHammer();
 	var title = $("<h1>").html(data.lobby_name + " Waiting for players");
 	var lobby_name = $("<h2>").html("Lobby: " + data.lobby_name);
-	var players_count = $("<h2>").html("Players: " + String(data.players.length) + "/4").attr("id", "count");
+	var players_count = $("<h2>").html("Players: " + String(data.players_init.length) + "/4").attr("id", "count");
 	var start_game = $("<div>").html("Ready").attr("id","ready_button").addClass("button");
 	var players = $("<ul>").attr("id", "players");
 
-	for(var i = 0; i < data.players.length; i++){
-		var player = $("<li>").html(data.players[i].name);
+	for(var i = 0; i < data.players_init.length; i++){
+		var player = $("<li>").html(data.players_init[i].name).addClass("wait");
 		players.append(player);
 	}
 
@@ -173,10 +173,10 @@ function loadLobby(data) {
  	navbar.append(back_button);
 
 	$("#ready_button").hammer().on("tap", function(){
-		socket.emit('ready_game', {'lobby_name': usr.lobby_name, 'player_id': usr.player_id});
+		socket.emit('ready_game', {'lobby_name': usr.lobby_name, 'username': usr.name});
 	});
 	$("#back_button").hammer().on("tap", function(){
-		socket.emit('leave_lobby', {'username': usr.name, 'lobby_name': usr.lobby_name, 'player_id': usr.player_id});
+		socket.emit('leave_lobby', {'username': usr.name, 'lobby_name': usr.lobby_name});
 		loadMenu();
 	});
 }

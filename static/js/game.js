@@ -13,9 +13,9 @@ var clinterval;
 
 var playerViews = new Array();
 
-function initGame(players, lobby_name) {
+function initGame(players_init, lobby_name) {
 	//players = list of players
-	console.log("players = ", players);
+	console.log("players_init = ", players_init);
 	console.log("lobby_name = ", lobby_name);
 	//Sets up the game
 	window.canvas = document.getElementById("myCanvas");
@@ -36,9 +36,9 @@ function initGame(players, lobby_name) {
 	player = new Player(canvasWidth/3, canvasHeight - 1*window.block_y);
 
 	//Create view for players
-	for(var p in players){
-		if (players[p].name !== usr.name){
-			playerViews.push(new playerView(players[p].name, players[p].charNum));
+	for(var p in players_init){
+		if(players_init[p].name !== usr.name){
+			playerViews.push(new playerView(players_init[p].name, players_init[p].charNum));
 		}
 	}
 
