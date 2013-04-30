@@ -74,12 +74,14 @@ function Player(playerX, playerY) {
 		}
 		
 		// Draws player progress on minimap
-		ctx.drawImage(this.end, (canvasWidth*.75+ this.xOffset), (canvasHeight*.1), 247/8, 475/8);
+		ctx.fillStyle = "#038200";
+		ctx.fillRect(this.xOffset - canvasWidth/15, 475/8 + 5, canvasWidth * .70 + 247/8, 5);
+		ctx.drawImage(this.end, (canvasWidth*.70+ this.xOffset - canvasWidth/15), 10, 247/8, 475/8);
 		this.drawProgression();
 	}
 
 	this.drawProgression = function() {
-		ctx.drawImage(this.image, 0, 0, 247, 475,  (this.race_progress * canvasWidth * .8) + this.xOffset - canvasWidth/15 , canvasHeight * .1, 247/8, 475/8);
+		ctx.drawImage(this.image, 0, 0, 247, 475, (this.race_progress * canvasWidth * .70) + this.xOffset - canvasWidth/15, 10, 247/8, 475/8);
 	}.bind(this)
 
 	var lowJump = function() {
@@ -116,7 +118,10 @@ function Player(playerX, playerY) {
 		var startX = direction === "left" ? this.x : this.x + this.width
 		// set a cooldown and fire fireball
 		this.fireballCooldown = this.fireballDefaultCooldown;
-		level.fireballArray.push(new Fireball(startX, this.y - this.height * .8, this.speed.x, direction, 0))
+		var fireball = new Fireball(startX, this.y - this.height * .8, this.speed.x, direction, usr.name)
+		level.fireballArray.push(fireball);
+		socket.emit("player_fireball", {'x': fireball.x, 'y':fireball.y, 'player_speed':fireball.playerSpeed, 'direction': fireball.direction, 'id': fireball.id, 'lobby_name':usr.lobby_name});
+		//console.log("fireball =", fireball);
 	}.bind(this);
 
 	this.checkAhead = function(y, terrain){
@@ -126,7 +131,7 @@ function Player(playerX, playerY) {
 	this.checkFireball = function() {
 		var player = this;
 		level.fireballArray.forEach(function(fireball) {
-			if (intersectRect(fireball, player) === true) {
+			if (fireball.id !== usr.name &&intersectRect(fireball, player) === true) {
 				console.log("burn")
 				return true;
 			}

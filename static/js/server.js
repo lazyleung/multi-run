@@ -182,11 +182,22 @@ function initSock(){
 	});
 
 	socket.on("player_update", function(data){
-		console.log("player_update", data);
+		//console.log("player_update", data);
 		if(data.success){
 			updatePlayers(data);
 		} else {
 			showNotification(data.reason);
 		}
+	});
+
+	socket.on("fireball_update", function(data){
+		if (data.success){
+			console.log(data);
+			level.fireballArray.push(new Fireball(data.data.x, data.data.y, data.data.player_speed, data.data.direction, data.data.id));
+			console.log(level.fireballArray);
+			console.log(level.fireballArray.length);
+		} else {
+			showNotification(data.reason);
+		} 
 	});
 }

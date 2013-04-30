@@ -118,13 +118,23 @@ io.sockets.on("connection", function(socket){
     });
 
     socket.on("player_update", function(data) {
-        console.log(data);
+        //console.log(data);
         var status = getPrivateLobby(data.lobby_name);
         if(status === -1){
             //Lobby doesn't exist
             socket.emit('player_update', {'success': false, 'reason': "Lobby doesn't exist"});
         }else if(status >= 0){
             socket.broadcast.to(data.lobby_name).emit('player_update', {'success': true, 'data': data});
+        }
+    });
+
+    socket.on("player_fireball", function(data){
+        //console.log(data);
+        var status = getPrivateLobby(data.lobby_name);
+        if(status === -1){
+            socket.emit('fireball_update', {'success': false, 'reason': "Lobby doesn't exist"});
+        } else if (status >= 0){
+            socket.broadcast.to(data.lobby_name).emit('fireball_update', {'success': true, 'data':data});
         }
     });
 

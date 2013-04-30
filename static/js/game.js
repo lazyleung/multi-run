@@ -1,7 +1,6 @@
 //Highlevel control of game
 var player;
 var timeInterval = 25;
-var timer;
 var progress;
 var background;
 var level;
@@ -44,9 +43,6 @@ function initGame(players_init, lobby_name) {
 		}
 	}
 
-	// Add timer
-	timer = new Timer(5);
-
 	//Create new background
 	background = new Background();
 
@@ -88,15 +84,10 @@ function draw() {
 			//console.log(playerViews[p]);
 			//console.log(playerViews[p].name, window.data.data.name);
 			if (playerViews[p].name === window.data.data.name){
-				var player_view = playerViews[p];
+				playerViews[p].draw(player.xOffset, window.data.data.pos_x, window.data.data.pos_y, window.data.data.animation_frame);
 			} 
 		}
-		//console.log("player_view",player_view);
-		ctx.drawImage(player_view.image, ( 247 * Math.ceil(window.data.data.animation_frame)), 0, 247, 475, window.data.data.pos_x, window.data.data.pos_y - window.block_y * 2, window.block_y/5 * 6, window.block_y * 2);
-		ctx.font = "32px Arial";
-		ctx.fillStyle = "black";
-		ctx.fillText(String(player_view.name), window.data.data.pos_x+(0.1)*window.block_x, window.data.data.pos_y-2.5*window.block_y)
-		//console.log("dino drawn", window.data, window.data.data.pos_x, window.data.data.pos_y);
+		//ctx.drawImage(player_view.image, ( 247 * Math.ceil(window.data.data.animation_frame)), 0, 247, 475, window.data.data.pos_x, window.data.data.pos_y - window.block_y * 2, window.block_y/5 * 6, window.block_y * 2);
 	}
 	//Draw player
 	player.draw();
@@ -110,11 +101,10 @@ function draw() {
 	ctx.fillStyle = "white";
 	ctx.fillText(String(player.points), canvasWidth-2*window.block_x, 40);
 	//Draw GUI
-	timer.draw();
 }
 
 function updatePlayers(data){
-	console.log(data);
+	//console.log(data);
 	window.data = data;
 	//console.log("dino drawn");
 	//data.players.forEach(function(player_view_data){
@@ -140,9 +130,7 @@ function update() {
 	background.update();
 	player.update(level.terrain_data);
 	updateFireballs();
-
 	socket.emit("player_update", {'name': usr.name, 'pos_x': player.x, 'pos_y': player.y, 'speed': player.speed, 'animation_frame': player.animationFrame, 'lobby_name': usr.lobby_name});
-	timer.update();
 	draw();
 }
 
