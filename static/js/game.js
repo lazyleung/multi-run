@@ -113,6 +113,12 @@ function updatePlayers(data){
 	//});
 }
 
+function updatePlayerViews(){
+	playerViews.forEach(function(aPlayerView) {
+		aPlayerView.update();
+	})
+}
+
 function drawFireballs() {
 	level.fireballArray.forEach(function(fireball) {
 		fireball.draw();
@@ -129,6 +135,7 @@ function update() {
 	background.update();
 	player.update(level.terrain_data);
 	updateFireballs();
+	updatePlayerViews();
 	socket.emit("player_update", {'name': usr.name, 'pos_x': player.x, 'pos_y': player.y, 'speed': player.speed, 'animation_frame': player.animationFrame, 'lobby_name': usr.lobby_name});
 	draw();
 }
