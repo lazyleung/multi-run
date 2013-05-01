@@ -330,24 +330,6 @@ app.use('/', express.static(__dirname + '/static/'));
 //  routes
 //===========================
 
-
-//This is for debugging purposes
-//Delete before release
-app.get('/me', function(req, res){
-    mongoExpressAuth.checkLogin(req, res, function(err){
-        if (err)
-            res.send(err);
-        else {
-            mongoExpressAuth.getAccount(req, function(err, result){
-                if (err)
-                    res.send(err);
-                else 
-                    res.send(result);
-            });
-        }
-    });
-});
-
 app.post('/checkLogin', function(req, res){
     mongoExpressAuth.getAccount(req, function(e, result){
         if(e){

@@ -372,6 +372,10 @@ function removeHammer(){
 	$("#start_button").hammer().off("tap");
 	$("#mute").hammer().off("tap");
 	$('#how_to_button').hammer().off("tap");
+	$("#dino_green").hammer().off("tap");
+	$("#dino_red").hammer().off("tap");
+	$("#dino_blue").hammer().off("tap");
+	$("#dino_olive").hammer().off("tap");
 }
 
 function loadEnd() {

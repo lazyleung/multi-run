@@ -1,0 +1,65 @@
+Grading Help:
+
+Members:
+	
+	Ethan Chan: eschan
+	Jonathan Leun: jkleung1
+	Alvin Wang: alvinw
+
+Project: Multi-run
+
+Required Elements
+
+JavaScript: 
+	Creating Objects:
+		//Game Elements
+		"level.js" box.js", "cloud,js", "coin.js", "fireball.js", "mountain.js", "powerup.js"
+
+		//Players and PlayerViews
+		"player.js", "playerView.js"
+
+	Canvas: 
+		Our game is entirely drawn using the HTML Canvas.
+
+	CSS:
+		"/static/css/style.css"
+
+		We used css styling for the UI.
+
+	DOM Manipulation:
+
+
+
+		Example: Each function in 'dom.js' manipulates the dom through creating, adding, and modifying DOM elements.
+
+	jQuery:
+
+		"/static/js/dom.js"
+
+		We used jQuery extensively for manipulating the DOM for our UI. 
+
+	AJAX Client:
+
+		"/static/js/server.js"
+
+		We implemented client side AJAX calls to communicate user information with the server.
+
+	AJAX Server:
+
+		"app.js" - After line 330 contains our AJAX server side logic.
+
+	node.js:
+
+		"app.js" - We used node for running our server.
+
+	websockets:
+
+		"app.js" (Lines 20-301) and "/static/server.js" (Lines 116-268)
+
+		We used socket.io extensively for communications beween client-server and clients. Sockets were used to sync game clients
+
+	server-side databases:
+
+		"app.js" (Lines 308-375)
+
+		We used mondoDB for storing login and user information, as well as cookie storage
