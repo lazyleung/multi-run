@@ -8,7 +8,7 @@ function Fireball(X, Y, playerSpeed,direction, id) {
 	this.direction = direction;
 	this.speed = direction === "left" ? this.playerSpeed - 15 : this.playerSpeed + 15;
 	this.id = id;
-	this.lifetime = 3000;
+	this.lifetime = 5000;
 
 	this.draw = function() {
 		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
