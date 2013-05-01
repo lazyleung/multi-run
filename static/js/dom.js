@@ -62,7 +62,6 @@ function loadMenu() {
 		}, false);
 		menuMusic.play();
 	}
-	console.log("usr-charNum", usr.charNum);
  	var menu = $("<ul>");
  	menu.append($("<li>").html("How To Play").attr("id","how_to_button"));
  	menu.append($("<li>").html("Create A Game").attr("id","create_game_button"));

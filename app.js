@@ -19,6 +19,7 @@ var app = express();
 
 var util = require("util")
 var io = require('socket.io').listen(8888);
+io.set('log level', 1); 
 var clients = new Object();
 var lobby_names = new Object();
 var private_lobby_list = new Array();
@@ -119,7 +120,6 @@ io.sockets.on("connection", function(socket){
     });
 
     socket.on("player_update", function(data) {
-        //console.log(data);
         var status = getPrivateLobby(data.lobby_name);
         if(status === -1){
             //Lobby doesn't exist
@@ -130,7 +130,6 @@ io.sockets.on("connection", function(socket){
     });
 
     socket.on("player_fireball", function(data){
-        //console.log(data);
         var status = getPrivateLobby(data.lobby_name);
         if(status === -1){
             socket.emit('fireball_update', {'success': false, 'reason': "Lobby doesn't exist"});

@@ -40,9 +40,7 @@ function Level(seed){
 				for(var j = 0; j < 16; j++){
 					if(j === 9){
 						ctx.drawImage(this.box, i*canvasWidth + j*window.block_x, canvasHeight - 3*window.block_y, 2*window.block_y, 2*window.block_y);
-						//if(this.coinArray[pos + j + i] === undefined){
 							ctx.drawImage(this.coin, 0, 0, 258, 256,i*canvasWidth + j*window.block_x, canvasHeight-5*window.block_y, window.block_x, window.block_y);
-						//}
 					}
 					if(j === 10){
 						ctx.drawImage(this.coin, 0, 0, 258, 256, i*canvasWidth + j*window.block_x, canvasHeight-5*window.block_y, window.block_x, window.block_y);
@@ -101,19 +99,9 @@ function Level(seed){
 			}
 			i++;
 		}
-		// for(var c = pos; c < this.coinArray.length; c++){
-		// 	if(this.coinArray[c] !== undefined){
-		// 		this.coinArray[c].draw();
-		// 	}
-		// }
-		// for(var c in this.coinArray){
-		// 	if(this.coinArray[c] !== undefined){
-		// 		this.coinArray[c].draw();
-		// 	}
-		// }
 	}
 
-	//generate premade or radnom level
+	//generate premade or random level
 	switch(seed) {
 		case 1:
 			this.make_level([flat, flat_obstacle, flat, flat, flat_coin, flat, platform, platform_coin,

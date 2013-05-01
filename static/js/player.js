@@ -30,13 +30,7 @@ function Player(playerX, playerY) {
 		// Setup touch handler
 		$('body').hammer().on("swipeup", function(event) {
 			event.gesture.preventDefault();
-		    //console.log(this, event);
-		    // if (Math.abs(event.gesture.deltaY) <= 120) {
-		    // 	lowJump();
-		    // }
-		    // else {
 		    	highJump();
-		    // }
 		});
 		$('body').hammer().on("swipeleft", function(event) {
 			event.gesture.preventDefault();
@@ -125,7 +119,6 @@ function Player(playerX, playerY) {
 			fire_shoot.play();
 		}
 		socket.emit("player_fireball", {'x': fireball.x, 'y':fireball.y, 'player_speed':fireball.playerSpeed, 'direction': fireball.direction, 'id': fireball.id, 'lobby_name':usr.lobby_name});
-		//console.log("fireball =", fireball);
 	}.bind(this);
 
 	this.checkAhead = function(y, terrain){
@@ -136,7 +129,6 @@ function Player(playerX, playerY) {
 		var player = this;
 		for (i = 0; i < level.fireballArray.length; i++){
 			var fireball = level.fireballArray[i];
-		//level.fireballArray.forEach(function(fireball) {
 			if (fireball.id !== usr.name &&intersectRect(fireball, player) === true) {
 				console.log("burn");
 				if(player.hit === 0){
@@ -151,7 +143,6 @@ function Player(playerX, playerY) {
 				level.fireballArray.splice(i, 1);
 				return true;
 			}
-		//});
 		}
 	}
 
@@ -191,11 +182,7 @@ function Player(playerX, playerY) {
 		// Update player race progression; -8 accounts for the end being at the mid point
 		this.race_progress = (this.x + this.width)/window.block_x / ((level.level_data.length) * 16 - 8);
 		var y_block = Math.ceil(this.y/window.block_y);
-
-		// Decrement fireball cooldown
-		//if (this.fireballCooldown === 0){
-		//	level.fireballArray.shift();
-		//}
+		
 		if (this.fireballCooldown > 0) {
 			this.fireballCooldown -= window.timeInterval;
 		}

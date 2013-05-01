@@ -80,16 +80,11 @@ function draw() {
 	drawFireballs();
 
 	if (typeof(window.data) !== 'undefined'){
-		//ctx.drawImage(images.dino_blue, window.data.data.pos_x, window.data.data.pos_y);
-		//console.log(playerViews);
 		for(var p in playerViews){
-			//console.log(playerViews[p]);
-			//console.log(playerViews[p].name, window.data.data.name);
 			if (playerViews[p].name === window.data.data.name){
 				playerViews[p].draw(player.xOffset, window.data.data.pos_x/(playerViews[p].canvas_width/canvasWidth), window.data.data.pos_y/(playerViews[p].canvas_height/canvasHeight), window.data.data.animation_frame);
 			} 
 		}
-		//ctx.drawImage(player_view.image, ( 247 * Math.ceil(window.data.data.animation_frame)), 0, 247, 475, window.data.data.pos_x, window.data.data.pos_y - window.block_y * 2, window.block_y/5 * 6, window.block_y * 2);
 	}
 
 	//Draw player
@@ -146,18 +141,15 @@ function playerUpdate() {
 }
 
 function startGame() {
-	// end menuMusic() and remove listener
 	if(mute === 0){
 		menuMusic.pause();
 		menuMusic.removeEventListener('ended', false);
-		// menuMusic.currentTime = 0;
 		// Start music
 		music = new Audio(musicList[Math.floor(Math.random() * 2)])
 		music.play();
 	}
 	player.init();
 	gameInterval = setInterval(update, timeInterval);
-	//setInterval(playerUpdate, 50);
 };
 
 function endGame() {
@@ -177,7 +169,6 @@ function exitGame(){
 	if(mute === 0){
 		music.pause();
 	}
-	// music.currentTime = 0; COULD BE REMOVED MAYUBE
 	loadContent();
 	loadEnd();
 	usr.isDone = true;
