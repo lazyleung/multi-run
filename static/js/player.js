@@ -137,7 +137,7 @@ function Player(playerX, playerY) {
 					if(mute === 0){
 						fireball_sound.play();
 					}
-					usr.points -= 50;
+					this.points -= 50;
 				}
 				//pop out fire ball here
 				level.fireballArray.splice(i, 1);

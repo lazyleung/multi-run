@@ -33,7 +33,6 @@ var public_lobby_list = [{'name': 'Alpha', 'players': []}, {'beta': 'Alpha', 'pl
 // Tell socket io to listen for new connections
 io.sockets.on("connection", function(socket){
     clients[socket.id] = 0;
-
     //Create Lobby
     socket.on('create_lobby', function(data) {
         if(!isPrivateLobby(data.lobby_name)){
