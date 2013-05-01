@@ -63,3 +63,8 @@ JavaScript:
 		"app.js" (Lines 308-375)
 
 		We used mondoDB for storing login and user information, as well as cookie storage
+
+	Use of Hammer.js external library:
+		"player.js"
+
+		Implementation of Hammer.js through touch gestures made our game play more unique and makes it seem more like a native app

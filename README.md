@@ -5,6 +5,10 @@ multi-run
 
 Group Members: alvinw, eschan, jkleung1
 
+
+Demo Video: http://youtu.be/_AV9hwgcMfI
+
+---------------
 Run Guidelines:
 
 Currently, the node and socket.io are being served
