@@ -121,8 +121,9 @@ function Player(playerX, playerY) {
 		this.fireballCooldown = this.fireballDefaultCooldown;
 		var fireball = new Fireball(startX, this.y - this.height * .8, this.speed.x, direction, usr.name)
 		level.fireballArray.push(fireball);
-
-		fire_shoot.play();
+		if(mute === 0){
+			fire_shoot.play();
+		}
 		socket.emit("player_fireball", {'x': fireball.x, 'y':fireball.y, 'player_speed':fireball.playerSpeed, 'direction': fireball.direction, 'id': fireball.id, 'lobby_name':usr.lobby_name});
 		//console.log("fireball =", fireball);
 	}.bind(this);
@@ -141,7 +142,9 @@ function Player(playerX, playerY) {
 				if(player.hit === 0){
 					player.speed.x = player.xSpeedBase
 					player.hit = 1;
-					fireball_sound.play();
+					if(mute === 0){
+						fireball_sound.play();
+					}
 					usr.points -= 50;
 				}
 				//pop out fire ball here
@@ -171,7 +174,9 @@ function Player(playerX, playerY) {
 		terrain[Math.floor(progress/16)][0][progress - (Math.floor(progress/16) * 16) + ((y-2) * 16)] = 0;
 
 		this.points += 50;
-		this.coin_sound.play();
+		if(mute === 0){
+			this.coin_sound.play();
+		}
 		return true;
 	}
 

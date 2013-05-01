@@ -164,6 +164,10 @@ function endGame() {
 	console.log("end!");
 	clearInterval(gameInterval);
 
+	$('body').hammer().off('tap');
+	$('body').hammer().off('swipeup');
+	$('body').hammer().off('swipeleft');
+
 	//5 Second pause before exiting
 	setTimeout(exitGame,1000);
 }
